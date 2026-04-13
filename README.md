@@ -1,2 +1,3 @@
 # ReadStage
-"Hello, TEAM-F！”
+"Hello, TEAM-F!”
+"頑張ろうTEAM-F!"
