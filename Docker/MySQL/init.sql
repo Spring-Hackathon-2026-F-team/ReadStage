@@ -19,12 +19,12 @@ USE readstage;
 CREATE TABLE
     users (
         id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-        mail_address VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,
         created_at DATETIME (6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
         updated_at DATETIME (6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
         PRIMARY KEY (id),
-        UNIQUE KEY uq_users_mail_address (mail_address)
+        UNIQUE KEY uq_users_email (email)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE
@@ -108,7 +108,7 @@ CREATE TABLE
 
 
 
-INSERT INTO users (mail_address, password)
+INSERT INTO users (email, password)
 VALUES 
   ('taro@example.com', '937e8d5fbb48bd4949536cd65b8d35c426b80d2f830c5c308e2cdec422ae2244'),
   ('jiro@example.com', '937e8d5fbb48bd4949536cd65b8d35c426b80d2f830c5c308e2cdec422ae2244'),
