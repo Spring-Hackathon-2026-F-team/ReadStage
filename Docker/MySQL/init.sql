@@ -1,20 +1,20 @@
-DROP DATABASE IF EXISTS snsapp;
+DROP DATABASE IF EXISTS readstage;
 
 DROP USER IF EXISTS 'testuser'@'%';
 
 
 CREATE USER 'testuser'@'%' IDENTIFIED BY 'testuser';
 
-CREATE DATABASE IF NOT EXISTS snsapp
+CREATE DATABASE IF NOT EXISTS readstage
   DEFAULT CHARACTER SET utf8mb4
   DEFAULT COLLATE utf8mb4_unicode_ci;
 
 
-GRANT ALL PRIVILEGES ON snsapp.* TO 'testuser'@'%';
+GRANT ALL PRIVILEGES ON readstage.* TO 'testuser'@'%';
 
 FLUSH PRIVILEGES;
 
-USE snsapp;
+USE readstage;
 
 CREATE TABLE
     users (
@@ -44,7 +44,7 @@ CREATE TABLE
         user_id BIGINT UNSIGNED NOT NULL,
         book_id BIGINT UNSIGNED NOT NULL,
         evaluation INT NOT NULL,
-        status ENUM('BASIC', 'START', 'STANDARD', 'EXPERT') NOT NULL,
+        status ENUM('START/入門', 'BASIC/基礎', 'STANDARD/応用', 'EXPERT/発展') NOT NULL,
         message VARCHAR(140),
         delete_flag TINYINT(1) DEFAULT 0,
         created_at DATETIME (6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -132,11 +132,11 @@ VALUES
 
 INSERT INTO recommends (user_id, book_id, evaluation, status, message)
 VALUES
-    (1, 1, 5, 'START', '知りたいことが書いてあってよかった。'),
-    (2, 1, 2, 'BASIC', 'あまり面白くなかった'),
-    (3, 1, 2, 'START', '普通。'),
-    (4, 1, 5, 'EXPERT', '久しぶりに読み直した。'),
-    (5, 1, 3, 'STANDARD', 'よかった。');
+    (1, 1, 5, 'START/入門', '知りたいことが書いてあってよかった。'),
+    (2, 1, 2, 'BASIC/基礎', 'あまり面白くなかった'),
+    (3, 1, 2, 'START/入門', '普通。'),
+    (4, 1, 5, 'EXPERT/発展', '久しぶりに読み直した。'),
+    (5, 1, 3, 'STANDARD/応用', 'よかった。');
 
 INSERT INTO categories (category)
 VALUES
