@@ -6,6 +6,8 @@ import uuid
 import re
 import os
 
+from models import Book
+
 # 定数定義
 EMAIL_PATTERN = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
 SESSION_DAYS = 30
@@ -25,6 +27,8 @@ def index():
 #    user_id = session.get("user_id")
 #    if user_id is None:
 #        return redirect(url_for('login_view'))
+    books = Book.get_all()
+    print(books) # TODO: DB接続確認のためのコメントなので、本実装で削除予定
     return render_template('book/books.html')
 #    return render_template(url_for('books_view'))
 
