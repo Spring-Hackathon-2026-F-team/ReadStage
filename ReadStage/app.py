@@ -22,9 +22,9 @@ csrf = CSRFProtect(app)
 @app.route("/", methods=["GET"])
 def index():
     #user_idがない場合、login.htmlへリダイレクト
-    user_id = session.get("user_id")
-    if user_id is None:
-        return redirect(url_for('login_view'))
+#    user_id = session.get("user_id")
+#    if user_id is None:
+#        return redirect(url_for('login_view'))
     return render_template('book/books.html')
 #    return render_template(url_for('books_view'))
 
@@ -108,7 +108,7 @@ def login_process():
 # ログアウト処理
 @app.route("/logout")
 def logout():
-    session.clear()
+#    session.clear()
     return redirect('auth/login.html')
 #    return redirect(url_for('login_view'))
 
@@ -116,29 +116,29 @@ def logout():
 # トップページ(書籍一覧)の表示
 @app.route("/books", methods=["GET"])
 def books_view():
-    user_id = session.get("user_id")
-    if user_id is None:
-        return redirect(url_for('login_view'))
-    else:
+#    user_id = session.get("user_id")
+#    if user_id is None:
+#        return redirect(url_for('login_view'))
+#    else:
         # Bookモデルクラスに書籍データの必要な情報を取得する想定
         # ほしい情報(書籍タイトル、カテゴリ、キーワード、各レベルの評価点、まえがき)
-        books = Book.get_all()
+#        books = Book.get_all()
 
         return render_template('book/books.html')
 #        return render_template('book/books.html', books=books, user_id=user_id)
 
 # 書籍評価ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
-def book_id_view():
+def book_id_view(book_id):
 
-    return render_template('post/posts.html')
+    return render_template('book/book_detail.html')
 
 
 # 書籍評価投稿ページ表示
 @app.route("/book/<int:book_id>/comment", methods=["GET"])
-def book_comment_view():
+def book_comment_view(book_id):
 
-    return render_template('post/create_post.html')
+    return render_template('book/create_comment.html')
 
 
 # 書籍評価投稿処理
