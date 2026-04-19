@@ -128,14 +128,14 @@ def books_view():
 #        return render_template('book/books.html', books=books, user_id=user_id)
 
 # 書籍評価ページ表示
-@app.route("/book/{id}", methods=["GET"])
+@app.route("/book/<int:book_id>", methods=["GET"])
 def book_id_view():
 
     return render_template('post/posts.html')
 
 
 # 書籍評価投稿ページ表示
-@app.route("/book/{id}/comment", methods=["GET"])
+@app.route("/book/<int:book_id>/comment", methods=["GET"])
 def book_comment_view():
 
     return render_template('post/create_post.html')
