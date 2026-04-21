@@ -6,4 +6,11 @@
 
 {% block content %}
 <p>Top Page</p>
+<img src="{{ url_for('static', filename='image/TopPage1.png') }}" style="width:100%; height:auto;" alt="トップページ画像">
+
+<div class="search-container">
+    <input type="search" placeholder="検索" class="search-input">
+    <button type="submit" class="search-button">検索</button>
+</div>
+
 {% endblock %}
