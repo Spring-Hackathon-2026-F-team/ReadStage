@@ -7,7 +7,7 @@ db_pool = DB.init_db_pool()
 
 class Book:
   @classmethod
-  def get_all(self):
+  def get_all(cls):
     conn = db_pool.get_conn()
     try:
       with conn.cursor() as cur:
