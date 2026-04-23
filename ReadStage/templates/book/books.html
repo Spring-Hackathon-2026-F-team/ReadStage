@@ -6,11 +6,30 @@
 
 {% block content %}
 <p>Top Page</p>
-<img src="{{ url_for('static', filename='image/TopPage1.png') }}" style="width:100%; height:auto;" alt="トップページ画像">
+<img src="{{ url_for('static', filename='image/header-image.png') }}" style="width:50%; height:auto;" alt="ヘッダーイメージ画像">
 
 <div class="search-container">
     <input type="search" placeholder="検索" class="search-input">
     <button type="submit" class="search-button">検索</button>
+</div>
+
+<h3> 本のイラスト </h3>
+<div class="row mt-4"> <!-- 全体を囲む大きな行,mt-4は上部にマージンを追加 -->
+  <div class="col-4"> <!-- 左側の列：イラスト用 -->
+    <img src="../static/image/1.png" alt="イラスト" class="img-fluid">
+  </div>
+  <div class="col-8"> <!-- 右側の列：これまでの6分割の枠用 -->
+    <h4> カテゴリー </h4>
+    <div class="row">
+      <div class="col">ネットワーク</div>
+    </div>
+    <h4> キーワード </h4>
+    <div class="row">
+      <div class="col">TCP/IP</div>
+      <div class="col">OSI参照モデル</div>
+      <div class="col">IT</dic>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
