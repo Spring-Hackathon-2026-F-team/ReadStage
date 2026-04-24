@@ -50,7 +50,7 @@ def signup_process():
     password_confirmation = request.form.get("password_confirmation", "")
 
     # 空チェック
-    if not name or not email or not password or not password_confirmation:
+    if not email or not password or not password_confirmation:
         flash("空のフォームがあります" , 'error')
         return redirect(url_for('signup_view'))
 
@@ -65,16 +65,17 @@ def signup_process():
         return redirect(url_for('signup_view'))
 
     # 既存ユーザーチェック
-    registered_user = User.find_by_email(email)
-    if registered_user is not None:
-        flash("既に登録されているﾒｰﾙｱﾄﾞﾚｽです。", "error")
-        return redirect(url_for('signup_view'))
-    #パスワードのハッシュ化
-    hashed_password = hashlib.sha256(password.encode("utf-8")).hexdigest()
+    # TODO: サインアップ処理実装まではコメントアウトし、必ずトップページに遷移させる
+    # registered_user = User.find_by_email(email)
+    # if registered_user is not None:
+    #     flash("既に登録されているﾒｰﾙｱﾄﾞﾚｽです。", "error")
+    #     return redirect(url_for('signup_view'))
+    # #パスワードのハッシュ化
+    # hashed_password = hashlib.sha256(password.encode("utf-8")).hexdigest()
 
-    user_id = User.create(email, hashed_password)
+    # user_id = User.create(email, hashed_password)
 
-    session["user_id"] = user_id
+    # session["user_id"] = user_id
 
     return redirect(url_for('books_view'))
 
@@ -93,18 +94,19 @@ def login_process():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    if email == "" or password == "":
+    if not email or not password:
         flash("メールアドレスorパスワードが空です。", "error")
     else:
-        user = User.find_by_email(email)
-        if user is None:
-            flash("メールアドレスが違います。", "error")
-        else:
-            hashPassword = hashlib.sha256(password.encode("utf-8")).hexdigest()
-            if hashPassword != user["password"]:
-                flash("パスワードが違います。", "error")
-            else:
-                session["user_id"] = user["id"]
+        # TODO: ログイン処理実装まではコメントアウトし、必ずトップページに遷移させる
+        # user = User.find_by_email(email)
+        # if user is None:
+        #     flash("メールアドレスが違います。", "error")
+        # else:
+        #     hashPassword = hashlib.sha256(password.encode("utf-8")).hexdigest()
+        #     if hashPassword != user["password"]:
+        #         flash("パスワードが違います。", "error")
+        #     else:
+        #         session["user_id"] = user["id"]
                 return redirect(url_for('books_view'))
     return redirect(url_for('login_view'))
 
