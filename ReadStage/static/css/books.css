@@ -1,0 +1,18 @@
+/* books.css */
+
+.row.mt-4 {
+    background-color: #EDEDED;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.row.mt-1 {
+    background-color: #D2D2D2;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.d-flex.flex-column.align-items-end p{
+    font-size: 15px;
+    margin: 0;
+}

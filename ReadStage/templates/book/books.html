@@ -2,34 +2,70 @@
 
 {% block title %}トップ{% endblock %}
 
-{% block page_css %}{% endblock %}
+{% block page_css %}
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/books.css') }}"> 
+{% endblock %}
 
 {% block content %}
 <p>Top Page</p>
-<img src="{{ url_for('static', filename='image/header-image.png') }}" style="width:50%; height:auto;" alt="ヘッダーイメージ画像">
+<img src="{{ url_for('static', filename='image/Header-image.png') }}" style="width:50%; height:auto;" alt="ヘッダーイメージ画像">
 
 <div class="search-container">
     <input type="search" placeholder="検索" class="search-input">
     <button type="submit" class="search-button">検索</button>
 </div>
 
-<h3> 本のイラスト </h3>
+<h3> マスタリングTCP/IP―入門編―(第6版) </h3>
 <div class="row mt-4"> <!-- 全体を囲む大きな行,mt-4は上部にマージンを追加 -->
   <div class="col-4"> <!-- 左側の列：イラスト用 -->
-    <img src="../static/image/1.png" alt="イラスト" class="img-fluid">
+      <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の本の表紙画像" class="img-fluid">
   </div>
-  <div class="col-8"> <!-- 右側の列：これまでの6分割の枠用 -->
-    <h4> カテゴリー </h4>
-    <div class="row">
-      <div class="col">ネットワーク</div>
-    </div>
-    <h4> キーワード </h4>
-    <div class="row">
-      <div class="col">TCP/IP</div>
-      <div class="col">OSI参照モデル</div>
-      <div class="col">IT</dic>
-    </div>
-  </div>
+       <div class="col-8"> <!-- 右側の列：これまでの6分割の枠用 -->
+          <h5> カテゴリー </h5>
+             <div>
+                  <p>ネットワーク</p>
+             </div>
+         <h5> キーワード </h5>
+              <div>
+                 <p>TCP/IP</p>
+                 <p>OSI参照モデル</p>
+                 <p>IT</p>
+              </div>
+        </div>
+     <div class="row mt-2">
+           <div class="col-4">
+               <div class="d-flex flex-column align-items-start">
+                 <img src="{{ url_for('static', filename='image/START01.button.png')}}" alt="START画像" class="img-fluid">
+                 <img src="{{ url_for('static', filename='image/BASIC01.button.png')}}" alt="BASIC画像" class="img-fluid">
+                 <img src="{{ url_for('static', filename='image/STANDARD01.button.png')}}" alt="STANDARD画像" class="img-fluid">
+                 <img src="{{ url_for('static', filename='image/EXPERT01.button.png')}}" alt="EXPERT画像" class="img-fluid">
+               </div>
+           </div>
+           <div class="col-4">
+               <div class="d-flex flex-column align-items-center">
+                  <img src="{{ url_for('static', filename='image/star4.0.png')}}" alt="star4.0評価画像" class="img-fluid">
+                  <img src="{{ url_for('static', filename='image/star2.0.png')}}" alt="star2.0評価画像" class="img-fluid">
+                  <img src="{{ url_for('static', filename='image/star5.0.png')}}" alt="star5.0評価画像" class="img-fluid">
+                  <img src="{{ url_for('static', filename='image/star5.0.png')}}" alt="star5.0評価画像" class="img-fluid mb-2">
+               </div>
+            </div>
+           <div class="col-2">
+                <div class="d-flex flex-column align-items-end">
+                   <!-- 星の評価数をつけます -->
+                   <p>3.6</p>
+                   <p>3.2</p>
+                   <p>4.6</p>
+                   <p>4.9</p>
+                </div>
+            </div>
+      </div>
+      <div class="row mt-1">
+          <p> 書籍のまえがき </p>
+          <p> 本書のテーマは,Webサービスの実践的な設計です。まずHTTPやURI,HTMLなどの仕様を歴史や設計思想を織り交ぜて解説します。そしてWebサービスにおける設計課題,たとえば望ましいURI,HTTPメソッドの使い分け,クライアントとサーバの役割分担,設計プロセスなどについて,現時点のベストプラクティスを紹介します。</P>
+      </div>
+
+
 </div>
 
 {% endblock %}
