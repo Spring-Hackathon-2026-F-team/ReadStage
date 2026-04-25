@@ -1,4 +1,25 @@
-<header>
+<header id="header">
   <div class="header-inner">
+    <!-- ロゴを左側に配置 -->
+    <div id="header-logo">
+      <img src="{{ url_for('static', filename='image/img_title_logo.png') }}" alt="header-logo" class="header-logo">
+    </div>
+    <!-- タイトルを左右中央に配置 -->
+    <div id="title-container">
+      <h1 id="main-title">ReadStage</h1>
+    </div>
   </div>
+
+  <!-- タイトルの下にサブタイトルを配置 -->
+  <p id="header-subtitle">学習レベルに応じたIT書籍のレコメンとアプリ</p>
+
+  <!-- 青帯のナビゲーションバー -->
+  <nav class="nav-var">
+    <div class="nav-inner">
+      {# <a href="{{ url_for('login') }}" class="nav-button">ログイン</a> #}
+      <a href="#" class="nav-button">ログイン</a>
+      {# <a href="{{ url_for('back')  }}" class="nav-button">戻る</a> #}
+      <a href="#" class="nav-button">戻る</a>
+    </div>
+  </nav>
 </header>

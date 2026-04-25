@@ -1,3 +1,88 @@
+/* ------ヘッダー------ */
+#header {
+    position: relative; /* 親要素 */
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+.header-inner {
+    display: flex;          /* flexboxで子要素を配置 */
+    align-items: center;    /* 上下の中央揃え */
+    padding: 20px 20px;
+    height: 40px;
+}
+
+/* ロゴの大きさを設定 */
+#header-logo img {
+    width: 33px;
+    height: 33px;
+    display: block; /*ブロック 要素 */
+    position: relative;
+}
+
+#title-container {
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    /* 自分の幅の半分を戻して、左右中央にする */
+    transform: translateX(-50%);
+    text-align: center;     /* 上下の中央揃え */
+    width: 100%;    /* 画面中央を基準にする */
+}
+
+#main-title {
+    margin: 0;
+    font-size: 32px;
+    color: #333;
+    white-space: nowrap;    /* 折り返ししない */
+}
+
+#header-subtitle {
+    position: absolute;
+    left: 50%;
+    top: 60px;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;    /* 折り返ししない */
+    width: 100%;
+}
+
+/* 青色のナビゲーションバー */
+.nav-var {
+    background-color: #1d61d0;
+    padding: 8px 0;
+    margin-top: 15px;   /* サブタイトルとの間隔 */
+}
+ 
+.nav-inner {
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between; /* 左右に配置 */
+    align-items: center;
+}
+
+.nav-button {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: opacity 0.5s;
+}
+
+.nav-button: hover {
+    opacity: 0.7;
+}
+
+
+
+
+
+
+
+
+
 /* search-cotainer を中央に配置 */
 .search-container {
     display: flex; /* Flexboxを使って子要素を配置 */
