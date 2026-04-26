@@ -1,6 +1,8 @@
 /* books.css */
 
-.row.mt-4 {
+.book-list {
+    display: flex;
+    margin-top: 20px;
     background-color: #EDEDED;
     padding: 20px;
     border-radius: 5px;
