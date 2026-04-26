@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}新規登録{% endblock %}
+
+{% block page_css %}{% endblock %}
+
+{% block content %}
+<div>
+  <div id="image-container">
+    <img src={{ url_for('static', filename='image/img_auth_bookshelf.png')}} alt="本棚" />
+  </div>
+
+  <form action="/signup" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div>
+      <p>メールアドレス</p>
+      <input id="email" name="email" type="email" />
+    </div>
+    <div>
+      <p>パスワード</p>
+      <input id="password" name="password" type="password" />
+    </div>
+    <div>
+      <p>パスワード確認用</p>
+      <input id="password_confirmation" name="password_confirmation" type="password" />
+    </div>
+    <button type="submit">新規登録</button>
+  </form>
+
+  <!-- フラッシュメッセージ -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div>
+    {% for category, message in messages %}
+      <div>
+        {{ message }}
+      </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+  <a href={{ url_for('login_view') }}>アカウントを持っている方はこちら</a>
+</div>
+{% endblock %}
