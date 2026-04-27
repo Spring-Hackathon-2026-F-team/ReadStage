@@ -3,6 +3,7 @@
 {% block title %}トップ{% endblock %}
 
 {% block page_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/books.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -18,55 +19,115 @@
 <article class="book-item"> <!--書籍１冊分のセット枠-->
  <h3 class="book-title"> マスタリングTCP/IP―入門編―(第6版) </h3>
   <div class="book-content"> <!-- 左側の列：イラスト用 -->
-      <img src="{{ url_for('static', filename='image/1.jpg" alt="マスタリングTCP/IP―入門編―(第6版)の本の表紙画像" class="book-image">
+      <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の本の表紙画像" class="book-image">
        <div class="book-info-right"> <!-- 右側の列用 -->
-          <div class="book-category">
-              <h5> カテゴリー </h5>
-                  <ul>
-                      <li>ネットワーク</li>
-                  </ul>
+              <div class="book-category">
+                  <h5> カテゴリー </h5>
+                     <ul>
+                         <li>ネットワーク</li>
+                     </ul>
+              </div>
+              <div class="book-keyword">
+                   <h5> キーワード </h5>
+                       <ul>
+                         <li>TCP/IP</li>
+                         <li>OSI参照モデル</li>
+                         <li>IT</li>
+                       </ul>
+              </div>
+            </div>
+              <div class="book-levels">
+                 <p>学習レベル</p>
+                  <div class="level-item">
+                       <span class="level-name-start">STRAT/入門</span>
+                       <span class="star-rating">★★★☆☆</span>
+                       <span class="score">3.4</span>
+                   </div>
+                   <div class="level-item">
+                       <span class="level-name-basic">BASIC/基礎</span>
+                       <span class="star-rating">★★★★☆</span>
+                       <span class="score">3.9</span>
+                   </div>
+                   <div class="level-item">
+                       <span class="level-name-standard"> STANDARD/応用</span>
+                       <span class="star-rating">★★★★★</span>
+                       <span class="score">4.5</span>
+                   </div>
+                   <div class="level-item">
+                       <span class="level-name-expart">EXPERT/発展</span>
+                       <span class="star-rating">★★★★★</span>
+                       <span class="score">4.6</span>
+                   </div>
+              </div>
+          <div class="book-description-area">
+             <p class="bool-description-heading">  書籍のまえがき </p>
+             <p class="book-description">
+              本書のテーマは,Webサービスの実践的な設計です。
+              まずHTTPやURI,HTMLなどの仕様を歴史や設計思想を織り交ぜて解説します。
+              そしてWebサービスにおける設計課題,
+              たとえば望ましいURI,HTTPメソッドの使い分け,クライアントとサーバの役割分担,
+              設計プロセスなどについて,現時点のベストプラクティスを紹介します。
+             </P>
           </div>
-          <div class="book-keyword">
-             <h5> キーワード </h5>
-              <ul>
-                 <li>TCP/IP</li>
-                 <li>OSI参照モデル</li>
-                 <li>IT</li>
-              </ul>
-           </div>
-       </div>
-     <div class="book-levels">
-           <p>学習レベル</p>
-              <div class="level-item">
-                 <span class="level-name">STRAT/入門</span>
-                 <span class="star-rating">★★★☆☆</span>
-                 <span class="score">3.4</span>
+    </div>
+  </article>
+</div>
+
+<div class="book-list"> <!-- 全体を囲む大きな枠 -->
+<article class="book-item"> <!--書籍１冊分のセット枠-->
+ <h3 class="book-title"> マスタリングTCP/IP―入門編―(第6版) </h3>
+  <div class="book-content"> <!-- 左側の列：イラスト用 -->
+      <img src="{{ url_for('static', filename='image/2.jpg') }}" alt="Linux標準教科書 Ver.4.0.1の本の表紙画像" class="book-image">
+       <div class="book-info-right"> <!-- 右側の列用 -->
+              <div class="book-category">
+                  <h5> カテゴリー </h5>
+                     <ul>
+                         <li>Linux</li>
+                     </ul>
               </div>
-              <div class="level-item">
-                 <span class="level-name">BASIC/基礎</span>
-                 <span class="star-rating">★★★★☆</span>
-                 <span class="score">3.9</span>
+              <div class="book-keyword">
+                   <h5> キーワード </h5>
+                       <ul>
+                         <li>Linuxコマンド</li>
+                         <li>Viエディタ</li>
+                         <li>パーミッション</li>
+                       </ul>
               </div>
-              <div class="level-item">
-                 <span class="level-name">STANDARD/応用</span>
-                 <span class="star-rating">★★★★★</span>
-                 <span class="score">4.5</span>
+            </div>
+              <div class="book-levels">
+                 <p>学習レベル</p>
+                  <div class="level-item">
+                       <span class="level-name-start">STRAT/入門</span>
+                       <span class="star-rating">★★★☆☆</span>
+                       <span class="score">3.4</span>
+                   </div>
+                   <div class="level-item">
+                       <span class="level-name-basic">BASIC/基礎</span>
+                       <span class="star-rating">★★★★☆</span>
+                       <span class="score">3.9</span>
+                   </div>
+                   <div class="level-item">
+                       <span class="level-name-standard"> STANDARD/応用</span>
+                       <span class="star-rating">★★★★★</span>
+                       <span class="score">4.5</span>
+                   </div>
+                   <div class="level-item">
+                       <span class="level-name-expart">EXPERT/発展</span>
+                       <span class="star-rating">★★★★★</span>
+                       <span class="score">4.6</span>
+                   </div>
               </div>
-              <div class="level-item">
-                 <span class="level-name">EXPERT/発展</span>
-                 <span class="star-rating">★★★★★</span>
-                 <span class="score">4.6</span>
-              </div>
-        </div>
-      <div class="book-description-area">
-          <p class="bool-description-heading">  書籍のまえがき </p>
-          <p class="book-description">
-             本書のテーマは,Webサービスの実践的な設計です。
-             まずHTTPやURI,HTMLなどの仕様を歴史や設計思想を織り交ぜて解説します。
-             そしてWebサービスにおける設計課題,
-             たとえば望ましいURI,HTTPメソッドの使い分け,クライアントとサーバの役割分担,
-             設計プロセスなどについて,現時点のベストプラクティスを紹介します。</P>
-      </div>
-   </div>
-</article>
+          <div class="book-description-area">
+             <p class="bool-description-heading">  書籍のまえがき </p>
+             <p class="book-description">
+              Linux初心者が基礎から学べる無性の学習教材です。
+              具体的な演習問題が含まれており、ハンズオン形式で学習することができます。
+              Linux OSは現代のITエンジニアにとって必須と言える重要な分野のため、
+              おすすめします。また、Linux技術者認定資格のLinuCの標準教科書となっています。
+             </P>
+          </div>
+    </div>
+  </article>
+</div>
+
 {% endblock %}
