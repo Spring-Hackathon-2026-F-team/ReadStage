@@ -1,20 +1,133 @@
 /* books.css */
-
+/*.投稿リスト全体 */
 .book-list {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     margin-top: 20px;
     background-color: #EDEDED;
     padding: 20px;
     border-radius: 5px;
 }
 
-.row.mt-1 {
-    background-color: #D2D2D2;
-    padding: 10px;
-    border-radius: 5px;
+/*.書籍一冊分のセットをGridコンテナにする */
+.book-item {
+    display: grid;
+    grid-template-columns: 1fr; /*１列で、中の要素が縦に並ぶように */
+    gap: 20px; /*それぞれの要素の間の間隔*/
+    border: 1px solid #ddd; /*枠線を追加して区切る　*/
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
 }
 
-.d-flex.flex-column.align-items-end p{
+.book-title {
+    grid-column: 1/-1; /* book-itemの全幅使用*/
+    margin-bottom: 0; /* book-itemのgapで調整するため*/
     font-size: 15px;
+    color: #333;
+}
+
+/* 投稿内容：左に画像、右に文章　*/
+.book-content {
+    grid-column: 1/-1; /* book-itemの全幅使用*/
+    display: grid;
+    grid-template-columns: 200px 1fr; /* 左側（画像）：２００px、右側（文章）：残り全部　*/
+    gap: 20px;
+    align-items: start;
+}
+
+/* 画像のレスポンシブ対応 */
+.book-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* book-imageの右側のコンテンツを縦に並べる */
+.book-info-right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 学習レベルのセクション */
+.book-levels {
+    grid-column: 1/-1; /*　book-itemの全幅使用 */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* [学習レベル]のタイトル */
+.bool-levels p{
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    color: #444;
+}
+
+.level-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95em;
+}
+
+.level-name {
+    min-width: 120px;
+    font-weight: bold;
+    color: #333;
+}
+
+.star-rating {
+    color: orange;
+    min-width: 70px;
+}
+
+.score {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/*.書籍のまえがきセクション */
+.book-description-area {
+    grid-column: 1/-1; /* book-itemの全幅使用 */
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.book-description-heading { /*.書籍のまえがき */
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #444;
+}
+
+/*.書籍の概要のスタイル */
+.book-description {
+    margin-top: 0;
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.6;
+}
+
+/*.カテゴリとキーワードのリストの余白を調整 */
+.book-category ul,
+.book-keyword ul {
     margin: 0;
+    padding-left: 20px;
+    list-style: disc;
+}
+.book-category p,
+.book-keyword p {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
 }

@@ -7,15 +7,15 @@
 
 {% block content %}
 <p>Top Page</p>
-<img src="{{ url_for('static', filename='image/Header-image.png') }}" style="width:70%; height:auto;" alt="ヘッダーイメージ画像" class="d-block mx-auto">
+<img src="{{ url_for('static', filename='image/Header-image.png') }}" style="width:70%; height:auto;" alt="ヘッダーイメージ画像" class="d-block">
 
 <div class="search-container">
     <input type="search" placeholder="検索" class="search-input">
     <button type="submit" class="search-button">検索</button>
 </div>
 
-<div class="book-list"> <!-- 全体を囲む大きな行,mt-4は上部にマージンを追加 -->
-<article class="book-item">
+<div class="book-list"> <!-- 全体を囲む大きな枠 -->
+<article class="book-item"> <!--書籍１冊分のセット枠-->
  <h3 class="book-title"> マスタリングTCP/IP―入門編―(第6版) </h3>
   <div class="book-content"> <!-- 左側の列：イラスト用 -->
       <img src="1.jpg" alt="マスタリングTCP/IP―入門編―(第6版)の本の表紙画像" class="book-image">
@@ -35,39 +35,38 @@
               </ul>
            </div>
        </div>
-     <div class="row mt-2">
-           <div class="col-4">
-               <div class="d-flex flex-column align-items-start">
-                 <img src="{{ url_for('static', filename='image/START01.button.png')}}" alt="START画像" class="img-fluid">
-                 <img src="{{ url_for('static', filename='image/BASIC01.button.png')}}" alt="BASIC画像" class="img-fluid">
-                 <img src="{{ url_for('static', filename='image/STANDARD01.button.png')}}" alt="STANDARD画像" class="img-fluid">
-                 <img src="{{ url_for('static', filename='image/EXPERT01.button.png')}}" alt="EXPERT画像" class="img-fluid">
-               </div>
-           </div>
-           <div class="col-4">
-               <div class="d-flex flex-column align-items-center">
-                  <img src="{{ url_for('static', filename='image/star4.0.png')}}" alt="star4.0評価画像" class="img-fluid">
-                  <img src="{{ url_for('static', filename='image/star3.0.png')}}" alt="star3.0評価画像" class="img-fluid">
-                  <img src="{{ url_for('static', filename='image/star5.0.png')}}" alt="star5.0評価画像" class="img-fluid">
-                  <img src="{{ url_for('static', filename='image/star5.0.png')}}" alt="star5.0評価画像" class="img-fluid mb-2">
-               </div>
-            </div>
-           <div class="col-2">
-                <div class="d-flex flex-column align-items-end">
-                   <!-- 星の評価数をつけます -->
-                   <p>3.6</p>
-                   <p>3.2</p>
-                   <p>4.6</p>
-                   <p>4.9</p>
-                </div>
-            </div>
+     <div class="book-levels">
+           <p>学習レベル</p>
+              <div class="level-item">
+                 <span class="level-name">STRAT/入門</span>
+                 <span class="star-rating">★★★☆☆</span>
+                 <span class="score">3.4</span>
+              </div>
+              <div class="level-item">
+                 <span class="level-name">BASIC/基礎</span>
+                 <span class="star-rating">★★★★☆</span>
+                 <span class="score">3.9</span>
+              </div>
+              <div class="level-item">
+                 <span class="level-name">STANDARD/応用</span>
+                 <span class="star-rating">★★★★★</span>
+                 <span class="score">4.5</span>
+              </div>
+              <div class="level-item">
+                 <span class="level-name">EXPERT/発展</span>
+                 <span class="star-rating">★★★★★</span>
+                 <span class="score">4.6</span>
+              </div>
+        </div>
+      <div class="book-description-area">
+          <p class="bool-description-heading">  書籍のまえがき </p>
+          <p class="book-description">
+             本書のテーマは,Webサービスの実践的な設計です。
+             まずHTTPやURI,HTMLなどの仕様を歴史や設計思想を織り交ぜて解説します。
+             そしてWebサービスにおける設計課題,
+             たとえば望ましいURI,HTTPメソッドの使い分け,クライアントとサーバの役割分担,
+             設計プロセスなどについて,現時点のベストプラクティスを紹介します。</P>
       </div>
-      <div class="row mt-1">
-          <p> 書籍のまえがき </p>
-          <p> 本書のテーマは,Webサービスの実践的な設計です。まずHTTPやURI,HTMLなどの仕様を歴史や設計思想を織り交ぜて解説します。そしてWebサービスにおける設計課題,たとえば望ましいURI,HTTPメソッドの使い分け,クライアントとサーバの役割分担,設計プロセスなどについて,現時点のベストプラクティスを紹介します。</P>
-      </div>
-
-
-</div>
-
+   </div>
+</article>
 {% endblock %}
