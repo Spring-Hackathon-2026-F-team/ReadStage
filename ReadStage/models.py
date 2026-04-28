@@ -29,7 +29,7 @@ class User:
     try:
       with conn.cursor() as cur:
         sql = 'SELECT id, password FROM users WHERE email=%s;'
-        cur.execute(sql, (email))
+        cur.execute(sql, (email,))
         user = cur.fetchone()
       return user
     except pymysql.Error as e:
