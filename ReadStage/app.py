@@ -119,24 +119,23 @@ def login_process():
 # ログアウト処理
 @app.route("/logout")
 def logout():
-   session.clear()
-   return redirect(url_for('login_view'))
+    session.clear()
+    return redirect(url_for('login_view'))
 
 
 # トップページ(書籍一覧)の表示
 @app.route("/books", methods=["GET"])
 def books_view():
-   user_id = session.get("user_id")
-   if user_id is None:
-       return redirect(url_for('login_view'))
-   else:
-        # Bookモデルクラスに書籍データの必要な情報を取得する想定
-        # ほしい情報(書籍タイトル、カテゴリ、キーワード、各レベルの評価点、まえがき)
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
+    else:
+        # Bookモデルクラスに整形された書籍データのリストを渡す
+        # ほしい情報(タイトル、カテゴリ、キーワード、まえがき)
         books = Book.get_all()
-        print(books) # TODO: DB接続確認のためのコメントなので、本実装で削除予定
+        return render_template('book/books.html', books=books)
+#       print(books) # TODO: DB接続確認のためのコメントなので、本実装で削除予定
 
-        return render_template('book/books.html')
-#        return render_template('book/books.html', books=books, user_id=user_id)
 
 # 書籍評価ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])

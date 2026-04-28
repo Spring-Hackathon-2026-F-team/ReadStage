@@ -1,6 +1,8 @@
 from flask import abort
 import pymysql
 from util.DB import DB
+#辞書（Dict）形式で取得したいため
+import pymysql.cursors
 
 # 初回起動時にコネクションプールインスタンスを取得
 db_pool = DB.init_db_pool()
@@ -10,11 +12,52 @@ class Book:
   def get_all(cls):
     conn = db_pool.get_conn()
     try:
-      with conn.cursor() as cur:
-        sql = 'SELECT * FROM books ORDER BY id DESC;'
+#      with conn.cursor() as cur:
+      # DictCursorを使って、結果を辞書形式で返す
+      with conn.cursor(pymysql.cursors.DictCursor) as cur:
+#        書籍一覧、詳細・コメントページに必要な書籍データを取得
+        sql = """
+          SELECT
+            b.id,
+            b.title,
+            c.category,
+            k.keyword,
+            b.introduction
+          FROM books AS b
+          JOIN book_categories AS bc ON
+            b.id = bc.book_id
+          JOIN categories AS c ON
+            bc.category_id = c.id
+          JOIN book_keywords AS bk ON
+            b.id = bk.book_id
+          JOIN keywords AS k ON
+            bk.keyword_id = k.id
+          ORDER BY
+            b.id ASC;
+        """
         cur.execute(sql)
-        books = cur.fetchall()
-      return books
+        #辞書のリストとして取得
+        rows = cur.fetchall()
+        #1つのbook_idに対して複数のキーワードがあるため、辞書リストを整理する
+        books_data = {}
+        for row in rows:
+            book_id = row['id']
+            if book_id not in books_data:
+                # 初めての書籍IDの場合、新しいエントリを作成
+                books_data[book_id] = {
+                    'id': row['id'],
+                    'title': row['title'],
+                    'category': row['category'], # categoryは1つと仮定
+                    'introduction': row['introduction'],
+                    'keywords': [] # キーワードはリストとして保持
+                }
+            # 該当書籍のキーワードリストに現在のキーワードを追加
+            books_data[book_id]['keywords'].append(row['keyword'])
+
+        # 辞書の値をリストに変換して返す
+        # [{id:1, title:*, category:*, introduction:*, keywords:[*,*,*]}]
+        final_books_list = list(books_data.values())
+      return final_books_list
     except pymysql.Error as e:
       print(f'エラーが発生しています：{e}')
       abort(500)
