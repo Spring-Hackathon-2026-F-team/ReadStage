@@ -158,6 +158,10 @@ def book_comment_view(book_id):
 
 #書籍投稿修正
 
+#エラーハンドラー404
+@app.errorhandler(404)
+def page_not_found(Error):
+    return render_template('error/404.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
