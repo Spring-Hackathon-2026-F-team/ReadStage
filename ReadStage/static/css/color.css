@@ -1,0 +1,18 @@
+/* 色を使い回しできるように変数にする */
+:root {
+  --primary: #1d61d0;
+  --secondary_background: #f5f5f5;
+  --card_background: #ededed;
+  --comment_background: #d2d2d2;
+  --danger: #d01d1d;
+  --star: #ffa500;
+  --textcolor: #333333;
+  --start_background: #98e607;
+  --start_text: #167600;
+  --basic_background: #17a351;
+  --basic_text: #ffffff;
+  --standard_background: #27bbfa;
+  --standard_text: #003297;
+  --expart_background: #003ea2;
+  --expart_text: #ffffff;
+}
