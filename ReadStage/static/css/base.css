@@ -1,3 +1,128 @@
+* {
+    /* padding,border全て含める、レイアウト崩れ防止 */
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 !important;   /* 上下左右全てのマージンを0にする */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--secondary_background) /* #f5f5f5(白) */
+}
+
+main {
+    min-height: 100vh;  /* 最低でも表示領域と同じ高さにする */
+    width: 100%;
+}
+
+
+/* ------ヘッダー------ */
+#header {
+    width: 100%;
+}
+
+/* ヘッダー全体の領域 */
+.header-inner {
+    width: 100%;
+    display: flex;          /* flexboxで子要素を配置 */
+    flex-direction: column; /* 子要素を縦に並べる */
+    align-items: center;    /* 左右の中央 */
+}
+
+/* ロゴとアプリ名を含む領域 */
+.header-upper {
+    position: relative;     /* 親要素 */
+    width: 100%;
+    height: 50px;
+    display: flex;          /* Flexbox */
+    justify-content: center; /* 左右の中央 */
+    align-items: center;    /* 上下の中央 */
+}
+
+/* ロゴ画像が入る左側の領域 */
+.app-logo-container {
+    position: absolute; /* 親要素.header-upperの左上が基準 */
+    left: 24px;
+    top: 30px;
+    transform: translateY(-50%);    /* 自分自身の半分を上に移動 */
+}
+
+/* ロゴ画像 */
+.app-logo {
+    width: 32px;
+    height: 32px;
+    display: block;     /* ブロック要素にして余計な隙間をなくす */
+}
+
+/* アプリ名(ReadStage)画像の領域 */
+.app-name-container {
+    display: flex;          /* Flexbox */
+    align-items: center;    /* 上下の中央 */
+}
+
+/* アプリ名(ReadStage)画像 */
+.app-name {
+    height: 32px;
+    width: auto;
+    display: block;     /* ブロック要素にする */
+    margin-top: 12px;   /* 位置を微調整 */
+    margin-left: 12px;  /* 中央より少し右へ微調整 */
+}
+
+/* サブタイトルの領域 */
+.subtitle-container {
+    font-family: "Segoe UI", "Trebuchet MS", Verdana, sans-serif;   /* フォントの優先順に使用 */
+    width: 100%;
+    font-size: 14px;
+    color: var(--textcolor);
+    text-align: center;
+    white-space: nowrap; /* 常に1行で表示 */
+}
+
+#sub-title {
+    margin: 0;
+    font-size: 14px;
+    white-space: nowrap /* 常に1行で表示 */
+}
+
+/* 青色のナビゲーションバー　*/
+.nav-bar {
+    width: 100%;
+    background: var(--primary); /* #1d61d0(青) */
+    margin-top: 5px;    /* サブタイトルとの間隔 */
+    height: 26px;
+    display: flex;          /* Flexbox */
+    align-items: center;    /* 上下の中央 */
+}
+
+.nav-inner {
+    width: 100%;
+    margin: 0 auto;     /* （ブロック要素を）画面の中央に配置 */
+    padding: 0 12px;
+    display: flex;      /* Flexbox */
+    justify-content: space-between; /* 左右両端に分ける */
+    color: var(--basic_text);   /* #ffffff(白) */
+}
+
+.nav-left,
+.nav-right {
+    display: flex;          /* Flexbox */
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-button {
+    color: var(--basic_text);   /* #ffffff(白) */
+    text-decoration: none;  /* 下線を消去 */
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;    /* 常に1行で表示 */
+}
+
+
+
+
+
+
 /* search-cotainer を中央に配置 */
 .search-container {
     display: flex; /* Flexboxを使って子要素を配置 */
@@ -25,7 +150,8 @@
     height: 40px;
 }
 
-.footer-image {         /* footerの背景画像（book-shelf) */
+/* フッターの背景画像(book_shelf) */
+.footer-image {
     position: absolute; /* 親要素の左上が基準 */
     top: 0;
     left: 0;
@@ -46,14 +172,14 @@
     background-color: #333;
     z-index: 20;        /* 重なりの優先順位は2番目（footer-imageの上に重ねる） */
     display: flex;              /* flexboxを適用 */
-    justify-content: center;    /* 左右の中央揃え */
-    align-items: center;        /* 上下の中央揃え */
+    justify-content: center;    /* 左右の中央 */
+    align-items: center;        /* 上下の中央 */
 }
 
 #copyright {        /* copyright(©2026 team-F)の文字 */
     margin: 0;      /* 余白をなくしてズレを防止 */
     color: #fff;
     font-size: 14px;
-    text-align: center;     /* 文字を中央へ */
-    white-space: nowrap;    /* 常に1行に固定 */
+    text-align: center;     /* 上下の中央 */
+    white-space: nowrap;    /* 常に1行で表示 */
 }

@@ -1,4 +1,77 @@
-<header>
+<header id="header">
   <div class="header-inner">
+
+    <!-- ヘッダー上部にロゴとアプリ名を表示 -->
+    <div class="header-upper">
+      <!-- ロゴを左上に配置 -->
+      <div class="app-logo-container">
+        <img src="{{ url_for('static', filename='image/app_logo.png') }}" alt="app-logo" class="app-logo">
+      </div>
+      <!-- アプリ名を左右中央に表示-->
+      <div class="app-name-container">
+        <img src="{{ url_for('static', filename='image/img_header_app_name.png') }}" alt="app-name" class="app-name">
+      </div>
+    </div>
+
+    <!-- ロゴとアプリ名の下にサブタイトルを表示 -->
+    <div class="subtitle-container">
+      <p id="sub-title">学習レベルに応じたIT書籍のレコメンドアプリ</p>
+    </div>
+
+    <!-- 青色のナビゲーションバーを表示 -->
+    <nav class="nav-bar">
+      <div class="nav-inner">
+
+        <!-- ナビゲーションバーの左側 -->
+        <div class="nav-left">
+          {# 新規登録ページの場合、左に「新規登録」の表示 #}
+          {% if request.endpoint == 'signup_view' %}
+            <span class="nav-button">新規登録</span>
+
+          {# ログインページの場合、左に「ログイン」の表示 #}
+          {% elif request.endpoint == 'login_view' %}
+            <span class="nav-button">ログイン</span>
+
+          {# 評価・コメントページの場合、左に「◀戻る」の表示 #}
+          {% elif request.endpoint == 'book_comment_view' %}
+            {# <a href="#" class="nav-button">◀戻る</a> #}
+            {# 「◀戻る」クリックで、書籍一覧ページへ移動 #}
+            <a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a>
+          
+          {# 書籍詳細ページの場合、左に「◀戻る」の表示 #}
+          {% elif request.endpoint == 'book_id_view' %}
+            {# <a href="#" class="nav-button">◀戻る</a> #}
+            {# 「◀戻る」クリックで、評価・コメントページへ移動 #}
+            <a href="{{ url_for('book_comment_view') }}" class="nav-button">戻る</a>
+
+          {# エラーページの場合、左に「◀トップページ」を表示 #}
+          {# リクエストに対する反応がないか、ページが見つからない場合 #}
+          {% elif not request.endpoint or request.endpoint == 'page_not_found' %}
+            {# 「◀トップページ」クリックで書籍一覧ページへ移動（book_idが必要） #}
+            <a href="{{ url_for('books_view', book_id=book.id) }}" class="nav-button">◀トップページ</a>
+          
+          {% else %}
+          {# 空白でもnav-varの高さを維持 #}
+            &nbsp;
+          {% endif %}
+        </div>
+
+        <!-- ナビゲーションバーの右側 -->
+        <div class="nav-right">
+          {# 書籍一覧ページ、評価・コメントページ、書籍詳細ページの場合、右に「ログアウト▶」を表示 #}
+          {% if request.endpoint in ['books_view', 'book_comment_view', 'book_id_view'] %}
+            {# <a href="#" class="nav-button">ログアウト▶</a> #}
+            {# 「ログアウト▶」クリックで、ログインページへ移動 #}
+            <a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a>
+          
+          {% else %}
+          {# 空白でもnav-barの高さを維持 #}
+            &nbsp;
+          {% endif %}
+        </div>
+
+      </div>
+    </nav>
+    
   </div>
 </header>
