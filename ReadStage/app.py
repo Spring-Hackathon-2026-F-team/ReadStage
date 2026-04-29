@@ -134,7 +134,6 @@ def books_view():
         # ほしい情報(タイトル、カテゴリ、キーワード、まえがき)
         books = Book.get_all()
         return render_template('book/books.html', books=books)
-#       print(books) # TODO: DB接続確認のためのコメントなので、本実装で削除予定
 
 
 # 書籍評価ページ表示

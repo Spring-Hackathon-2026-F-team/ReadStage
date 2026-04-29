@@ -12,7 +12,6 @@ class Book:
   def get_all(cls):
     conn = db_pool.get_conn()
     try:
-#      with conn.cursor() as cur:
       # DictCursorを使って、結果を辞書形式で返す
       with conn.cursor(pymysql.cursors.DictCursor) as cur:
 #        書籍一覧、詳細・コメントページに必要な書籍データを取得
