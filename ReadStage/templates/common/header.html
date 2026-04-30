@@ -24,27 +24,19 @@
 
         <!-- ナビゲーションバーの左側 -->
         <div class="nav-left">
-          {# 新規登録ページの場合、左に「新規登録」の表示 #}
-          {% if request.endpoint == 'signup_view' %}
-            <span class="nav-button">新規登録</span>
-
-          {# ログインページの場合、左に「ログイン」の表示 #}
-          {% elif request.endpoint == 'login_view' %}
-            <span class="nav-button">ログイン</span>
-
-          {# 評価・コメントページの場合、左に「◀戻る」の表示 #}
-          {% elif request.endpoint == 'book_comment_view' %}
+          {# 「評価・コメントページ」の場合、左に「◀戻る」の表示 #}
+          {% if request.endpoint == 'book_comment_view' %}
             {# <a href="#" class="nav-button">◀戻る</a> #}
             {# 「◀戻る」クリックで、書籍一覧ページへ移動 #}
             <a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a>
           
-          {# 書籍詳細ページの場合、左に「◀戻る」の表示 #}
+          {# 「書籍詳細ページ」の場合、左に「◀戻る」の表示 #}
           {% elif request.endpoint == 'book_id_view' %}
             {# <a href="#" class="nav-button">◀戻る</a> #}
             {# 「◀戻る」クリックで、評価・コメントページへ移動 #}
             <a href="{{ url_for('book_comment_view') }}" class="nav-button">戻る</a>
 
-          {# エラーページの場合、左に「◀トップページ」を表示 #}
+          {# 「エラーページ」の場合、左に「◀トップページ」を表示 #}
           {# リクエストに対する反応がないか、ページが見つからない場合 #}
           {% elif not request.endpoint or request.endpoint == 'page_not_found' %}
             {# 「◀トップページ」クリックで書籍一覧ページへ移動（book_idが必要） #}
@@ -56,9 +48,25 @@
           {% endif %}
         </div>
 
+        <!-- ナビゲーションバーの中央 -->
+        <div class="nav-center">
+          {# 「新規登録ページ」の場合、中央に「新規登録」の表示 #}
+          {% if request.endpoint == 'signup_view' %}
+            <span class="nav-button">新規登録</span>
+
+          {# 「ログインページ」の場合、中央に「ログイン」の表示 #}
+          {% elif request.endpoint == 'login_view' %}
+            <span class="nav-button">ログイン</span>
+
+          {% else %}
+          {# 空白でもnav-varの高さを維持 #}
+            &nbsp;
+          {% endif %}
+        </div>
+
         <!-- ナビゲーションバーの右側 -->
         <div class="nav-right">
-          {# 書籍一覧ページ、評価・コメントページ、書籍詳細ページの場合、右に「ログアウト▶」を表示 #}
+          {# 「書籍一覧ページ、評価・コメントページ、書籍詳細ページ」の場合、右に「ログアウト▶」を表示 #}
           {% if request.endpoint in ['books_view', 'book_comment_view', 'book_id_view'] %}
             {# <a href="#" class="nav-button">ログアウト▶</a> #}
             {# 「ログアウト▶」クリックで、ログインページへ移動 #}

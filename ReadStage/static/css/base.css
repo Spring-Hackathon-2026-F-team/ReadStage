@@ -1,3 +1,4 @@
+/* 全体のレイアウト */
 * {
     /* padding,border全て含める、レイアウト崩れ防止 */
     box-sizing: border-box;
@@ -104,6 +105,7 @@ main {
 }
 
 .nav-left,
+.nav-center,
 .nav-right {
     display: flex;          /* Flexbox */
     align-items: center;
@@ -113,12 +115,9 @@ main {
 .nav-button {
     color: var(--basic_text);   /* #ffffff(白) */
     text-decoration: none;  /* 下線を消去 */
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     white-space: nowrap;    /* 常に1行で表示 */
 }
-
-
 
 
 
@@ -142,6 +141,7 @@ main {
     font-size: 16px;
     outline: none;
 }
+
 
 /* ------フッター------ */
 #footer {
