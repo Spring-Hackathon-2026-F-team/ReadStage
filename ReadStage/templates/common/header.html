@@ -40,7 +40,7 @@
           {# リクエストに対する反応がないか、ページが見つからない場合 #}
           {% elif not request.endpoint or request.endpoint == 'page_not_found' %}
             {# 「◀トップページ」クリックで書籍一覧ページへ移動（book_idが必要） #}
-            <a href="{{ url_for('books_view', book_id=book.id) }}" class="nav-button">◀トップページ</a>
+            <a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a>
           
           {% else %}
           {# 空白でもnav-varの高さを維持 #}
