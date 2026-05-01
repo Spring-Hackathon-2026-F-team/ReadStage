@@ -1,0 +1,194 @@
+/* books.css */
+/*.投稿リスト全体 */
+.book-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 20px;
+    background-color: #EDEDED;
+    padding: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/*.書籍一冊分のセットをGridコンテナにする */
+.book-item {
+    display: grid;
+    grid-template-columns: 1fr; /*１列で、中の要素が縦に並ぶように */
+    gap: 20px; /*それぞれの要素の間の間隔*/
+    border: 1px solid #ddd; /*枠線を追加して区切る　*/
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+/*    max-width: 400px; */ /*.上限をスマホサイズに */
+    max-width: min(400px, 100%); 
+    margin: 5px auto; /*.上下に２０pxの余白、左右には自動で中央寄せ */
+    box-sizing: border-box; 
+}
+
+/* 書籍タイトルのスタイル*/
+.book-title {
+    grid-column: 1/-1; /* book-itemの全幅使用*/
+    margin-bottom: 0; /* book-itemのgapで調整するため*/
+    font-size: 15px;
+    color: #333;
+}
+
+/* 投稿内容：左に画像、右に文章　*/
+.book-content {
+    /* grid-column: 1/-1; /* book-itemの全幅使用 */
+    display: grid; /*.カテゴリ・キーワード欄と横並びにする */
+    grid-template-columns: 160px 1fr; /* 左側（画像）：２００px、右側（文章）：残り全部　*/
+    gap: 5px; /*.画像と右側情報の間にスペースを作る */
+    align-items: flex-start; /* 必要に応じて上揃えにする　*/
+}
+
+/* 画像のレスポンシブ対応 */
+.book-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* book-imageの右側のコンテンツを縦に並べる */
+.book-info-right {
+    /* flex-grow: 1; /*.残りのスペースを全幅使用*/
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* book-categoryとbook-keywordに左パディング追加 */
+.book-category,
+.book-keyword {
+    padding-left: 1px; /* h5とliの左端が揃う基準 */
+}
+
+/* h5 のデフォルトマージンを調整して、枠との間に余白を作る */
+.book-category h5,
+.book-keyword h5 {
+    margin-top: 0;
+    margin-bottom: 8px; /* h5の下に少し余白 */
+    padding-left: 0; /* 親にパディングがあるので、h5自体には不要 */
+}
+
+/* ul のデフォルトマージンとパディングをリセット */
+.book-category ul,
+.book-keyword ul {
+    margin: 0; /* デフォルトマージンをリセット */
+    padding: 0; /* ulのデフォルトパディングをリセット */
+}
+
+/* リストアイテムの余白調整 */
+.book-category ul li,
+.book-keyword ul li {
+    list-style: none; /* リストタブの黒丸を消す */  
+    background-color: #D2D2D2;
+    border: 1px solid #fff;
+    padding: 5px; /* 上下左右5pxのパディング */
+    border-radius: 8px;
+    margin-bottom: 2px;
+    display: block; /* これで親要素の幅いっぱいに広げる */
+}
+
+.book-category ul li:last-child,
+.book-keyword ul li:last-child {
+    margin-bottom: 0; /* 最後のアイテムの下余白は不要 */
+}
+
+
+/*.コメントのセクション */
+.comment-description-area {
+    grid-column: 1/-1; /* book-itemの全幅使用 */
+    padding: 5px; /* 上下、左右のpadding */
+    border: 1px solid #333333;
+    border-radius: 0px;
+    background-color: #D2D2D2;
+    margin: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column; /* 要素を縦に並べる */
+    gap: 5px; /* 要素間の隙間 */
+}
+
+/* 投稿日時 */
+.comment-updated-at-text { /* 新しいクラス名 */
+    margin: 0; /* pタグのデフォルトマージンをリセット */
+    white-space: nowrap; /* テキストが改行されないように */
+    font-size: 0.9em; /* 必要に応じてフォントサイズ調整 */
+    color: #555;
+    text-align: right; 
+}
+
+/* 学習者レベル、評価を横並び */
+.comment-meta-info {
+    display: flex; 
+    align-items: center; /* 垂直方向の中央揃え */
+    gap: 10px; /* 要素間のスペース */
+}
+
+/* 学習者レベル */
+.level-name { /*.学習者レベルの名前 */
+    font-weight: bold;
+    margin: 0px; /* 上下、左右のmargin */
+    width: 55%;
+    text-indent: 5px;
+    font-size: 1.1em;
+    border: 0.5px solid #333333;
+    background-color: #27BBFA;
+    color: #003297;
+    flex-shrink: 0;
+}
+
+/* コメント詳細のスタイル */
+.comment-description {
+    margin: 0px; /* デフォルトマージンをリセット */
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* 修正、削除ボタンの位置調整 */
+.comment-actions {
+    display: flex; /* ボタンを横並びにする */
+    justify-content: flex-end; /* ボタンを右寄せにする */
+    gap: 10px; /* ボタン間のスペース */
+    margin-top: 10px; /* コメントとの間に少しスペース */
+    padding-right: 5px; /* comment-description-areaのpaddingに合わせる */
+}
+
+/* 修正、削除ボタンのスタイル */
+.edit-button,
+.delete-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
+}
+
+/*修正ボタン*/
+.edit-button {
+    background-color: #FFA500; /* オレンジ */
+    color: #FFFFFF;
+}
+
+/*修正ボタンのホバー
+.edit-button:hover {
+    background-color: #0056b3;
+}
+*/
+
+/*削除ボタン*/
+.delete-button {
+    background-color: #dc3545; /* 赤色 */
+    color: #FFFFFF;
+}
+
+/*削除ボタンのホバー
+.delete-button:hover {
+    background-color: #c82333;
+}
+*/
