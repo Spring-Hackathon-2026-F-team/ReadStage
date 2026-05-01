@@ -3,9 +3,9 @@
 .book-list {
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: 20px;
+    margin-top: 10px;
     background-color: #EDEDED;
-    padding: 20px;
+    padding: 10px;
     border-radius: 5px;
 }
 
@@ -51,7 +51,7 @@
     /* flex-grow: 1; /*.残りのスペースを全幅使用*/
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
 }
 
 /* 学習レベルのセクション */
@@ -60,7 +60,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    padding: 15px;
+    padding: 10px 15px;
     border: 1px solid #eee;
     border-radius: 5px;
     background-color: #EDEDED;
@@ -70,7 +70,7 @@
 .book-levels p{
     font-weight: bold;
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     font-size: 1.1em;
     color: #444;
 }
@@ -157,17 +157,24 @@
 .book-category h5,
 .book-keyword h5 {
     margin-top: 0;
-    margin-bottom: 8px; /* h5の下に少し余白 */
+    margin-bottom: 0px; /* h5の下の余白 */
 }
+/* リストアイテムの位置調整 */
+.book-category ul,
+.book-keyword ul {
+    padding-left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    list-style: none; /* リストタブの黒丸を消す */  
+} 
 /* リストアイテムの余白調整 */
 .book-category ul li,
 .book-keyword ul li {
-    list-style: none; /* リストタブの黒丸を消す */  
     background-color: #D2D2D2;
     border: 1px solid #fff;
     padding: 5px;
     border-radius: 8px;
-    padding-left: 15px;
+    padding-left: 10px;
     margin-bottom: 2px; /* 各リストアイテムの下に少し余白 */
     display: block;
 }
