@@ -20,6 +20,8 @@
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
     <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の画像" class="book-image">
     <div class="book-info-right"> <!-- 右側の列用 -->
+        <div class="book-review"></div>
+            <button class="review-button">書籍評価へ</button>
         <div class="book-category">
             <h5>カテゴリー</h5>
                 <ul>
@@ -38,9 +40,6 @@
 </div>
 
 <div class="comment-description-area">
-    <p class="comment-updated-at-text">投稿日時: <!-- コメント更新日 -->
-        <span id="comment-updated_at"></span>
-    </p>
     <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
         <p class="level-name">STANDARD/応用</p>
         <div class="level-item">
@@ -48,6 +47,10 @@
             <span class="star-rating-num">5.0</span>
         </div>
     </div>
+    <p class="comment-updated-at-text">投稿日時:2026.5.2 <!-- コメント更新日 -->
+        <span id="comment-updated_at"></span>
+    </p>
+
     <p class="comment-description">
         ネットワークエンジニア以外でもすべてのエンジニアにおすすめしたい書籍です。<!-- 紹介文の表示 -->
     </p>
@@ -60,5 +63,3 @@
 
 </div>
 {% endblock %}
-
-

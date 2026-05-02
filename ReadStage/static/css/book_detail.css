@@ -58,9 +58,30 @@
     gap: 15px;
 }
 
+/*書籍評価ボタン*/
+.review-button {
+    margin-bottom: 0px; /* ボタンの下に少し余白 */
+    background-color: #1D61D0; /* 青 */
+    color: #FFFFFF;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
+}
+
+/*書籍評価ボタンのホバー */
+/*.review-button:hover {
+    background-color: #0056b3;
+} */
+
+
 /* book-categoryとbook-keywordに左パディング追加 */
 .book-category,
-.book-keyword {
+.book-keyword,
+.book-review {
     padding-left: 1px; /* h5とliの左端が揃う基準 */
 }
 
@@ -171,7 +192,7 @@
 
 /*修正ボタン*/
 .edit-button {
-    background-color: #FFA500; /* オレンジ */
+    background-color: #1D61D0; /* 青 */
     color: #FFFFFF;
 }
 
