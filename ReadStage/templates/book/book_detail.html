@@ -1,9 +1,65 @@
 {% extends "base.html" %}
 
-{% block title %}トップ{% endblock %}
+{% block title %}評価・コメント{% endblock %}
 
-{% block page_css %}{% endblock %}
+{% block page_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/book_detail.css') }}">
+{% endblock %}
 
 {% block content %}
-<p>評価・コメントページ</p>
+
+<div class="header-image-container">
+<img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+    <p class="header-notification">評価・コメント</p>
+</div>
+
+<div class="book-list"> <!-- 全体を囲む大きな枠 -->
+
+<article class="book-item"> <!--書籍１冊分のセット枠-->
+<h3 class="book-title">マスタリングTCP/IP―入門編―(第6版)</h3>
+<div class="book-content"> <!-- 左側の列：イラスト用 -->
+    <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の画像" class="book-image">
+    <div class="book-info-right"> <!-- 右側の列用 -->
+        <div class="book-review"></div>
+            <button class="review-button">書籍評価へ</button>
+        <div class="book-category">
+            <h5>カテゴリー</h5>
+                <ul>
+                    <li>ネットワーク</li>
+                </ul>
+        </div>
+        <div class="book-keyword">
+            <h5>キーワード</h5>
+                <ul>
+                        <li>TCP/IP</li>
+                        <li>OSI参照モデル</li>
+                        <li>IP</li>
+                </ul>
+        </div>
+    </div>
+</div>
+
+<div class="comment-description-area">
+    <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
+        <p class="level-name">STANDARD/応用</p>
+        <div class="level-item">
+            <span class="star-rating">★★★☆☆</span>
+            <span class="star-rating-num">5.0</span>
+        </div>
+    </div>
+    <p class="comment-updated-at-text">投稿日時:2026.5.2 <!-- コメント更新日 -->
+        <span id="comment-updated_at"></span>
+    </p>
+
+    <p class="comment-description">
+        ネットワークエンジニア以外でもすべてのエンジニアにおすすめしたい書籍です。<!-- 紹介文の表示 -->
+    </p>
+    <div class="comment-actions"> <!-- 修正、削除ボタン -->
+        <button class="edit-button">修正</button>
+        <button class="delete-button">削除</button>
+    </div>
+</div>
+</article>
+
+</div>
 {% endblock %}
