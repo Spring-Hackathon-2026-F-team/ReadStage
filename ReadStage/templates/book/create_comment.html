@@ -15,14 +15,13 @@
 
 <div class="comment-list"> <!-- 全体を囲む大きな枠 -->
     <article class="comment-item"> <!-- 書籍１冊分のセット枠 -->
-        <form action="/submit_comment" method="post">
-            <input type="hidden" name="user_id" value="123">
-            <input type="hidden" name="book_id" value="456">
+        <form action="/book/{{ book.id }}/comment" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
             <h3 class="book-title">{{ book.title }}</h3>
             <div class="comment-content">
                 <!-- 1行目 左側: 書籍画像 -->
-                <img src="{{ url_for('static', filename='image/' + book.id|string + '.jpg') }}" alt="{{ book.title }}の本の表紙画像" class="book-image">
+                <img src="{{ url_for('static', filename='image/' ~ book.id ~ '.jpg') }}" alt="{{ book.title }}の本の表紙画像" class="book-image">
 
                 <!-- 1行目 右側: 評価と学習者レベルドロップダウン -->
                 <div class="book-info-right">
@@ -34,10 +33,10 @@
                         <h5>学習者レベル</h5>
                         <select id="learning-level" name="status" class="level-dropdown">
                             <option value="" disabled selected>選択してください</option>
-                            <option value="start">START/入門</option>
-                            <option value="basic">BASIC/基礎</option>
-                            <option value="standard">STANDARD/応用</option>
-                            <option value="expert">EXPERT/発展</option>
+                            <option value="START/入門">START/入門</option>
+                            <option value="BASIC/基礎">BASIC/基礎</option>
+                            <option value="STANDARD/応用">STANDARD/応用</option>
+                            <option value="EXPERT/発展">EXPERT/発展</option>
                         </select>
                     </div>
                 </div>
