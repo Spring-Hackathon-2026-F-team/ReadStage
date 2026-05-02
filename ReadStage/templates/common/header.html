@@ -44,17 +44,17 @@
          <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
         <!-- 詳細・コメントページの場合 -->
-        {% elif request.endpoint == 'book_comment_view' %}
+        {% elif request.endpoint == 'book_id_view' %}
           <!-- 左に「◀戻る」、右に「ログアウト▶」を表示 -->
          <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">戻る</a></div>
          <div class="nav-center">&nbsp;</div>
          <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
         <!-- 書籍・評価ページの場合 -->
-        {% elif request.endpoint == 'book_id_view' %}
+        {% elif request.endpoint == 'book_comment_view' %}
           <!-- 左に「◀戻る」、右に「ログアウト▶」を表示 -->
           <!-- ？？（戻り値bool_idが必要？）？？ -->
-         <div class="nav-left"><a href="{{ url_for('book_comment_view', book_id=request.view_args['book_id']) }}" class="nav-button">戻る</a></div>
+         <div class="nav-left"><a href="{{ url_for('book_id_view', book_id=request.view_args['book_id']) }}" class="nav-button">戻る</a></div>
          <div class="nav-center">&nbsp;</div>
          <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
