@@ -54,7 +54,7 @@
         {% elif request.endpoint == 'book_comment_view' %}
           <!-- 左に「◀戻る」、右に「ログアウト▶」を表示 -->
           <!-- ？？（戻り値bool_idが必要？）？？ -->
-         <div class="nav-left"><a href="{{ url_for('book_id_view', book_id=request.view_args['book_id']) }}" class="nav-button">戻る</a></div>
+         <div class="nav-left"><a href="{{ url_for('book_id_view', book_id=request.view_args['book_id']) }}" class="nav-button">◀戻る</a></div>
          <div class="nav-center">&nbsp;</div>
          <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
