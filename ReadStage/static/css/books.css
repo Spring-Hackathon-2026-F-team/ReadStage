@@ -78,47 +78,30 @@
 .level-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 25px;
     font-size: 0.95em;
 }
 
-.level-name-start {
+.level-name-start,
+.level-name-basic,
+.level-name-expert {
     min-width: 140px;
     font-weight: bold;
-    color: #167600;
-    padding-left: 10px;
-    background-color: #98E607;
-    border-radius: 5px;
-}
-
-.level-name-basic {
-    min-width: 140px;
-    font-weight: bold;
-    color: #FFFFFF;
-    padding-left: 10px;
-    background-color: #17A351;
+    padding-left: 15px;
     border-radius: 5px;
 }
 
 .level-name-standard {
     min-width: 145px;
     font-weight: bold;
-    color: #003297;
-    padding-left: 5px;
-    background-color: #27BBFA;
-    border-radius: 5px;
-}
-
-
-
-.level-name-expart {
-    min-width: 140px;
-    font-weight: bold;
-    color: #FFFFFF;
     padding-left: 10px;
-    background-color: #003EA2;
     border-radius: 5px;
 }
+
+.level-name-start{ color: #167600; background-color: #98E607;}
+.level-name-basic{ color: #ffffff; background-color: #17A351;}
+.level-name-standard{ color: #003297; background-color: #27bbfa;}
+.level-name-expert { color: #ffffff; background-color: #003ea2;}
 
 .star-rating {
     color: orange;
