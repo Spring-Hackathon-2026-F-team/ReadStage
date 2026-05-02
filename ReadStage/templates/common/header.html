@@ -22,8 +22,57 @@
     <nav class="nav-bar">
       <div class="nav-inner">
 
+        <!-- 新規登録ページの場合 -->
+        {% if request.endpoint == 'signup_view' %}
+          <!-- 中央に「新規登録ページ」を表示 -->
+         <div class="nav-left">&nbsp;</div>
+         <div class="nav-center"><span class="nav-text">新規登録ページ</span></div>
+         <div class="nav-right">&nbsp;</div>
+
+        <!-- ログインページの場合 -->
+        {% elif request.endpoint == 'login_view' %}
+          <!-- 中央に「ログインページ」を表示 -->
+         <div class="nav-left">&nbsp;</div>
+         <div class="nav-center"><span class="nav-text">ログインページ</span></div>
+         <div class="nav-right">&nbsp;</div>
+
+        <!-- 書籍一覧（トップ）ページの場合 -->
+        {% elif request.endpoint == 'books_view' %}
+          <!-- 右に「ログアウト▶」を表示 -->
+         <div class="nav-left">&nbsp;</div>
+         <div class="nav-center">&nbsp;</div>
+         <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
+
+        <!-- 詳細・コメントページの場合 -->
+        {% elif request.endpoint == 'book_comment_view' %}
+          <!-- 左に「◀戻る」、右に「ログアウト▶」を表示 -->
+         <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">戻る</a></div>
+         <div class="nav-center">&nbsp;</div>
+         <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
+
+        <!-- 書籍・評価ページの場合 -->
+        {% elif request.endpoint == 'book_id_view' %}
+          <!-- 左に「◀戻る」、右に「ログアウト▶」を表示 -->
+          <!-- ？？（戻り値bool_idが必要？）？？ -->
+         <div class="nav-left"><a href="{{ url_for('book_comment_view', book_id=request.view_args['book_id']) }}" class="nav-button">戻る</a></div>
+         <div class="nav-center">&nbsp;</div>
+         <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
+
+        <!-- エラーページ(404 or 500)の場合 -->
+        {% elif not request.endpoint or request.endpoint == 'page_not_found' %}
+          <!-- 左に「◀トップページ」を表示 -->
+         <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a></div>
+         <div class="nav-center">&nbsp;</div>
+         <div class="nav-right">&nbsp;</div>
+
+        {% else %}
+          <div class="nav-left">&nbsp;</div>
+          <div class="nav-center">&nbsp;</div>
+          <div class="nav-right">&nbsp;</div>
+        {% endif %}        
+
         <!-- ナビゲーションバーの左側 -->
-        <div class="nav-left">
+        <!-- <div class="nav-left">
           {# 「評価・コメントページ」の場合、左に「◀戻る」の表示 #}
           {% if request.endpoint == 'book_comment_view' %}
             {# <a href="#" class="nav-button">◀戻る</a> #}
@@ -40,43 +89,43 @@
           {# リクエストに対する反応がないか、ページが見つからない場合 #}
           {% elif not request.endpoint or request.endpoint == 'page_not_found' %}
             {# 「◀トップページ」クリックで書籍一覧ページへ移動（book_idが必要） #}
-            <a href="{{ url_for('books_view', book_id=book.id) }}" class="nav-button">◀トップページ</a>
+            <a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a>
           
           {% else %}
           {# 空白でもnav-varの高さを維持 #}
             &nbsp;
           {% endif %}
-        </div>
+        </div> -->
 
         <!-- ナビゲーションバーの中央 -->
-        <div class="nav-center">
-          {# 「新規登録ページ」の場合、中央に「新規登録」の表示 #}
+        <!-- <div class="nav-center">
+          {# 「新規登録ページ」の場合、中央に「新規登録ページ」の表示 #}
           {% if request.endpoint == 'signup_view' %}
-            <span class="nav-button">新規登録</span>
+            <span class="nav-button">新規登録ページ</span>
 
-          {# 「ログインページ」の場合、中央に「ログイン」の表示 #}
+          {# 「ログインページ」の場合、中央に「ログインページ」の表示 #}
           {% elif request.endpoint == 'login_view' %}
-            <span class="nav-button">ログイン</span>
+            <span class="nav-button">ログインページ</span>
 
           {% else %}
           {# 空白でもnav-varの高さを維持 #}
             &nbsp;
           {% endif %}
-        </div>
+        </div> -->
 
         <!-- ナビゲーションバーの右側 -->
-        <div class="nav-right">
+        <!-- <div class="nav-right">
           {# 「書籍一覧ページ、評価・コメントページ、書籍詳細ページ」の場合、右に「ログアウト▶」を表示 #}
           {% if request.endpoint in ['books_view', 'book_comment_view', 'book_id_view'] %}
             {# <a href="#" class="nav-button">ログアウト▶</a> #}
             {# 「ログアウト▶」クリックで、ログインページへ移動 #}
             <a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a>
-          
+
           {% else %}
           {# 空白でもnav-barの高さを維持 #}
             &nbsp;
           {% endif %}
-        </div>
+        </div> -->
 
       </div>
     </nav>

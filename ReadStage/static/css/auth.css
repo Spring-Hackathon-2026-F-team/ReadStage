@@ -1,0 +1,22 @@
+#header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: var(--secondary_background);
+}
+#image-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--secondary_background);
+}
+
+#image-container img {
+    max-width: 100%;
+}
+
+img {
+    width: 100%;
+    display: block; /* 画像にできる隙間を消す */
+}
