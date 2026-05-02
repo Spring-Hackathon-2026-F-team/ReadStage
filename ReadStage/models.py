@@ -63,6 +63,22 @@ class Book:
     finally:
       db_pool.release(conn)
 
+  @classmethod
+  def get_book(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = 'SELECT id, title FROM books WHERE id=%s;'
+        cur.execute(sql, (book_id,))
+        book = cur.fetchone()
+      return book
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
+
 class User:
   # メールアドレスに合致するユーザーIDとパスワードのみを返却
   @classmethod

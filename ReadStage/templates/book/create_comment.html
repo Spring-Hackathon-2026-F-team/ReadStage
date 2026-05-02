@@ -19,10 +19,10 @@
             <input type="hidden" name="user_id" value="123">
             <input type="hidden" name="book_id" value="456">
 
-            <h3 class="book-title"> マスタリングTCP/IP―入門編―(第6版) </h3>
+            <h3 class="book-title">{{ book.title }}</h3>
             <div class="comment-content">
                 <!-- 1行目 左側: 書籍画像 -->
-                <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の本の表紙画像" class="book-image">
+                <img src="{{ url_for('static', filename='image/' + book.id|string + '.jpg') }}" alt="{{ book.title }}の本の表紙画像" class="book-image">
 
                 <!-- 1行目 右側: 評価と学習者レベルドロップダウン -->
                 <div class="book-info-right">
