@@ -77,13 +77,13 @@
           {% if request.endpoint == 'book_comment_view' %}
             {# <a href="#" class="nav-button">◀戻る</a> #}
             {# 「◀戻る」クリックで、書籍一覧ページへ移動 #}
-            <a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a>
+            <a href="{{ url_for('book_id_view', book_id=request.view_args['book_id']) }}" class="nav-button">戻る</a>
           
           {# 「書籍詳細ページ」の場合、左に「◀戻る」の表示 #}
           {% elif request.endpoint == 'book_id_view' %}
             {# <a href="#" class="nav-button">◀戻る</a> #}
             {# 「◀戻る」クリックで、評価・コメントページへ移動 #}
-            <a href="{{ url_for('book_comment_view') }}" class="nav-button">戻る</a>
+            <a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a>
 
           {# 「エラーページ」の場合、左に「◀トップページ」を表示 #}
           {# リクエストに対する反応がないか、ページが見つからない場合 #}
