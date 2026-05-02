@@ -4,6 +4,19 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    /* ヘッダー上部に空白ができないようにする */
+    margin: 0;
+    padding: 0;
+}
+
+main,
+.content-wrapper {
+    /* 文字やフォームのマージンが、ヘッダーを上にあげないようにする */
+    display: flow-root;
+}
+
 main {
     min-height: 100vh;  /* 最低でも表示領域と同じ高さにする */
     width: 100%;
@@ -12,14 +25,19 @@ main {
 /* ------ヘッダー------ */
 #header {
     width: 100%;
+    /* スクロールしても、ヘッダーが常に表示さえっるようにする */
+    position: sticky;
+    top: 0; /* 画面の一番上に固定 */
+    z-index: 100;
     background: var(--secondary_background);    
 }
 
 /* ヘッダー全体の領域 */
 .header-inner {
     width: 100%;
-    display: flex;          /* flexboxで子要素を配置 */
-    flex-direction: column; /* 子要素を縦に並べる */
+    /* ロゴ・タイトル、サブタイトル、ナビゲーションバーを縦に並べる */
+    display: flex;
+    flex-direction: column;
     align-items: center;    /* 左右の中央 */
     background: var(--secondary_background);
 }
