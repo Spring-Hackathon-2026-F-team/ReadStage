@@ -5,7 +5,7 @@
     grid-template-columns: 1fr;
     margin-top: 20px;
     background-color: #EDEDED;
-    padding: 20px;
+    padding: 10px;
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -37,7 +37,7 @@
 .book-content {
     /* grid-column: 1/-1; /* book-itemの全幅使用 */
     display: grid; /*.カテゴリ・キーワード欄と横並びにする */
-    grid-template-columns: 160px 1fr; /* 左側（画像）：２００px、右側（文章）：残り全部　*/
+    grid-template-columns: 160px 1fr; /* 左側（画像）：160px、右側（文章）：残り全部　*/
     gap: 5px; /*.画像と右側情報の間にスペースを作る */
     align-items: flex-start; /* 必要に応じて上揃えにする　*/
 }
