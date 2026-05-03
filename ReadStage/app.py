@@ -136,7 +136,7 @@ def books_view():
         return render_template('book/books.html', books=books)
 
 
-# 書籍評価ページ表示
+# 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
 def book_id_view(book_id):
     # セッションチェック
@@ -168,7 +168,7 @@ def book_id_view(book_id):
                            is_already_comment=is_already_comment)
 
 
-# 書籍評価投稿ページ表示
+# 書籍コメントページ表示
 @app.route("/book/<int:book_id>/comment", methods=["GET"])
 def book_comment_view(book_id):
     # セッションチェック
