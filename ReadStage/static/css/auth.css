@@ -53,6 +53,7 @@ button[type="submit"] {
     color: white;
     border: none;
     border-radius: 4px;
+    font-weight: bold;    /* 太字にする */
     /* cursor: pointer;        重ねた時に指マークにする */
 }
 
