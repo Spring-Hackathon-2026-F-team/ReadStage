@@ -20,11 +20,11 @@
     </div>
     <div>
       <p>パスワード</p>
-      <input id="password" name="password" type="password" />
+      <input id="password" name="password" type="password" required minlength="8" />
     </div>
     <div>
       <p>パスワード確認用</p>
-      <input id="password_confirmation" name="password_confirmation" type="password" />
+      <input id="password_confirmation" name="password_confirmation" type="password" required minlength="8" />
     </div>
     <button type="submit">新規登録</button>
   </form>
@@ -32,9 +32,9 @@
   <!-- フラッシュメッセージ -->
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    <div>
+    <div class="flash-message">
     {% for category, message in messages %}
-      <div>
+      <div class="alert">
         {{ message }}
       </div>
     {% endfor %}
