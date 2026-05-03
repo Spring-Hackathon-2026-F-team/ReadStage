@@ -84,17 +84,11 @@
 
 .level-name-start,
 .level-name-basic,
+.level-name-standard,
 .level-name-expert {
     min-width: 140px;
     font-weight: bold;
-    padding-left: 15px;
-    border-radius: 5px;
-}
-
-.level-name-standard {
-    min-width: 145px;
-    font-weight: bold;
-    padding-left: 10px;
+    padding: 0 10px;
     border-radius: 5px;
 }
 
