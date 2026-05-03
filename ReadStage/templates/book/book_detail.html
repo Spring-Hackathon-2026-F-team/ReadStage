@@ -16,49 +16,59 @@
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
 
 <article class="book-item"> <!--書籍１冊分のセット枠-->
-<h3 class="book-title">マスタリングTCP/IP―入門編―(第6版)</h3>
+<h3 class="book-title">{{ book.title }}</h3>
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
-    <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の画像" class="book-image">
+    <img src="{{ url_for('static', filename='image/' ~ book.id ~ '.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の画像" class="book-image">
     <div class="book-info-right"> <!-- 右側の列用 -->
         <div class="book-review"></div>
-            <button class="review-button">書籍評価へ</button>
+        {% if is_already_comment %}
+            <button class="review-button" onclick="window.location.href='{{ url_for('book_comment_view', book_id=book.id)}}'">書籍評価へ</button>
+        {% endif %}
         <div class="book-category">
             <h5>カテゴリー</h5>
                 <ul>
-                    <li>ネットワーク</li>
+                    <li>{{ category.category }}</li>
                 </ul>
         </div>
         <div class="book-keyword">
             <h5>キーワード</h5>
                 <ul>
-                        <li>TCP/IP</li>
-                        <li>OSI参照モデル</li>
-                        <li>IP</li>
+                        {% for keyword in keywords %}
+                            <li>{{ keyword.keyword }}</li>
+                        {% endfor %}
                 </ul>
         </div>
     </div>
 </div>
 
+{% for comment in recommends %}
 <div class="comment-description-area">
-    <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
-        <p class="level-name">STANDARD/応用</p>
-        <div class="level-item">
-            <span class="star-rating">★★★☆☆</span>
-            <span class="star-rating-num">5.0</span>
+        <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
+            <p class="level-name">{{ comment.status }}</p>
+            <div class="level-item">
+                <span class="star-rating">
+                    {% for i in range(5) %}
+                        {{- "★" if i < comment.evaluation else "☆" -}}
+                    {% endfor %}
+                </span>
+                <span class="star-rating-num">{{ "%.1f" | format(comment.evaluation) }}</span>
+            </div>
         </div>
-    </div>
-    <p class="comment-updated-at-text">投稿日時:2026.5.2 <!-- コメント更新日 -->
-        <span id="comment-updated_at"></span>
-    </p>
+        <p class="comment-updated-at-text">投稿日時:{{ comment.updated_at.strftime('%Y.%m.%d') }} <!-- コメント更新日 -->
+            <span id="comment-updated_at"></span>
+        </p>
 
-    <p class="comment-description">
-        ネットワークエンジニア以外でもすべてのエンジニアにおすすめしたい書籍です。<!-- 紹介文の表示 -->
-    </p>
-    <div class="comment-actions"> <!-- 修正、削除ボタン -->
-        <button class="edit-button">修正</button>
-        <button class="delete-button">削除</button>
+        <p class="comment-description">
+            {{ comment.message }}<!-- 紹介文の表示 -->
+        </p>
+        {% if comment.is_current_user %}
+            <div class="comment-actions"> <!-- 修正、削除ボタン -->
+                <button class="edit-button">修正</button>
+                <button class="delete-button">削除</button>
+            </div>
+        {% endif %}
     </div>
-</div>
+{% endfor %}
 </article>
 
 </div>

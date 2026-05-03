@@ -136,7 +136,28 @@ class Recommend:
       abort(500)
     finally:
       db_pool.release(conn)
+  
+  @classmethod
+  def get_book_recommend(cls, user_id, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = '''
+        SELECT id, user_id, (user_id=%s) AS is_current_user, evaluation, status, message, updated_at 
+        FROM recommends WHERE book_id=%s AND delete_flag=0 
+        ORDER BY id DESC;
+        '''
+        cur.execute(sql, (user_id, book_id))
+        recommends = cur.fetchall()
 
+        for recommend in recommends:
+          recommend['is_current_user'] = bool(recommend['is_current_user'])
+        return recommends
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
 
 
   @classmethod
@@ -155,4 +176,43 @@ class Recommend:
       abort(500)
     finally:
       db_pool.release(conn)
-    
+
+class Category:
+  @classmethod
+  def get_book_category(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = '''
+        SELECT c.category FROM categories AS c 
+        INNER JOIN book_categories AS bc ON bc.category_id = c.id
+        WHERE bc.book_id=%s;
+        '''
+        cur.execute(sql, (book_id, ))
+        category = cur.fetchone()
+        return category
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)    
+
+class Keyword:
+  @classmethod
+  def get_book_keywords(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = '''
+        SELECT k.keyword FROM keywords AS k 
+        INNER JOIN book_keywords AS bk ON bk.keyword_id = k.id
+        WHERE bk.book_id=%s;
+        '''
+        cur.execute(sql, (book_id, ))
+        category = cur.fetchall()
+        return category
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)    

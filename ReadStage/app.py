@@ -6,7 +6,7 @@ import uuid
 import re
 import os
 
-from models import Book, User, Recommend
+from models import Book, User, Recommend, Category, Keyword
 
 # 定数定義
 EMAIL_PATTERN = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
@@ -139,8 +139,33 @@ def books_view():
 # 書籍評価ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
 def book_id_view(book_id):
+    # セッションチェック
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
 
-    return render_template('book/book_detail.html')
+    # 書籍存在チェック
+    book = Book.get_book(book_id)
+    if book is None:
+        abort(404)
+
+    # カテゴリ・キーワード・コメント一覧取得
+    category = Category.get_book_category(book_id)
+    keywords = Keyword.get_book_keywords(book_id)
+    recommends = Recommend.get_book_recommend(user_id, book_id)
+
+    # 書籍評価へボタン表示条件
+    my_comment = Recommend.get_recommend(user_id, book_id)
+    is_already_comment = True
+    if my_comment:
+        is_already_comment = False
+
+    return render_template('book/book_detail.html',
+                           book=book,
+                           category=category,
+                           keywords=keywords,
+                           recommends=recommends,
+                           is_already_comment=is_already_comment)
 
 
 # 書籍評価投稿ページ表示
