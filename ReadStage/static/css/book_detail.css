@@ -3,7 +3,7 @@
 .book-list {
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: 20px;
+    margin-top: 5px;
     background-color: #EDEDED;
     padding: 10px;
     border-radius: 5px;
@@ -17,7 +17,7 @@
     gap: 20px; /*それぞれの要素の間の間隔*/
     border: 1px solid #ddd; /*枠線を追加して区切る　*/
     background-color: #f8f8f8;
-    padding: 20px;
+    padding: 10px;
     border-radius: 8px;
 /*    max-width: 400px; */ /*.上限をスマホサイズに */
     max-width: min(400px, 100%); 
@@ -25,10 +25,35 @@
     box-sizing: border-box; 
 }
 
+/* ヘッダー画像とテキストを囲むコンテナ */
+.header-image-container {
+    position: relative; /* 子要素（お知らせテキスト）の絶対配置の基準にする */
+    width: 100%; /* 親要素の幅に合わせる */
+    margin-bottom: 5px; /* 下に余白 */
+}
+
+/* ヘッダー画像上の「評価詳細」テキストのスタイル */
+.header-notification {
+    position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
+    bottom: 15px; /* 画像の下端から15px上 */
+    left: 15px; /* 画像の左端から15px右 */
+    color: white; /* 文字色を白に */
+    font-size: 1em; /* テキストの大きさ */
+    font-weight: bold; /* 太字 */
+    /* 文字の枠線（アウトライン）をtext-shadowで表現 */
+    text-shadow:
+        -1px -1px 0 #1A2B3C, /* 左上 */
+         1px -1px 0 #1A2B3C, /* 右上 */
+        -1px  1px 0 #1A2B3C, /* 左下 */
+         1px  1px 0 #1A2B3C; /* 右下 */
+    margin: 0; /* pタグのデフォルトマージンをリセット */
+    white-space: nowrap; /* テキストが改行されないように */
+}
+
 /* 書籍タイトルのスタイル*/
 .book-title {
     grid-column: 1/-1; /* book-itemの全幅使用*/
-    margin-bottom: 0; /* book-itemのgapで調整するため*/
+    margin: 0; /* book-itemのgapで調整するため*/
     font-size: 15px;
     color: #333;
 }
@@ -55,21 +80,24 @@
     /* flex-grow: 1; /*.残りのスペースを全幅使用*/
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
 }
 
-/*書籍評価ボタン*/
+/*書籍コメントへ ボタン*/
 .review-button {
     margin-bottom: 0px; /* ボタンの下に少し余白 */
     background-color: #1D61D0; /* 青 */
     color: #FFFFFF;
-    padding: 4px 8px;
+    padding: 4px 5px;
+    width: 130px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.9em;
     font-weight: bold;
     transition: background-color 0.2s ease; /* ホバー時のアニメーション */
+    display: block; /* ボタンをブロック要素にする */
+    margin-left: auto; /* 左側のマージンを自動調整して右寄せにする */
 }
 
 /*書籍評価ボタンのホバー */
@@ -89,7 +117,7 @@
 .book-category h5,
 .book-keyword h5 {
     margin-top: 0;
-    margin-bottom: 8px; /* h5の下に少し余白 */
+    margin-bottom: 3px; /* h5の下に少し余白 */
     padding-left: 0; /* 親にパディングがあるので、h5自体には不要 */
 }
 
