@@ -1,22 +1,101 @@
-#header {
-    width: 100%;
-    position: sticky;
-    top: 0;
-    background-color: var(--secondary_background);
-}
 #image-container {
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;        /* 上下の中央 */
+    justify-content: center;    /* 左右の中央 */
     background-color: var(--secondary_background);
 }
 
 #image-container img {
     max-width: 100%;
+    display: block; /* 画像にできる隙間をなくす */
 }
 
-img {
+/* フォーム全体を中央に寄せる */
+form {
+    display: flex;
+    flex-direction: column; /* 要素を縦に並べる */
     width: 100%;
-    display: block; /* 画像にできる隙間を消す */
+    max-width: 340px;   /* 横幅を制限 */
+    margin: 0px auto;  /* 左右のmarginを自動計算して中央に */
+    padding: 0 20px;    /* 画面幅との隙間 */
 }
+
+/* 各入力欄のセット */
+form div {
+    width: 100%;
+    margin-bottom: 0px; /* 最小限に設定 */
+}
+
+/* 項目名（メールアドレス、パスワード等） */
+form p {
+    margin-top: 8px;    /* 上の項目との間隔 */
+    margin-bottom: 2px; /* 下の入力欄との間隔 */
+    height: 19px;       /* 全体の高さ */
+    color: var(--textcolor);
+}
+
+/* テキスト入力欄 */
+input {
+    width: 100%;    /* 横幅最大にする */
+    padding: 4px 10px;  /* 入力文字と外枠に適度な余白 */
+    border-radius: 5px; /* 角を丸くする */
+    border: 1px solid #ccc;
+}
+
+/* ボタン */
+button[type="submit"] {
+    display: block;         /* ブロック要素にする */
+    margin: 10px auto 0;    /* 左右のマージンautoで、ボタンを左右中央へ */
+    width: 100px;
+    height: 30px;
+    background-color: var(--primary);   /* 青 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;    /* 太字にする */
+    /* cursor: pointer;        重ねた時に指マークにする */
+}
+
+button[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+/* フラッシュメッセージの枠 */
+.flash-message {
+    width: 100%;
+    max-width: 340px;       /* フォームの幅と合わせる */
+    margin: 10px auto;      /* 左右中央に配置 */
+    padding: 0 10px;        /* 左右の余白 */
+    box-sizing: border-box; /* 枠の計算をフォームと合わせる */
+    text-decoration: none;  /* 下線を消す */
+}
+
+/* 個別のメッセージ */
+.alert {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center; /* 文字を中央に */
+    color: var(--danger);   /* 赤 */
+    /* 枠と背景を非表示にする */
+    background-color: transparent: /* 背景色を透明にする */
+    border: none;
+}
+
+/* 「アカウントを持っている(・いない)方はこちら」を中央へ */
+a {
+    display: block;         /* ブロック要素にする */
+    text-align: center;     /* 文字を中央へ */
+    margin: 4px 0;          /* 上下の位置調整 */
+    font-size: 13px;
+    color: var(--primary);
+    text-decoration: none;  /* 下線を消す */
+}
+
+/* 
+a:hover {
+    text-decoration: underline; /* マウスを乗せた時だけ下線を表示 */
+} */
