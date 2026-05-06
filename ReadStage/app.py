@@ -6,7 +6,7 @@ import uuid
 import re
 import os
 
-from models import Book, User
+from models import Book, User, Recommend
 
 # 定数定義
 EMAIL_PATTERN = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
@@ -136,21 +136,64 @@ def books_view():
         return render_template('book/books.html', books=books)
 
 
-# 書籍評価ページ表示
+# 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
 def book_id_view(book_id):
 
     return render_template('book/book_detail.html')
 
 
-# 書籍評価投稿ページ表示
+# 書籍コメントページ表示
 @app.route("/book/<int:book_id>/comment", methods=["GET"])
 def book_comment_view(book_id):
+    # セッションチェック
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
 
-    return render_template('book/create_comment.html')
+    # 書籍存在チェック
+    book = Book.get_book(book_id)
+    if book is None:
+        abort(404)
+
+    # 対象書籍に該当ユーザーがすでにコメント済みの場合は404エラーとする
+    recommend = Recommend.get_recommend(user_id, book_id)
+    if recommend is not None:
+        abort(404)
+
+    return render_template('book/create_comment.html', book=book)
 
 
 # 書籍評価投稿処理
+@app.route("/book/<int:book_id>/comment", methods=["POST"])
+def create_comment(book_id):
+    # セッションチェック
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
+
+    # 書籍存在チェック
+    book = Book.get_book(book_id)
+    if book is None:
+        abort(404)
+    
+    # 対象書籍に該当ユーザーがすでにコメント済みの場合は400エラーとする
+    recommend = Recommend.get_recommend(user_id, book_id)
+    if recommend is not None:
+        abort(400)
+
+    # 書籍評価情報を登録
+    evaluation = int(request.form.get("evaluation"))
+    status = request.form.get("status")
+    message = request.form.get("message")
+    Recommend.create(user_id=user_id,
+                     book_id=book_id,
+                     evaluation=evaluation,
+                     status=status,
+                     message=message);
+
+    # 詳細・コメントページにリダイレクト
+    return redirect(url_for('book_id_view', book_id=book_id))
 
 
 # 書籍検索
