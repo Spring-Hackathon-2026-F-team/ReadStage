@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}評価・コメント{% endblock %}
+{% block title %}評価詳細{% endblock %}
 
 {% block page_css %}
 <link rel="stylesheet" href="{{url_for('static', filename='css/book_detail.css') }}">
@@ -9,8 +9,10 @@
 {% block content %}
 
 <div class="header-image-container">
-<img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
-    <p class="header-notification">評価詳細ページ</p>
+    <div class="header-image-inner-container">
+      <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+       <p class="header-notification">評価詳細ページ</p>
+    </div>
 </div>
 
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
