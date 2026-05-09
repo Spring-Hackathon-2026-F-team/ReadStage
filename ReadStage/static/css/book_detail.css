@@ -1,8 +1,5 @@
 /* books.css */
-@charset "utf-8";
-*{
-    box-sizing: border-box;
-}
+/* @charset "utf-8";    /*.日本語の基本設定 */
 /*.投稿リスト全体 */
 .book-list {
     display: grid;
@@ -102,6 +99,7 @@ a{
     max-width: 375px;
     margin: auto;
     text-align: center;
+    font-weight: bold;
 }
 
 .button-wrap{
@@ -111,20 +109,19 @@ a{
 .c-button{
     color: #fff;
     background-color: #3498db;
-    display: inline-block;
+    display: flex;
     font-size: 15px;
     padding: 4px 5px;
     border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
 }
 
 .c-button.tocomment{
     width: 120px;
     display: block; /* ボタンをブロック要素にする */
     margin-left: auto; /* 左側のマージンを自動調整して右寄せにする */
-    cursor: pointer;
-    font-size: 0.9em;
-    font-weight: bold;
-    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
 }
 
 .c-button.tocomment:hover{
@@ -186,7 +183,7 @@ a{
     list-style: none; /* リストタブの黒丸を消す */  
     background-color: #D2D2D2;
     border: 1px solid #fff;
-    padding: 0 2px; /* 上下左右2pxのパディング */
+    padding: 0 5px; /* 上下左右2pxのパディング */
     text-indent: 3px;
     border-radius: 8px;
     margin-bottom: 2px;
@@ -272,6 +269,28 @@ a{
     font-size: 0.95em;
     color: #555;
     line-height: 1.6;
+}
+
+.c-button.retouch{ /* コンポーネント修正ボタンの設定 */
+    padding: 3px 10px;
+}
+.c-button.retouch:hover{
+    background-color: #1d61d0;
+}
+
+.c-button.delete{  /*.コンポーネント削除ボタンの設定 */
+    padding: 3px 10px;
+    background-color: #d01d1d; /* 赤色 */
+}
+.c-button.delete:hover{
+    background-color: #70080a;
+}
+/* 修正、削除ボタンの位置調整 */
+.button-wrap.comment-actions {  /*コンポーネント修正・削除の２つまとめ分 */
+    justify-content: flex-end; /* ボタンを右寄せにする */
+    gap: 5px; /* ボタン間のスペース */
+    margin-top: 10px; /* コメントとの間に少しスペース */
+    padding-right: 5px; /* comment-description-areaのpaddingに合わせる */
 }
 
 /* 修正、削除ボタンの位置調整 */
