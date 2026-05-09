@@ -1,4 +1,8 @@
 /* books.css */
+@charset "utf-8";
+*{
+    box-sizing: border-box;
+}
 /*.投稿リスト全体 */
 .book-list {
     display: grid;
@@ -86,6 +90,45 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+/* ボタンコンポーネントの詳細設定 */
+a{
+    text-decoration: none;
+}
+
+.content-wrap{
+    width: 100%;
+    max-width: 375px;
+    margin: auto;
+    text-align: center;
+}
+
+.button-wrap{
+    margin: 2px 0;
+}
+
+.c-button{
+    color: #fff;
+    background-color: #3498db;
+    display: inline-block;
+    font-size: 15px;
+    padding: 4px 5px;
+    border-radius: 5px;
+}
+
+.c-button.tocomment{
+    width: 120px;
+    display: block; /* ボタンをブロック要素にする */
+    margin-left: auto; /* 左側のマージンを自動調整して右寄せにする */
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
+}
+
+.c-button.tocomment:hover{
+    background-color: #1d61d0;
 }
 
 /*書籍コメントへ ボタン*/

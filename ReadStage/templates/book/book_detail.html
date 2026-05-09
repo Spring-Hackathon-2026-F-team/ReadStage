@@ -22,8 +22,13 @@
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
     <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の画像" class="book-image">
     <div class="book-info-right"> <!-- 右側の列用 -->
-        <div class="book-review"></div>
-            <button class="review-button">書籍コメントへ</button>
+        <div class="content-wrap">
+            <div class="button-wrap">
+            <!--- <div class="book-review"> -->
+                <a href="book_detail.css" class="c-button tocomment">書籍コメントへ</a>
+              <!--- <button class="review-button">書籍コメントへ</button> -->
+            </div>
+        </div>
         <div class="book-category">
             <h5>カテゴリー</h5>
                 <ul>
