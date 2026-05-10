@@ -9,11 +9,14 @@
 {% block content %}
 
 <div class="header-image-container">
-    <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
-    <p class="header-notification">書籍評価</p>
+    <div class="header-image-inner-container">
+        <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+        <p class="header-notification">書籍評価ページ</p>
+    </div>
 </div>
 
 <div class="comment-list"> <!-- 全体を囲む大きな枠 -->
+
     <article class="comment-item"> <!-- 書籍１冊分のセット枠 -->
         <form action="/book/{{ book.id }}/comment" method="post">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -57,7 +60,7 @@
                 </div>
             </div>
             <!-- コメント投稿ボタン -->
-            <button type="submit" class="submit-button">登録</button>
+            <button type="submit" class="c-button submit">登録</button>
         </form>
     </article>
 </div>

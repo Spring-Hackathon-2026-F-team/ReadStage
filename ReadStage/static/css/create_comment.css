@@ -2,23 +2,21 @@
 
 /* ヘッダー画像とテキストを囲むコンテナ */
 .header-image-container {
-    position: relative; /* 子要素（お知らせテキスト）の絶対配置の基準にする */
     width: 100%; /* 親要素の幅に合わせる */
-    margin-bottom: 20px; /* 下に余白 */
+    margin-bottom: 5px; /* 下に余白 */
+    display: flex;
+    justify-content: center;    /* 左右の中央 */
 }
 
-/* ヘッダー画像自体はコンテナの幅いっぱいに */
-.header-image {
-    width: 100%;
-    height: auto;
-    display: block;
+.header-image-inner-container{
+    position: relative; /* 子要素（お知らせテキスト）の絶対配置の基準にする */
 }
 
 /* ヘッダー画像上の「書籍評価」テキストのスタイル */
 .header-notification {
     position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
     bottom: 15px; /* 画像の下端から15px上 */
-    left: 15px; /* 画像の左端から15px右 */
+    left: 17px; /* 画像の左端から17px右 */
     color: white; /* 文字色を白に */
     font-size: 1em; /* テキストの大きさ */
     font-weight: bold; /* 太字 */
@@ -36,20 +34,20 @@
 .comment-list {
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: 20px;
-    background-color: #EDEDED;
-    padding: 20px;
+    margin-top: 5px;
+    padding: 10px;
     border-radius: 5px;
+    background-color: #EDEDED;
 }
 
 /* 書籍一冊分のセットをGridコンテナにする */
 .comment-item {
     display: grid;
     grid-template-columns: 1fr; /* 1列で、中の要素が縦に並ぶように */
-    gap: 20px; /* それぞれの要素の間の間隔 */
+    gap: 10px; /* それぞれの要素の間の間隔 */
     border: 1px solid #ddd; /* 枠線を追加して区切る */
     background-color: #f8f8f8;
-    padding: 20px;
+    padding: 10px;
     border-radius: 8px;
     max-width: 400px; /* 上限をスマホサイズに */
     margin: 5px auto; /* 上下に5pxの余白、左右には自動で中央寄せ */
@@ -198,19 +196,12 @@
 }
 
 /* コメント投稿ボタンのスタイル */
-.submit-button {
+.c-button.submit {
     display: block; /* ブロック要素にして中央揃えしやすくする */
     width: fit-content; /* 内容に合わせて幅を調整 */
-    margin: 20px auto 0 auto; /* 上に20px、左右自動で中央揃え */
-    padding: 12px 25px;
-    background-color: #1D61D0; /* 青色のボタン */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
+    margin: 10px auto 0 auto; /* 上に20px、左右自動で中央揃え */
+    padding: 8px 20px;
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 /* スマホ対応の調整 */
