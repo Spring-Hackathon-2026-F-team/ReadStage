@@ -14,7 +14,7 @@
 }
 
 .header-image {
-    display: block; /* ブロック要素にして余計な隙間をなくす */
+    /* display: block; ブロック要素にして余計な隙間をなくす */
     max-width: 100%;
     height: auto;
 }
@@ -46,7 +46,7 @@
 /* コメントリスト全体の余白用 */
 .comment-list {
     padding: 10px; /* 一括でpaddingを制御 */
-    padding-top: 2px;
+    padding-top: 0;
     box-sizing: border-box;
     display: flex;          /* Flexbox */
     flex-direction: column; /* 縦に並べる */
@@ -59,7 +59,7 @@
     margin: 10px auto;
     padding: 5px 10px;
     width: 100%;
-    max-width: 400px;
+    max-width: 375px;
     box-sizing: border-box;
 }
 
@@ -75,7 +75,7 @@
 .comment-content {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px; /* グリッドアイテム間のスペース */
+    gap: 10px; /* グリッドアイテム間のスペース */
     width: 100%;
 }
 
@@ -231,7 +231,6 @@
 
 /* 「登録」ボタン */
 .c-button.submit {
-    display: block; /* ブロック要素にして中央揃えしやすくする */
-    line-height: 20px; /* テキストをボタンの中央に配置 */
+    line-height: 20px; /* テキストをボタンの上下中央に配置 */
     margin: 10px auto; /* 左右の中央 */
 }
