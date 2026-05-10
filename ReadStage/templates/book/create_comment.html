@@ -15,54 +15,63 @@
     </div>
 </div>
 
-<div class="comment-list"> <!-- 全体を囲む大きな枠 -->
+ <!-- 全体を囲む大きな枠 -->
+<div class="comment-wrapper">
+    <div class="comment-list">
+        <article class="comment-item"> <!-- 書籍１冊分のセット枠 -->
+            <form action="/book/{{ book.id }}/comment" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <h3 class="book-title">{{ book.title }}</h3>
+                <div class="comment-content">
+                    <!-- 1行目 左側: 書籍画像 -->
+                    <img src="{{ url_for('static', filename='image/' ~ book.id ~ '.jpg') }}" alt="{{ book.title }}の本の表紙画像" class="book-image">
 
-    <article class="comment-item"> <!-- 書籍１冊分のセット枠 -->
-        <form action="/book/{{ book.id }}/comment" method="post">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
-            <h3 class="book-title">{{ book.title }}</h3>
-            <div class="comment-content">
-                <!-- 1行目 左側: 書籍画像 -->
-                <img src="{{ url_for('static', filename='image/' ~ book.id ~ '.jpg') }}" alt="{{ book.title }}の本の表紙画像" class="book-image">
-
-                <!-- 1行目 右側: 評価と学習者レベルドロップダウン -->
-                <div class="book-info-right">
-                    <div class="book-evaluation">
-                        <h5>評価☆☆☆☆☆</h5>
-                        <input type="number" id="book-rating" name="evaluation" min="1" max="5" step="1" placeholder="1から5の整数入力" class="rating-input">
+                    <!-- 1行目 右側: 評価と学習者レベルドロップダウン -->
+                    <div class="book-info-right">
+                        <div class="book-evaluation">
+                            <h5>評価</h5>
+                            <select name="evaluation" class="dropdown" required>
+                                <option value="" disabled selected>1～5の整数</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="select-levels">
+                            <h5>学習者レベル</h5>
+                            <select name="status" class="dropdown" required>
+                                <option value="" disabled selected>レベル(4段階)</option>
+                                <option value="START/入門">START/入門</option>
+                                <option value="BASIC/基礎">BASIC/基礎</option>
+                                <option value="STANDARD/応用">STANDARD/応用</option>
+                                <option value="EXPERT/発展">EXPERT/発展</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="select-levels">
-                        <h5>学習者レベル</h5>
-                        <select id="learning-level" name="status" class="level-dropdown">
-                            <option value="" disabled selected>選択してください</option>
-                            <option value="START/入門">START/入門</option>
-                            <option value="BASIC/基礎">BASIC/基礎</option>
-                            <option value="STANDARD/応用">STANDARD/応用</option>
-                            <option value="EXPERT/発展">EXPERT/発展</option>
-                        </select>
+
+                    <!-- 2行目: 学習者レベルの説明 (全幅) -->
+                    <div class="learning-level">
+                        <h5>📚 各レベルの参考例</h5>
+                        <p class="level-text"><strong class="level-badge level-start">START</strong><span>この分野の用語は聞いたことがある</span></p>
+                        <p class="level-text"><strong class="level-badge level-basic">BASIC</strong><span>この分野の用語に少し理解がある</span></p>
+                        <p class="level-text"><strong class="level-badge level-standard">STANDARD</strong><span>この分野に何度か触れたことがある</span></p>
+                        <p class="level-text"><strong class="level-badge level-expert">EXPERT</strong><span>この分野の知識を使いこなせている</span></p>
+                    </div>
+
+                    <!-- 3行目: コメント入力欄 (全幅) -->
+                    <div class="comment-area ">
+                        <p class="comment-heading">コメント（任意　最大で140文字）</p>
+                        <textarea id="comment-message" name="message" class="comment-textarea" rows="5" placeholder="書籍の感想や評価を記入してください(最大140文字)" maxlength="140"></textarea>
                     </div>
                 </div>
+                <!-- 「登録」ボタン -->
+                <button type="submit" class="c-button submit">登録</button>
+            </form>
+        </article>
+    </div>
 
-                <!-- 2行目: 学習者レベルの説明 (全幅) -->
-                <div class="learning-level-descriptions">
-                    <h5>学習者レベル</h5>
-                    <p><strong>START/入門:</strong> ITの学習を始めたばかりの学習者レベル</p>
-                    <p><strong>BASIC/基礎:</strong> 基本的な知識を習得する学習者レベル</p>
-                    <p><strong>STANDARD/応用:</strong> 応用的な知識を習得する学習者レベル。</p>
-                    <p><strong>EXPERT/発展:</strong> 高度な専門知識を持ち、複雑な問題解決に取り組む学習者レベル。</p>
-                </div>
-
-                <!-- 3行目: コメント入力欄 (全幅) -->
-                <div class="comment-description-area ">
-                    <p class="comment-description-heading">  書籍のコメント </p>
-                    <textarea id="comment-message" name="message" class="comment-textarea" rows="5" placeholder="書籍の感想や評価を記入してください(最大140文字)" maxlength="140"></textarea>
-                </div>
-            </div>
-            <!-- コメント投稿ボタン -->
-            <button type="submit" class="c-button submit">登録</button>
-        </form>
-    </article>
 </div>
 
 {% endblock %}
