@@ -1,6 +1,14 @@
 /* books.css */
 /* @charset "utf-8";    /*.日本語の基本設定 */
 /*.投稿リスト全体 */
+html, body {   /*  デフォルトの余白がない設定にする   */
+    margin: 0;
+    padding: 0;
+}
+*, *::before, *::after { /* 全ての要素にbox-sizingの適用を行う */
+    box-sizing: border-box;
+}
+
 .book-list {
     display: grid;
     grid-template-columns: 1fr;
@@ -42,7 +50,7 @@
 .header-notification {
     position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
     bottom: 15px; /* 画像の下端から15px上 */
-    left: 17px; /* 画像の左端から15px右 */
+    left: 15px; /* 画像の左端から15px右 */
     color: white; /* 文字色を白に */
     font-size: 1em; /* テキストの大きさ */
     font-weight: bold; /* 太字 */
@@ -102,52 +110,12 @@ a{
     font-weight: bold;
 }
 
-.button-wrap{
-    margin: 2px 0;
-}
-
-.c-button{
-    color: #fff;
-    background-color: #3498db;
-    display: flex;
-    font-size: 15px;
-    padding: 4px 5px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
-}
-
 .c-button.tocomment{
-    width: 120px;
-    display: block; /* ボタンをブロック要素にする */
-    margin-left: auto; /* 左側のマージンを自動調整して右寄せにする */
-}
-
-.c-button.tocomment:hover{
-    background-color: #1d61d0;
-}
-
-/*書籍コメントへ ボタン*/
-.review-button {
-    margin-bottom: 0px; /* ボタンの下に少し余白 */
-    background-color: #3498db; /* 青 */
-    color: #FFFFFF;
-    padding: 4px 5px;
     width: 130px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    font-weight: bold;
-    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
-    display: block; /* ボタンをブロック要素にする */
     margin-left: auto; /* 左側のマージンを自動調整して右寄せにする */
 }
-
-/*書籍評価ボタンのホバー */
-.review-button:hover {
-    background-color: #1d61d0;
+.c-button.tocomment:hover{
+    background-color: var(--primary);
 }
 
 .star-rating {
@@ -271,67 +239,21 @@ a{
     line-height: 1.6;
 }
 
-.c-button.retouch{ /* コンポーネント修正ボタンの設定 */
-    padding: 3px 10px;
-}
 .c-button.retouch:hover{
-    background-color: #1d61d0;
+    background-color: var(--primary);
 }
 
 .c-button.delete{  /*.コンポーネント削除ボタンの設定 */
-    padding: 3px 10px;
-    background-color: #d01d1d; /* 赤色 */
+    background-color: var(--danger); /* 赤色 */
 }
 .c-button.delete:hover{
     background-color: #70080a;
 }
 /* 修正、削除ボタンの位置調整 */
 .button-wrap.comment-actions {  /*コンポーネント修正・削除の２つまとめ分 */
+    display: flex;  /*flex要素にして、ボタンを横並びにする */
     justify-content: flex-end; /* ボタンを右寄せにする */
     gap: 5px; /* ボタン間のスペース */
-    margin-top: 10px; /* コメントとの間に少しスペース */
+    margin-top: 6px; /* コメントとの間に少しスペース */
     padding-right: 5px; /* comment-description-areaのpaddingに合わせる */
-}
-
-/* 修正、削除ボタンの位置調整 */
-.comment-actions {
-    display: flex; /* ボタンを横並びにする */
-    justify-content: flex-end; /* ボタンを右寄せにする */
-    gap: 5px; /* ボタン間のスペース */
-    margin-top: 10px; /* コメントとの間に少しスペース */
-    padding-right: 5px; /* comment-description-areaのpaddingに合わせる */
-}
-
-/* 修正、削除ボタンのスタイル */
-.edit-button,
-.delete-button {
-    padding: 3px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    font-weight: bold;
-    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
-}
-
-/*修正ボタン*/
-.edit-button {
-    background-color: #3498db; /* 青 */
-    color: #FFFFFF;
-}
-
-/*修正ボタンのホバー */
-.edit-button:hover {
-    background-color: #1d61d0;
-}
-
-/*削除ボタン*/
-.delete-button {
-    background-color: #d01d1d; /* 赤色 */
-    color: #FFFFFF;
-}
-
-/* 削除ボタンのホバー */
-.delete-button:hover {
-    background-color: #70080a;
 }
