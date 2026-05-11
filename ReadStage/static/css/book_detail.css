@@ -1,6 +1,14 @@
 /* books.css */
 /* @charset "utf-8";    /*.日本語の基本設定 */
 /*.投稿リスト全体 */
+html, body {   /*  デフォルトの余白がない設定にする   */
+    margin: 0;
+    padding: 0;
+}
+*, *::before, *::after { /* 全ての要素にbox-sizingの適用を行う */
+    box-sizing: border-box;
+}
+
 .book-list {
     display: grid;
     grid-template-columns: 1fr;
@@ -42,7 +50,7 @@
 .header-notification {
     position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
     bottom: 15px; /* 画像の下端から15px上 */
-    left: 17px; /* 画像の左端から15px右 */
+    left: 15px; /* 画像の左端から15px右 */
     color: white; /* 文字色を白に */
     font-size: 1em; /* テキストの大きさ */
     font-weight: bold; /* 太字 */
@@ -90,24 +98,25 @@
 }
 
 /* ボタンコンポーネントの詳細設定 */
+a{
+    text-decoration: none;
+}
 
 .content-wrap{
     width: 100%;
     max-width: 375px;
     margin: auto;
     text-align: center;
-}
-
-.button-wrap{
-    margin: 2px 0;
+    font-weight: bold;
 }
 
 .c-button.tocomment{
-    width: 120px;
-    display: block; /* ボタンをブロック要素にする */
+    width: 130px;
     margin-left: auto; /* 左側のマージンを自動調整して右寄せにする */
 }
-
+.c-button.tocomment:hover{
+    background-color: var(--primary);
+}
 
 .star-rating {
     color: orange;
@@ -230,23 +239,17 @@
     line-height: 1.6;
 }
 
-.c-button.retouch{ /* コンポーネント修正ボタンの設定 */
-    padding: 3px 10px;
-}
-
 .c-button.delete{  /*.コンポーネント削除ボタンの設定 */
-    padding: 3px 10px;
     background-color: var(--danger); /* 赤色 */
 }
 .c-button.delete:hover{
     background-color: #70080a;
 }
-
 /* 修正、削除ボタンの位置調整 */
-.comment-actions {
-    display: flex; /* ボタンを横並びにする */
+.button-wrap.comment-actions {  /*コンポーネント修正・削除の２つまとめ分 */
+    display: flex;  /*flex要素にして、ボタンを横並びにする */
     justify-content: flex-end; /* ボタンを右寄せにする */
     gap: 5px; /* ボタン間のスペース */
-    margin-top: 10px; /* コメントとの間に少しスペース */
+    margin-top: 6px; /* コメントとの間に少しスペース */
     padding-right: 5px; /* comment-description-areaのpaddingに合わせる */
 }
