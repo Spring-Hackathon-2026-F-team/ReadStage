@@ -23,7 +23,7 @@
 .header-notification {
     position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
     bottom: 15px; /* 画像の下端から15px上 */
-    left: 17px; /* 画像の左端から17px右 */
+    left: 15px; /* 画像の左端から15px右 */
     color: white; /* 文字色を白に */
     font-size: 1em; /* テキストの大きさ */
     font-weight: bold; /* 太字 */
