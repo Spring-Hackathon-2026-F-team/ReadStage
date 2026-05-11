@@ -202,3 +202,23 @@ body {
     text-align: center;     /* 上下の中央 */
     white-space: nowrap;    /* 常に1行で表示 */
 }
+
+/* ------ buttonコンポーネント ------  */
+.c-button{
+    color: #fff;
+    background-color: #3498db;
+    display: block; /* ボタンをブロック要素にする */
+    font-size: 15px;
+    padding: 3px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
+    text-decoration: none;
+    border: none;
+    margin: 2px 0;
+}
+
+/* ホバー時の基本（青が濃くなる） */
+.c-button:hover{
+    background-color: var(--primary);
+}

@@ -1,9 +1,18 @@
 /* books.css */
+/* @charset "utf-8";    /*.日本語の基本設定 */
 /*.投稿リスト全体 */
+html, body {   /*  デフォルトの余白がない設定にする   */
+    margin: 0;
+    padding: 0;
+}
+*, *::before, *::after { /* 全ての要素にbox-sizingの適用を行う */
+    box-sizing: border-box;
+}
+
 .book-list {
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: 20px;
+    margin-top: 5px;
     background-color: #EDEDED;
     padding: 10px;
     border-radius: 5px;
@@ -17,7 +26,7 @@
     gap: 20px; /*それぞれの要素の間の間隔*/
     border: 1px solid #ddd; /*枠線を追加して区切る　*/
     background-color: #f8f8f8;
-    padding: 20px;
+    padding: 10px;
     border-radius: 8px;
 /*    max-width: 400px; */ /*.上限をスマホサイズに */
     max-width: min(400px, 100%); 
@@ -25,10 +34,40 @@
     box-sizing: border-box; 
 }
 
+/* ヘッダー画像とテキストを囲むコンテナ */
+.header-image-container {
+    width: 100%; /* 親要素の幅に合わせる */
+    margin-bottom: 5px; /* 下に余白 */
+    display: flex;
+    justify-content: center;    /* 左右の中央 */
+}
+
+.header-image-inner-container{
+    position: relative; /* 子要素（お知らせテキスト）の絶対配置の基準にする */
+}
+
+/* ヘッダー画像上の「評価詳細」テキストのスタイル */
+.header-notification {
+    position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
+    bottom: 15px; /* 画像の下端から15px上 */
+    left: 15px; /* 画像の左端から15px右 */
+    color: white; /* 文字色を白に */
+    font-size: 1em; /* テキストの大きさ */
+    font-weight: bold; /* 太字 */
+    /* 文字の枠線（アウトライン）をtext-shadowで表現 */
+    text-shadow:
+        -1px -1px 0 #1A2B3C, /* 左上 */
+         1px -1px 0 #1A2B3C, /* 右上 */
+        -1px  1px 0 #1A2B3C, /* 左下 */
+         1px  1px 0 #1A2B3C; /* 右下 */
+    margin: 0; /* pタグのデフォルトマージンをリセット */
+    white-space: nowrap; /* テキストが改行されないように */
+}
+
 /* 書籍タイトルのスタイル*/
 .book-title {
     grid-column: 1/-1; /* book-itemの全幅使用*/
-    margin-bottom: 0; /* book-itemのgapで調整するため*/
+    margin: 0; /* book-itemのgapで調整するため*/
     font-size: 15px;
     color: #333;
 }
@@ -55,28 +94,34 @@
     /* flex-grow: 1; /*.残りのスペースを全幅使用*/
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
 }
 
-/*書籍評価ボタン*/
-.review-button {
-    margin-bottom: 0px; /* ボタンの下に少し余白 */
-    background-color: #1D61D0; /* 青 */
-    color: #FFFFFF;
-    padding: 4px 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
+/* ボタンコンポーネントの詳細設定 */
+a{
+    text-decoration: none;
+}
+
+.content-wrap{
+    width: 100%;
+    max-width: 375px;
+    margin: auto;
+    text-align: center;
     font-weight: bold;
-    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
 }
 
-/*書籍評価ボタンのホバー */
-/*.review-button:hover {
-    background-color: #0056b3;
-} */
+.c-button.tocomment{
+    width: 130px;
+    margin-left: auto; /* 左側のマージンを自動調整して右寄せにする */
+}
+.c-button.tocomment:hover{
+    background-color: var(--primary);
+}
 
+.star-rating {
+    color: orange;
+    min-width: 70px;
+}
 
 /* book-categoryとbook-keywordに左パディング追加 */
 .book-category,
@@ -89,7 +134,7 @@
 .book-category h5,
 .book-keyword h5 {
     margin-top: 0;
-    margin-bottom: 8px; /* h5の下に少し余白 */
+    margin-bottom: 3px; /* h5の下に少し余白 */
     padding-left: 0; /* 親にパディングがあるので、h5自体には不要 */
 }
 
@@ -97,7 +142,7 @@
 .book-category ul,
 .book-keyword ul {
     margin: 0; /* デフォルトマージンをリセット */
-    padding: 0; /* ulのデフォルトパディングをリセット */
+    padding: 0 2px; /* ulのデフォルトパディングをリセット */
 }
 
 /* リストアイテムの余白調整 */
@@ -106,17 +151,19 @@
     list-style: none; /* リストタブの黒丸を消す */  
     background-color: #D2D2D2;
     border: 1px solid #fff;
-    padding: 5px; /* 上下左右5pxのパディング */
+    padding: 0 5px; /* 上下左右2pxのパディング */
+    text-indent: 3px;
     border-radius: 8px;
     margin-bottom: 2px;
     display: block; /* これで親要素の幅いっぱいに広げる */
+    height: 26px;
+    line-height: 26px;
 }
 
 .book-category ul li:last-child,
 .book-keyword ul li:last-child {
-    margin-bottom: 0; /* 最後のアイテムの下余白は不要 */
+    margin-bottom: 0px; /* 最後のアイテムの下余白は不要 */
 }
-
 
 /*.コメントのセクション */
 .comment-description-area {
@@ -124,7 +171,7 @@
     padding: 5px; /* 上下、左右のpadding */
     border: 1px solid #333333;
     border-radius: 0px;
-    background-color: #D2D2D2;
+    background-color: #EDEDED;
     margin: 0;
     flex-shrink: 0;
     display: flex;
@@ -149,17 +196,40 @@
 }
 
 /* 学習者レベル */
-.level-name { /*.学習者レベルの名前 */
-    font-weight: bold;
-    margin: 0px; /* 上下、左右のmargin */
-    width: 55%;
+.level-name-start,
+.level-name-basic,
+.level-name-expert { /*.学習者レベルの名前 */
+    margin: 0 2px; /* 上下、左右のmargin */
+    /* width: 55%; */
     text-indent: 5px;
     font-size: 1.1em;
     border: 0.5px solid #333333;
-    background-color: #27BBFA;
-    color: #003297;
     flex-shrink: 0;
 }
+
+.level-name-standard{
+    margin: 0 2px; /* 上下、左右のmargin */
+    text-indent: 3px;
+    font-size: 1.0em;
+    border: 0.5px solid #333333;
+    flex-shrink: 0;
+}
+
+.level-name-start,
+.level-name-basic,
+.level-name-standard,
+.level-name-expert {
+    min-width: 140px;
+    max-width: 160px;
+    font-weight: bold;
+    padding: 0 10px;
+    border-radius: 5px;
+}
+
+.level-name-start{ color: #167600; background-color: #98E607;}
+.level-name-basic{ color: #ffffff; background-color: #17A351;}
+.level-name-standard{ color: #003297; background-color: #27bbfa;}
+.level-name-expert { color: #ffffff; background-color: #003ea2;}
 
 /* コメント詳細のスタイル */
 .comment-description {
@@ -169,47 +239,17 @@
     line-height: 1.6;
 }
 
+.c-button.delete{  /*.コンポーネント削除ボタンの設定 */
+    background-color: var(--danger); /* 赤色 */
+}
+.c-button.delete:hover{
+    background-color: #70080a;
+}
 /* 修正、削除ボタンの位置調整 */
-.comment-actions {
-    display: flex; /* ボタンを横並びにする */
+.button-wrap.comment-actions {  /*コンポーネント修正・削除の２つまとめ分 */
+    display: flex;  /*flex要素にして、ボタンを横並びにする */
     justify-content: flex-end; /* ボタンを右寄せにする */
-    gap: 10px; /* ボタン間のスペース */
-    margin-top: 10px; /* コメントとの間に少しスペース */
+    gap: 5px; /* ボタン間のスペース */
+    margin-top: 6px; /* コメントとの間に少しスペース */
     padding-right: 5px; /* comment-description-areaのpaddingに合わせる */
 }
-
-/* 修正、削除ボタンのスタイル */
-.edit-button,
-.delete-button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    font-weight: bold;
-    transition: background-color 0.2s ease; /* ホバー時のアニメーション */
-}
-
-/*修正ボタン*/
-.edit-button {
-    background-color: #1D61D0; /* 青 */
-    color: #FFFFFF;
-}
-
-/*修正ボタンのホバー
-.edit-button:hover {
-    background-color: #0056b3;
-}
-*/
-
-/*削除ボタン*/
-.delete-button {
-    background-color: #dc3545; /* 赤色 */
-    color: #FFFFFF;
-}
-
-/*削除ボタンのホバー
-.delete-button:hover {
-    background-color: #c82333;
-}
-*/
