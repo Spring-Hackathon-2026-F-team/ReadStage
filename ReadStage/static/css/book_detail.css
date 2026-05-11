@@ -239,10 +239,6 @@ a{
     line-height: 1.6;
 }
 
-.c-button.retouch:hover{
-    background-color: var(--primary);
-}
-
 .c-button.delete{  /*.コンポーネント削除ボタンの設定 */
     background-color: var(--danger); /* 赤色 */
 }
