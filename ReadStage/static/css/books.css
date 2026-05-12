@@ -9,6 +9,12 @@
     border-radius: 5px;
 }
 
+/* aタグの文字色・下線表示をリセット */
+.book-list > a {
+    text-decoration: none;
+    color: inherit;
+}
+
 /*.書籍一冊分のセットをGridコンテナにする */
 .book-item {
     display: grid;
