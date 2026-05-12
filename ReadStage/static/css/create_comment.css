@@ -176,7 +176,6 @@
     width: 95px;
     padding: 2px;
     text-align: center;
-    color: var(--basic_text);
     font-size: 12px;
     font-weight: bold;
     flex-shrink: 0;     /* 潰れないように固定 */
@@ -193,7 +192,6 @@
 /* レベルバッジ右側の説明文 */
 .level-text span {
     font-size: 14px;
-    margin: 0 8px;
     color: var(--textcolor);
 }
 
