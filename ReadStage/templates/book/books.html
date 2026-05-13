@@ -17,6 +17,7 @@
 
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
 {% for book in books %} <!-- Jinja2のループを開始 -->
+<a href="/book/{{ book.id }}">
 <article class="book-item"> <!--書籍１冊分のセット枠-->
 <h3 class="book-title">{{ book.title }}</h3>
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
@@ -70,7 +71,7 @@
     </p>
 </div>
 </article>
-
+</a>
 {% endfor %} 
 <!-- Jinja2のループ終了 -->
 
