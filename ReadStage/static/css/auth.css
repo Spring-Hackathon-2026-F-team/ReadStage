@@ -45,14 +45,9 @@ input {
 
 /* ボタン */
 button[type="submit"] {
-    display: block;         /* ブロック要素にする */
     margin: 10px auto 0;    /* 左右のマージンautoで、ボタンを左右中央へ */
     width: 100px;
     height: 30px;
-    background-color: var(--primary);   /* 青 */
-    color: white;
-    border: none;
-    border-radius: 4px;
     font-weight: bold;    /* 太字にする */
     /* cursor: pointer;        重ねた時に指マークにする */
 }
@@ -65,8 +60,8 @@ button[type="submit"]:active {
 .flash-message {
     width: 100%;
     max-width: 340px;       /* フォームの幅と合わせる */
-    margin: 10px auto;      /* 左右中央に配置 */
-    padding: 0 10px;        /* 左右の余白 */
+    margin: 4px auto;      /* 左右中央に配置 */
+    padding: 0;        /* 左右の余白 */
     box-sizing: border-box; /* 枠の計算をフォームと合わせる */
     text-decoration: none;  /* 下線を消す */
 }
@@ -75,13 +70,11 @@ button[type="submit"]:active {
 .alert {
     box-sizing: border-box;
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
     font-size: 14px;
     text-align: center; /* 文字を中央に */
     color: var(--danger);   /* 赤 */
     /* 枠と背景を非表示にする */
-    background-color: transparent: /* 背景色を透明にする */
+    background-color: transparent; /* 背景色を透明にする */
     border: none;
 }
 

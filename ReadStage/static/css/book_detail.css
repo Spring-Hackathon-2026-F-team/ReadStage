@@ -34,35 +34,7 @@ html, body {   /*  デフォルトの余白がない設定にする   */
     box-sizing: border-box; 
 }
 
-/* ヘッダー画像とテキストを囲むコンテナ */
-.header-image-container {
-    width: 100%; /* 親要素の幅に合わせる */
-    margin-bottom: 5px; /* 下に余白 */
-    display: flex;
-    justify-content: center;    /* 左右の中央 */
-}
-
-.header-image-inner-container{
-    position: relative; /* 子要素（お知らせテキスト）の絶対配置の基準にする */
-}
-
-/* ヘッダー画像上の「評価詳細」テキストのスタイル */
-.header-notification {
-    position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
-    bottom: 15px; /* 画像の下端から15px上 */
-    left: 15px; /* 画像の左端から15px右 */
-    color: white; /* 文字色を白に */
-    font-size: 1em; /* テキストの大きさ */
-    font-weight: bold; /* 太字 */
-    /* 文字の枠線（アウトライン）をtext-shadowで表現 */
-    text-shadow:
-        -1px -1px 0 #1A2B3C, /* 左上 */
-         1px -1px 0 #1A2B3C, /* 右上 */
-        -1px  1px 0 #1A2B3C, /* 左下 */
-         1px  1px 0 #1A2B3C; /* 右下 */
-    margin: 0; /* pタグのデフォルトマージンをリセット */
-    white-space: nowrap; /* テキストが改行されないように */
-}
+/* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
 
 /* 書籍タイトルのスタイル*/
 .book-title {
