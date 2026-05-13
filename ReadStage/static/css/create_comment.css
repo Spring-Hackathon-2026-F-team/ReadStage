@@ -1,20 +1,25 @@
 /* create_comment.css */
 
-/* ヘッダー画像とテキストを囲むコンテナ */
+/* ヘッダー画像の領域 */
 .header-image-container {
-    position: relative; /* 子要素（お知らせテキスト）の絶対配置の基準にする */
     width: 100%; /* 親要素の幅に合わせる */
-    margin-bottom: 20px; /* 下に余白 */
+    margin-bottom: 5px; /* 下に余白 */
+    display: flex;
+    justify-content: center;    /* 左右の中央 */
 }
 
-/* ヘッダー画像自体はコンテナの幅いっぱいに */
+.header-image-inner-container {
+    position: relative; /* 子要素（お知らせテキスト）の絶対配置の基準にする */
+    display: inline-block; /* ヘッダー画像の幅に合わせる */
+}
+
 .header-image {
-    width: 100%;
+    /* display: block; ブロック要素にして余計な隙間をなくす */
+    max-width: 100%;
     height: auto;
-    display: block;
 }
 
-/* ヘッダー画像上の「書籍評価」テキストのスタイル */
+/* ヘッダー画像上の「評価詳細」テキストのスタイル */
 .header-notification {
     position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
     bottom: 15px; /* 画像の下端から15px上 */
@@ -32,229 +37,197 @@
     white-space: nowrap; /* テキストが改行されないように */
 }
 
-/* 投稿リスト全体 */
+/* コメントリスト外枠 */
+.comment-wrapper {
+    width: 100%;
+    background-color: var(--secondary_background);
+}
+
+/* コメントリスト全体の余白用 */
 .comment-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin-top: 20px;
-    background-color: #EDEDED;
-    padding: 20px;
-    border-radius: 5px;
+    padding: 10px; /* 一括でpaddingを制御 */
+    padding-top: 0;
+    box-sizing: border-box;
+    display: flex;          /* Flexbox */
+    flex-direction: column; /* 縦に並べる */
+    align-items: center;    /* 左右中央 */
 }
 
-/* 書籍一冊分のセットをGridコンテナにする */
+/* 書籍一冊分の領域 */
 .comment-item {
-    display: grid;
-    grid-template-columns: 1fr; /* 1列で、中の要素が縦に並ぶように */
-    gap: 20px; /* それぞれの要素の間の間隔 */
-    border: 1px solid #ddd; /* 枠線を追加して区切る */
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 400px; /* 上限をスマホサイズに */
-    margin: 5px auto; /* 上下に5pxの余白、左右には自動で中央寄せ */
+    background-color: var(--card_background);
+    margin: 10px auto;
+    padding: 5px 10px;
+    width: 100%;
+    max-width: 375px;
+    box-sizing: border-box;
 }
 
+/* 書籍のタイトル */
 .book-title {
-    grid-column: 1/-1; /* book-itemの全幅使用 */
-    margin-bottom: 0; /* book-itemのgapで調整するため */
-    font-size: 15px;
-    color: #333;
+    font-size: 16px;
+    color: var(--textcolor);
+    margin: 4px auto;
+    font-weight: bold;
 }
 
-
-/* 投稿内容： */
+/* 書籍画像からコメントまでの領域 */
 .comment-content {
-    display: grid;
-    grid-template-columns: 160px 1fr; /* 1列目: 画像の幅、2列目: 残り全部 */
-    grid-template-rows: auto auto auto; /* 1行目: 画像と評価、2行目: 学習レベル説明、3行目: コメント */
-    gap: 20px; /* グリッドアイテム間のスペース */
-    align-items: flex-start; /* 必要に応じて上揃えにする */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* グリッドアイテム間のスペース */
+    width: 100%;
 }
 
-/* 書籍画像 */
+/* 左側の書籍画像 */
 .book-image {
-    grid-column: 1 / 2; /* 1列目に配置 */
-    grid-row: 1 / 2; /* 1行目に配置 */
-    width: 100%; /* 親要素の幅いっぱいに */
-    height: auto;
+    width: 95px;
+    height: 134px;
     object-fit: cover;
-    border-radius: 4px;
+    flex-shrink: 0;
 }
 
-/* book-imageの右側のコンテンツ（評価とドロップダウン） */
+/* 右側のコンテンツ（評価と学習者レベル） */
 .book-info-right {
+    flex: 1;    /* 残りの幅をすべて使う */
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    grid-column: 2 / 3; /* 2列目に配置 */
-    grid-row: 1 / 2; /* 1行目に配置 */
+    min-width: 160px;    /* 狭くなりすぎないように */
+    gap: 24px;
+    padding-right: 10px;
+}
+
+/* 「評価」と「学習者レベル」の行の設定 */
+.book-evaluation,
+.select-levels {
+    display: flex;
+    align-items: center;
+    gap: 10px;   /* ラベルとドロップダウンの間隔 */
+    width: 100%;
+}
+
+/* 中央のラベル文字 */
+.book-evaluation h5,
+.select-levels h5 {
+    margin: 0;
+    width: 80px;
+    flex-shrink: 0; /* 幅を固定してつぶさない */
+    font-size: 14px;
+    white-space: nowrap;    /* 折り返しを防止 */
+}
+
+/* 右側のドロップダウン */
+.dropdown {
+    flex: 1;        /* 残りの幅をすべて使用する */
+    min-width: 0;   /* はみだし防止 */
+    box-sizing: border-box;
+    padding: 2px;
+    padding-right: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: var(--comment_background);
+    color: var(--textcolor);
+}
+
+.book-evaluation, 
+.select-levels {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
 }
 
 /* 学習レベルの説明セクション */
-.learning-level-descriptions {
-    grid-column: 1 / -1; /* 全幅を使用 */
-    grid-row: 2 / 3; /* 2行目に配置 */
-    background-color: #e0e0e0; /* 背景色 */
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 0.9em;
-    color: #333;
+.learning-level {
+    width: 100%;
+    background-color: var(--card_background);
+    padding: 0;
+    border-radius: 0px;
+    color: var(--textcolor);
 }
 
-.learning-level-descriptions h5 {
-    margin-top: 0;
-    margin-bottom: 8px;
-    font-size: 1em;
-    color: #444;
+.learning-level p {
+    letter-spacing: 0.05em; /* 文字間隔を少し空ける */
 }
 
-.learning-level-descriptions p {
-    margin: 0 0 5px 0; /* 段落間の余白 */
+/* 「📚各レベルの参考例」文字の部分 */
+.learning-level h5 {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    color: var(--textcolor);
+}
+
+.learning-level p {
+    margin: 0 0 2px 0; /* 段落間の余白 */
     line-height: 1.4;
 }
 
-.learning-level-descriptions p:last-child {
-    margin-bottom: 0;
+.level-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 14px;
 }
 
-/* 書籍のコメントセクション */
-.comment-description-area {
-    grid-column: 1 / -1; /* 全幅を使用 */
-    grid-row: 3 / 4; /* 3行目に配置 */
-    padding: 7px;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    background-color: #D2D2D2;
-}
-
-/* 評価入力フォームのスタイル */
-.rating-input {
-    width: 90%; /* 幅を調整 */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* ４つのレベルバッジ */
+.level-badge {
+    display: inline-block;
+    width: 95px;
     text-align: center;
-    font-size: 1em;
-    background-color: #D2D2D2; /* 背景色を合わせる */
-    color: #333;
-}
-
-/* 学習者レベルのドロップダウンのスタイル */
-.level-dropdown {
-    width: 100%; /* 親要素の幅いっぱいに */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-    background-color: #D2D2D2; /* 背景色を合わせる */
-    color: #333;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.2-16.1%208.1-3.8%204.9-4.9%2011.4-3.1%2017.4l133.7%20163.5c4.6%205.6%2011.9%208.7%2019.2%208.7s14.6-3.1%2019.2-8.7L290.1%2094.7c1.8-6-.1-12.5-3.1-17.4z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 12px;
-    padding-right: 30px;
-}
-
-/* h5 のデフォルトマージンを調整 */
-.book-evaluation h5,
-.select-levels h5 {
-    margin-top: 0;
-    margin-bottom: 8px;
-}
-
-/* 書籍のコメントセクション */
-.comment-description-area {
-    grid-column: 1/-1; /* book-itemの全幅使用 */
-    padding: 7px;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    background-color: #D2D2D2;
-}
-
-.comment-description-heading { /* 書籍のコメント */
+    font-size: 12px;
     font-weight: bold;
-    margin: 2px;
-    font-size: 1em;
-    color: #444;
+    flex-shrink: 0;     /* 潰れないように固定 */
+    margin-right: 8px; /* spanとの間隔 */
+    border-radius: 6px;
 }
 
-/* コメント入力欄 (textarea) のスタイル */
+/* 4つのレベルバッジの色 */
+.level-start    { background-color: var(--start_background)    ; color: var(--start_text); }
+.level-basic    { background-color: var(--basic_background)    ; color: var(--basic_text); }
+.level-standard { background-color: var(--standard_background) ; color: var(--standard_text); }
+.level-expert   { background-color: var(--expart_background)   ; color: var(--basic_text); }
+
+/* レベルバッジ右側の説明文 */
+.level-text span {
+    font-size: 14px;
+    color: var(--textcolor);
+}
+
+/* 書籍コメント欄 */
+.comment-area {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--comment_background);
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+/* 「コメント（任意　最大で140文字）」 */
+.comment-heading {
+    font-weight: bold;
+    font-size:  14px;
+    margin: 0;
+    color: var(--textcolor);
+}
+
+/* コメント入力欄 (textarea)  */
 .comment-textarea {
-    width: calc(100% - 20px); /* 親要素の幅からパディング分を引く */
+    width: 100%;
+    height: 120px;
+    margin-top: 5px;
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 0.95em;
-    line-height: 1.6;
     resize: vertical; /* 垂直方向のみリサイズ可能にする */
-    background-color: #fff; /* 背景色 */
-    color: #333;
-    margin-top: 5px; /* 上に少し余白 */
     box-sizing: border-box; /* パディングを幅に含める */
+    border: none;   /* 枠線を消す */
+    outline: none;  /* クリック時の枠線を消す */
+    /* background: var(--basic_text); */
+    /* color: var(--testcolor); */
 }
 
-/* コメント投稿ボタンのスタイル */
-.submit-button {
-    display: block; /* ブロック要素にして中央揃えしやすくする */
-    width: fit-content; /* 内容に合わせて幅を調整 */
-    margin: 20px auto 0 auto; /* 上に20px、左右自動で中央揃え */
-    padding: 12px 25px;
-    background-color: #1D61D0; /* 青色のボタン */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* スマホ対応の調整 */
-@media (max-width: 600px) {
-    .comment-content {
-        /* スマホでも2列にする */
-        /* 画像の幅を少し小さくして、右側のスペースを確保するよ */
-        grid-template-columns: 120px 1fr; /* 例: 画像を120px、右側を残り全部 */
-        grid-template-rows: auto auto auto; /* 1行目: 画像と評価、2行目: 学習レベル説明、3行目: コメント */
-        gap: 15px; /* スマホ向けにギャップを少し調整 */
-    }
-    .book-image {
-        grid-column: 1 / 2; /* 1列目1行目 */
-        grid-row: 1 / 2;
-        width: 100%; /* 親要素の幅いっぱいに */
-        max-width: none; /* 以前のmax-width: 160px; を解除 */
-        margin: 0; /* 中央寄せを解除 */
-    }
-    .book-info-right {
-        grid-column: 2 / 3; /* 2列目1行目 */
-        grid-row: 1 / 2;
-        align-items: flex-start; /* 要素を左揃えにする */
-    }
-    .learning-level-descriptions {
-        grid-column: 1 / -1; /* 全幅 */
-        grid-row: 2 / 3; /* 2行目 */
-    }
-    .comment-description-area {
-        grid-column: 1 / -1; /* 全幅 */
-        grid-row: 3 / 4; /* 3行目 */
-    }
-    /* book-info-right内の要素の幅を調整 */
-    .rating-input {
-        width: 100%; /* 親要素の幅いっぱいに */
-    }
-    .select-levels {
-        width: 100%; /* 親要素の幅いっぱいに */
-        text-align: left; /* h5を左寄せに戻す */
-    }
-    .select-levels h5 {
-        padding-left: 0; /* 親要素のpaddingに合わせる */
-    }
-    .level-dropdown {
-        width: 100%; /* 親要素の幅いっぱいに */
-        margin: 0; /* 中央寄せを解除 */
-    }
+/* 「登録」ボタン */
+.c-button.submit {
+    line-height: 20px; /* テキストをボタンの上下中央に配置 */
+    margin: 10px auto; /* 左右の中央 */
 }
