@@ -7,12 +7,11 @@
 {% endblock %}
 
 {% block content %}
+<p>Error Page</p>
 
 <div class="header-image-container">
-    <div class="header-image-inner-container">
-        <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
-        <p class="header-notification">お知らせ</p>
-    </div>
+    <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+    <p class="header-notification">お知らせ</p>
 </div>
 
 <div class="error-wrapper">
@@ -25,7 +24,7 @@
             </div>
 
             <img src="{{ url_for('static', filename='image/app_logo.png') }}" class="app-logo-image" alt="アプリロゴ画像"> <!-- style属性を削除し、クラスを追加 -->
-            <a href='book/books.html' class="c-button">IT書籍を探すなら</a>
+            <a href='book/books.html' class="button-link">IT書籍を探すなら</a>
     </div>
 </div>
 
