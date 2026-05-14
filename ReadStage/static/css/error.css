@@ -1,6 +1,38 @@
 /* 404/500/その他エラー画面のCSS */
 
-/* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
+/* ヘッダー画像とテキストを囲むコンテナ */
+.header-image-container {
+    position: relative; /* 子要素（お知らせテキスト）の配置の基準にする */
+    width: 100%; /* 親要素の幅に合わせる */
+    margin-bottom: 20px; /* 下に余白 */
+}
+
+/* ヘッダー画像自体はコンテナの幅いっぱいに */
+.header-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* お知らせテキストのスタイル */
+.header-notification {
+    position: absolute; /* 親要素（.header-image-container）を基準に配置 */
+    bottom: 15px; /* 画像の下端から15px上 */
+    left: 20px; /* 画像の左端から20px右 */
+
+    color: white; /* 文字色を白に */
+    font-size: 1.0em; /* テキストの大きさ */
+    font-weight: bold; /* 太字 */
+    
+    /* 文字の枠線（アウトライン）をtext-shadowで表現 */
+    text-shadow:
+        -1px -1px 0 #1A2B3C, /* 左上 */
+         1px -1px 0 #1A2B3C, /* 右上 */
+        -1px  1px 0 #1A2B3C, /* 左下 */
+         1px  1px 0 #1A2B3C; /* 右下 */
+    margin: 0; /* pタグのデフォルトマージンをリセット */
+    white-space: nowrap; /* テキストが改行されないように */
+}
 
 /* 全体の配置を調整するためのラッパー */
 .error-wrapper {
@@ -21,13 +53,13 @@
     text-align: center; /* 枠内のテキストやインライン要素を中央揃え */
     border-radius: 10px; /* 角を少し丸くする */
     box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* 影をつける */
-    background-color: var(card_background); /* 背景色 */
+    background-color: #EDEDED; /* 背景色 */
 }
 
 /* エラー番号のスタイル */
 .error-num {
     font-size: 1.5em; /* 数字を大きく */
-    color: var(textcolor); /* エラーコード色 */
+    color: #000000; /* エラーコード色 */
     margin-bottom: 15px;
 }
 
@@ -36,6 +68,15 @@
     margin-bottom: 8px; /* 段落間の余白 */
     line-height: 1.6; /* 行の高さ */
     font-size: 0.9em; /* 親要素のフォントサイズの倍率 */
+}
+
+
+/* ヘッダー画像のスタイル */
+.header-image {
+    width: 100%;
+    height: auto;
+    display: block; /* ブロック要素にして、必要ならmargin: auto;で中央揃え */
+    margin-bottom: 20px; /* 下に余白 */
 }
 
 /* アプリロゴ画像のスタイル */
@@ -48,8 +89,18 @@
 }
 
 /* ボタンリンクのスタイル */
-.c-button {
+.button-link {
     display: inline-block; /* ボタンのように見せるため */
+    background-color: #3498db; /* ボタンの背景色 */
+    color: white; /* 文字色 */
     padding: 8px 20px; /* ボタンのパディング */
+    text-decoration: none; /* 下線なし */
+    border-radius: 5px; /* 角を丸く */
+    margin-top: 5px; /* 上に余白 */
     font-weight: bold;
+    transition: background-color 0.3s ease; /* ホバー時のアニメーション */
+}
+
+.button-link:hover {
+    background-color: #1D61D0;
 }
