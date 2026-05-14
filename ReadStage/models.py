@@ -173,6 +173,20 @@ class Recommend:
     finally:
       db_pool.release(conn)
 
+  @classmethod
+  def get_book_recommend(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = 'SELECT id, ... FROM recommends WHERE book_id=%s;'
+        cur.execute(sql, (book_id, ))
+        recommend = cur.fetchone()
+        return recommend
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
 
   @classmethod
   def create(cls, user_id, book_id, evaluation, status, message):
@@ -190,4 +204,6 @@ class Recommend:
       abort(500)
     finally:
       db_pool.release(conn)
-    
+
+class Category:
+  pass;

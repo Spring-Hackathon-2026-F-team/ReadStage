@@ -18,12 +18,12 @@
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
 
 <article class="book-item"> <!--書籍１冊分のセット枠-->
-<h3 class="book-title">マスタリングTCP/IP―入門編―(第6版)</h3>
+<h3 class="book-title">{{ book.title }}</h3>
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
-    <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の画像" class="book-image">
+    <img src="{{ url_for('static', filename='image/' ~ book.id ~ '.jpg') }}" alt="{{ book.title }}の画像" class="book-image">
     <div class="book-info-right"> <!-- 右側の列用 -->
         <div class="content-wrap">
-            <a href="/create_comment.html" class="c-button tocomment">書籍コメントへ</a> <!--ボタンコンポーネントの設定-->
+            <a href="/book/{{ book.id }}/comment" class="c-button tocomment">書籍コメントへ</a> <!--ボタンコンポーネントの設定-->
         </div>
         <div class="book-category">
             <h5>カテゴリー</h5>

@@ -139,8 +139,12 @@ def books_view():
 # 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
 def book_id_view(book_id):
+    # 書籍存在チェック
+    book = Book.get_book(book_id)
+    if book is None:
+        abort(400)        
 
-    return render_template('book/book_detail.html')
+    return render_template('book/book_detail.html', book=book)
 
 
 # 書籍コメントページ表示
