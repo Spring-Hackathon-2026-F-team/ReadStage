@@ -1,7 +1,4 @@
 /* books.css */
-
-/* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
-
 /*.投稿リスト全体 */
 .book-list {
     display: grid;
