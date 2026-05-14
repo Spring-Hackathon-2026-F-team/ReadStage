@@ -7,8 +7,13 @@
 {% endblock %}
 
 {% block content %}
-<p>Top Page</p>
-<img src="{{ url_for('static', filename='image/Header-image.png') }}" style="width:100%; height:auto;" alt="ヘッダーイメージ画像" class="d-block">
+
+<div class="header-image-container">
+    <div class="header-image-inner-container">
+      <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+       <p class="header-notification">トップページ</p>
+    </div>
+</div>
 
 <div class="search-container">
     <input type="search" placeholder="検索" class="search-input">
@@ -17,7 +22,6 @@
 
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
 {% for book in books %} <!-- Jinja2のループを開始 -->
-<a href="/book/{{ book.id }}">
 <article class="book-item"> <!--書籍１冊分のセット枠-->
 <h3 class="book-title">{{ book.title }}</h3>
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
@@ -71,7 +75,6 @@
     </p>
 </div>
 </article>
-</a>
 {% endfor %} 
 <!-- Jinja2のループ終了 -->
 
