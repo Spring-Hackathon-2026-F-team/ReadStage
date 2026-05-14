@@ -1,7 +1,4 @@
 /* books.css */
-
-/* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
-
 /*.投稿リスト全体 */
 .book-list {
     display: grid;
@@ -10,6 +7,12 @@
     background-color: #EDEDED;
     padding: 10px;
     border-radius: 5px;
+}
+
+/* aタグの文字色・下線表示をリセット */
+.book-list > a {
+    text-decoration: none;
+    color: inherit;
 }
 
 /*.書籍一冊分のセットをGridコンテナにする */
