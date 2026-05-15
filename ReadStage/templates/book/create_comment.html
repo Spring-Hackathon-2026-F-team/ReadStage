@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}書籍評価{% endblock %}
+{% block title %}書籍コメント{% endblock %}
 
 {% block page_css %}
 <link rel="stylesheet" href="{{url_for('static', filename='css/create_comment.css') }}">
@@ -11,7 +11,7 @@
 <div class="header-image-container">
     <div class="header-image-inner-container">
         <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
-        <p class="header-notification">書籍評価ページ</p>
+        <p class="header-notification">書籍コメントページ</p>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
                     <div class="book-info-right">
                         <div class="book-evaluation">
                             <h5>評価</h5>
-                            <select name="evaluation" class="dropdown" required>
+                            <select name="evaluation" class="dropdown">
                                 <option value="" disabled selected>1～5の整数</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="select-levels">
                             <h5>学習者レベル</h5>
-                            <select name="status" class="dropdown" required>
+                            <select name="status" class="dropdown">
                                 <option value="" disabled selected>レベル(4段階)</option>
                                 <option value="START/入門">START/入門</option>
                                 <option value="BASIC/基礎">BASIC/基礎</option>
@@ -75,3 +75,4 @@
 </div>
 
 {% endblock %}
+ 
