@@ -87,8 +87,3 @@ a {
     color: var(--primary);
     text-decoration: none;  /* 下線を消す */
 }
-
-/* 
-a:hover {
-    text-decoration: underline; /* マウスを乗せた時だけ下線を表示 */
-} */
