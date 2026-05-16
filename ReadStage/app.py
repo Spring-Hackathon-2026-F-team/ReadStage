@@ -229,7 +229,7 @@ def create_comment(book_id):
                      status=status,
                      message=message)
 
-    # 詳細・コメントページにリダイレクト
+    # 評価詳細ページにリダイレクト
     return redirect(url_for('book_id_view', book_id=book_id))
 
 
