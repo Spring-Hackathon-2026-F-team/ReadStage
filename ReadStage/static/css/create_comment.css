@@ -204,3 +204,25 @@
     line-height: 20px; /* テキストをボタンの上下中央に配置 */
     margin: 10px auto; /* 左右の中央 */
 }
+
+/* フラッシュメッセージの枠 */
+.flash-message {
+    width: 100%;
+    max-width: 340px;       /* フォームの幅と合わせる */
+    margin: 4px auto;       /* 左右中央に配置 */
+    padding: 0;             /* 左右の余白 */
+    box-sizing: border-box; /* 枠の計算をフォームと合わせる */
+    text-decoration: none;  /* 下線を消す */
+}
+
+/* 個別のメッセージ */
+.alert {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 14px;
+    text-align: center; /* 文字を中央に */
+    color: var(--danger);   /* 赤 */
+    /* 枠と背景を非表示にする */
+    background-color: transparent; /* 背景色を透明にする */
+    border: none;
+}
