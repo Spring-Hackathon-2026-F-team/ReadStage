@@ -182,6 +182,32 @@ def create_comment(book_id):
     if recommend is not None:
         abort(400)
 
+
+
+# 188～207行目、create_comment.htmlのフラッシュメッセージ 仮作成（おにちゃん）
+    # フォームデータの取得
+    evaluation_raw = request.form.get("evaluation", "").strip()
+    status = request.form.get("status", "").strip()
+    message = request.form.get("message", "")
+
+    # バリデーションチェック（未選択チェック）
+    if evaluation_raw == "" or status == "":
+        flash("「評価」と「学習者レベル」は必須入力です。", "error")
+        # リダイレクトではなく、bookデータを渡して同じページを再表示
+        return render_template('book/create_comment.html', book=book)
+    
+    # int型に変換
+    evaluation = int(evaluation_raw)
+
+    # 書籍評価情報を登録
+    Recommend.create(user_id=user_id,
+                     book_id=book_id,
+                     evaluation=evaluation,
+                     status=status,
+                     message=message)
+    
+
+
     # 書籍評価情報を登録
     evaluation = int(request.form.get("evaluation"))
     status = request.form.get("status")
