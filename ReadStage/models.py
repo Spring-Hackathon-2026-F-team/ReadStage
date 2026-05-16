@@ -178,7 +178,7 @@ class Recommend:
     conn = db_pool.get_conn()
     try:
       with conn.cursor() as cur:
-        sql = 'SELECT id, ... FROM recommends WHERE book_id=%s;'
+        sql = 'SELECT id, title FROM recommends WHERE book_id=%s;'
         cur.execute(sql, (book_id, ))
         recommend = cur.fetchone()
         return recommend
@@ -206,4 +206,33 @@ class Recommend:
       db_pool.release(conn)
 
 class Category:
-  pass;
+  @classmethod
+  def get_category(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor(pymysql.cursors.DictCursor) as cur:
+        sql = 'SELECT id, category_id FROM categories WHERE book_id=%s;'
+        cur.execute(sql, (id, book_id))
+        category = cur.fetchone()
+        return category
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+      
+class Keyword:
+  @classmethod
+  def get_keyword(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor(pymysql.cursors.DictCursor) as cur:
+        sql = 'SELECT id, keyword_id FROM book_keywords WHERE keyword_id=%s;'
+        cur.execute(sql, (id, keyword))
+        keyword = cur.fetchall()
+        return keyword
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
