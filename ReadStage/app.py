@@ -184,7 +184,7 @@ def create_comment(book_id):
 
 
 
-/* 188～207行目、create_comment.htmlのフラッシュメッセージ 仮作成（おにちゃん） */
+# 188～207行目、create_comment.htmlのフラッシュメッセージ 仮作成（おにちゃん）
     # フォームデータの取得
     evaluation_raw = request.form.get("evaluation", "").strip()
     status = request.form.get("status", "").strip()
