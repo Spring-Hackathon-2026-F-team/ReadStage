@@ -131,10 +131,10 @@ def books_view():
         return redirect(url_for('login_view'))
     else:
         # Bookモデルクラスに整形された書籍データのリストを渡す
-        # ほしい情報(タイトル、カテゴリ、キーワード、まえがき)
+        # タイトル、カテゴリ、キーワード、まえがきを渡す
+        # book_idごとの4つのレベルの評価点を渡す
         books = Book.get_all()
         return render_template('book/books.html', books=books)
-
 
 # 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])

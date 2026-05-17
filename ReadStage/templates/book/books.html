@@ -44,29 +44,27 @@
         </div>
     </div>
 </div>
-<!-- 学習レベルの評価データを最終的には動的に書き換える -->
+<!-- 学習レベルの評価データを動的に表示 -->
 <div class="book-levels">
     <p>学習レベル</p>
-    <div class="level-item">
-        <span class="level-name-start">START/入門</span>
-        <span class="star-rating">★★★☆☆</span>
-        <span class="score">3.4</span>
-    </div>
-    <div class="level-item">
-        <span class="level-name-basic">BASIC/基礎</span>
-        <span class="star-rating">★★★★☆</span>
-        <span class="score">3.9</span>
-    </div>
-    <div class="level-item">
-        <span class="level-name-standard"> STANDARD/応用</span>
-        <span class="star-rating">★★★★★</span>
-        <span class="score">4.5</span>
-    </div>
-    <div class="level-item">
-        <span class="level-name-expert">EXPERT/発展</span>
-        <span class="star-rating">★★★★★</span>
-        <span class="score">4.6</span>
-    </div>
+    <!-- 各ステータスをループして表示するための表示用のリストを定義 -->
+    {% set statuses = ['START/入門', 'BASIC/基礎', 'STANDARD/応用', 'EXPERT/発展'] %}
+    {% for status in statuses %}
+    <!-- book.average_evaluationsから現在のstatusの評価点を取得。評価がない場合は0.0を表示 -->
+        {% set avg_score = book.average_evaluations.get(status, 0.0) %} 
+        <div class="level-item">
+            <!-- CSSクラス名用にステータス名を加工（例:"START/入門" -> "level-name-start-入門"）-->
+            <!-- ステータス名に半角スペースが入った場合は'-'で置き換え --> 
+            <span class="level-name-{{ status|lower|replace(' ', '-')|replace('/', '-') }}">{{ status }}</span>
+            <span class="star-rating">
+                <!-- 評価点を四捨五入し、さらに整数型に変換する -->
+                {% set rounded_score = avg_score|round|int %}
+                <!-- 四捨五入した数だけ★を表示し、残りを☆で埋める -->
+                {{ '★' * rounded_score }}{{ '☆' * (5 - rounded_score) }}
+            </span>
+            <span class="score">{{ avg_score|float|round(1) }}</span> <!-- 小数点以下1桁で表示 -->
+        </div>
+    {% endfor %}
 </div>
 
 <div class="book-description-area">
