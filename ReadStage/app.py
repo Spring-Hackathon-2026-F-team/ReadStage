@@ -139,8 +139,23 @@ def books_view():
 # 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
 def book_id_view(book_id):
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
+    
+    # 特定の書籍の詳細情報を取得
+    book = Book.get_book_detail(book_id) # 新しいメソッドを呼び出す
+    if book is None:
+        abort(404) # 書籍が見つからなければ404エラー
 
-    return render_template('book/book_detail.html')
+    # その書籍に対するすべてのコメントと評価を取得
+    comments = Recommend.get_comments_by_book_id(book_id)
+
+    # テンプレートに書籍情報とコメント情報を渡す
+    return render_template('book/book_detail.html', 
+                        book=book, 
+                        comments=comments,
+                        current_user_id=user_id) #current_user_idを渡す
 
 
 # 書籍コメントページ表示

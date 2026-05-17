@@ -18,80 +18,78 @@
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
 
 <article class="book-item"> <!--書籍１冊分のセット枠-->
-<h3 class="book-title">マスタリングTCP/IP―入門編―(第6版)</h3>
+<h3 class="book-title">{{ book.title }}</h3> <!-- 書籍タイトルを動的に表示 -->
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
-    <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の画像" class="book-image">
+    <img src="{{ url_for('static', filename='image/' + book.id|string + '.jpg') }}" alt="{{book.title}}の画像" class="book-image">
     <div class="book-info-right"> <!-- 右側の列用 -->
         <div class="content-wrap">
-            <a href="/create_comment.html" class="c-button tocomment">書籍コメントへ</a> <!--ボタンコンポーネントの設定-->
+            <!-- 書籍コメント投稿ページへのリンクを動的に生成 -->
+            <a href="{{ url_for('book_comment_view', book_id=book.id) }}" class="c-button tocomment">書籍コメントへ</a> <!--ボタンコンポーネントの設定-->
         </div>
         <div class="book-category">
             <h5>カテゴリー</h5>
                 <ul>
-                    <li>ネットワーク</li>
+                    <li>{{book.category}}</li> <!-- カテゴリを動的に表示 -->
                 </ul>
         </div>
         <div class="book-keyword">
             <h5>キーワード</h5>
                 <ul>
-                     <li>TCP/IP</li>
-                     <li>OSI参照モデル</li>
-                     <li>IP</li>
+                    {% for keyword in book.keywords %} <!-- キーワードをループで表示 -->
+                        <li>{{ keyword }}</li>
+                    {% endfor %}
                 </ul>
         </div>
     </div>
 </div>
 
+<!-- 個別のコメントをループで表示するセクション -->
+{% for comment in comments %}
 <div class="comment-description-area">
-    <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
-        <p class="level-name-standard">STANDARD/応用</p>
+    <div class="comment-meta-info">
+        <!-- コメントのstatusと評価点を表示 -->
+        <p class="level-name-{{ comment.status|lower|replace(' ', '-')|replace('/', '-') }}">{{ comment.status }}</p>
         <div class="level-item">
-            <span class="star-rating">★★★☆☆</span>
-            <span class="star-rating-num">5.0</span>
+            <span class="star-rating">
+                {# コメントの評価点を四捨五入し、整数型に変換 #}
+                {% set rounded_comment_score = comment.evaluation|round|int %}
+                {{ '★' * rounded_comment_score }}{{ '☆' * (5 - rounded_comment_score) }}
+            </span>
+            <span class="star-rating-num">{{ comment.evaluation|float|round(1) }}</span>
         </div>
     </div>
-    <p class="comment-updated-at-text">投稿日時:2026.5.2 <!-- コメント更新日 -->
-        <span id="comment-updated_at"></span>
+    <p class="comment-updated-at-text">
+        投稿日時: {{ comment.created_at.strftime('%Y.%m.%d %H:%M') }} <!-- 投稿日時をフォーマット -->
     </p>
 
     <p class="comment-description">
-        ネットワークエンジニア以外でもすべてのエンジニアにおすすめしたい書籍です。<!-- 紹介文の表示 -->
+        {{ comment.message }} <!-- コメントメッセージを表示 -->
     </p>
     <div class="content-wrap">
+        {#
+        修正・削除ボタンは、現在のユーザーがコメント投稿者である場合にのみ表示するロジックが必要。
+        もしapp.pyでcurrent_user_idを渡しているなら、以下のように条件分岐できる。
+        {% if current_user_id == comment.user_id %}
+            <div class="button-wrap comment-actions">
+                <a href="{{ url_for('edit_comment_view', comment_id=comment.id) }}" class="c-button retouch">修正</a>
+                <a href="{{ url_for('delete_comment_process', comment_id=comment.id) }}" class="c-button delete">削除</a>
+            </div>
+        {% endif %}
+        今回は表示のみに集中するため、一旦ダミーのボタンとしておくね。
+        #}
+
         <div class="button-wrap comment-actions">
-            <a href="create_comment.html" class="c-button retouch">修正</a><!--修正ボタン-->
-            <a href="book_delete.html" class="c-button delete">削除</a><!--削除ボタン-->
+            <a href="#" class="c-button retouch">修正</a>
+            <a href="#" class="c-button delete">削除</a>
         </div>
     </div>
 </div>
-
+{% else %} <!-- コメントがない場合の表示 -->
 <div class="comment-description-area">
-    <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
-        <p class="level-name-start">START/入門</p>
-        <div class="level-item">
-            <span class="star-rating">★★★★☆</span>
-            <span class="star-rating-num">4.0</span>
-        </div>
-    </div>
-    <p class="comment-updated-at-text">投稿日時:2026.5.8 <!-- コメント更新日 -->
-        <span id="comment-updated_at"></span>
-    </p>
-
-    <p class="comment-description">
-        ある程度、勉強した後に読むと頭に入りやすいです。
-        httpの歴史や成り立ちがじっくり描かれており、わかりやすいです。
-        知識詰め込みってタイプの本ではないので読みやすかったです。
-        GET、POST、PUTなどの説明が分かりやすく、Web技術入門のための良書だ
-        と感じています。<!-- 紹介文の表示 -->
-    </p>
-    <div class="content-wrap"> <!-- 修正、削除ボタン -->
-        <div class="button-wrap comment-actions">
-            <a href="create_comment.html" class="c-button retouch">修正</a>
-            <a href="book_delete.html" class="c-button delete">削除</a>
-        </div>
-    </div>
+    <p>まだコメントがありません。</p>
 </div>
-</article>
+{% endfor %}
 
+</article>
 </div>
 {% endblock %}

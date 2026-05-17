@@ -52,7 +52,9 @@ class Book:
                     'keywords': [] # キーワードはリストとして保持
                 }
             # 該当書籍のキーワードリストに現在のキーワードを追加
-            books_data[book_id]['keywords'].append(row['keyword'])
+            #重複チェックとNone値の追加回避を行う
+            if row['keyword'] and row['keyword'] not in books_data[book_id]['keywords']:
+              books_data[book_id]['keywords'].append(row['keyword'])
         #辞書の値をリストの中に入れて返す
         # final_books_list = [ {書籍1の辞書}, {書籍2の辞書}, ... ]
         #例：書籍1の辞書{'id': 1, 'title': 'Python入門', 'category': 'プログラミング', ...}
@@ -94,6 +96,76 @@ class Book:
             #[{id:1, title:書籍名, category:カテゴリ名, introduction:まえがき, keywords:[*,*,*],
             # 'average_evaluations': {'START/入門': 3.5, 'BASIC/基礎': 3.5, ...}}]
       return final_books_list
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
+  @classmethod
+  #特定の書籍の詳細情報を取得するメソッド
+  def get_book_detail(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor(pymysql.cursors.DictCursor) as cur:
+        # 1. 特定の書籍の基本情報とキーワードを取得
+        sql_book_info = """
+          SELECT
+            b.id,
+            b.title,
+            c.category,
+            k.keyword,
+            b.introduction
+          FROM books AS b
+          JOIN book_categories AS bc ON
+            b.id = bc.book_id
+          JOIN categories AS c ON
+            bc.category_id = c.id
+          LEFT JOIN book_keywords AS bk ON
+            b.id = bk.book_id
+          LEFT JOIN keywords AS k ON
+            bk.keyword_id = k.id
+          WHERE b.id = %s;
+        """
+        cur.execute(sql_book_info, (book_id,))
+        rows = cur.fetchall()
+
+        if not rows:
+          return None # 該当する書籍がなければNoneを返す
+
+        # 書籍データを整形（キーワードをリストにまとめる）
+        book_data = {
+            'id': rows[0]['id'],
+            'title': rows[0]['title'],
+            'category': rows[0]['category'],
+            'introduction': rows[0]['introduction'],
+            'keywords': []
+        }
+        for row in rows:
+            #重複チェックとNone値の追加回避を行う
+            if row['keyword'] and row['keyword'] not in book_data['keywords']:
+                book_data['keywords'].append(row['keyword'])
+
+        # 2. その書籍の平均評価点を取得
+        sql_evaluations = """
+          SELECT
+            status,
+            ROUND(AVG(evaluation), 1) AS average_evaluation
+          FROM recommends
+          WHERE book_id = %s
+          GROUP BY status;
+        """
+        cur.execute(sql_evaluations, (book_id,))
+        average_evaluations_list = cur.fetchall()
+
+        # 3. 平均評価点を書籍データにマージ
+        evaluations_by_status = {}
+        for eval_item in average_evaluations_list:
+            evaluations_by_status[eval_item['status']] = eval_item['average_evaluation']
+        
+        book_data['average_evaluations'] = evaluations_by_status
+
+      return book_data
     except pymysql.Error as e:
       print(f'エラーが発生しています：{e}')
       abort(500)
@@ -173,7 +245,6 @@ class Recommend:
     finally:
       db_pool.release(conn)
 
-
   @classmethod
   def create(cls, user_id, book_id, evaluation, status, message):
     conn = db_pool.get_conn()
@@ -190,4 +261,30 @@ class Recommend:
       abort(500)
     finally:
       db_pool.release(conn)
-    
+
+  @classmethod
+  def get_comments_by_book_id(cls, book_id): # 特定の書籍のコメントと評価を取得するメソッド
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor(pymysql.cursors.DictCursor) as cur:
+        sql = """
+          SELECT
+            r.evaluation,
+            r.status,
+            r.message,
+            r.user_id, -- ここでコメント投稿者のuser_idを取得する
+            r.created_at
+          FROM recommends AS r
+          JOIN users AS u ON
+            r.user_id = u.id
+          WHERE r.book_id = %s
+          ORDER BY r.created_at DESC;
+        """
+        cur.execute(sql, (book_id,))
+        comments = cur.fetchall()
+      return comments
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
