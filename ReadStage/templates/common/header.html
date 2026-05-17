@@ -26,50 +26,44 @@
         <!-- 新規登録ページ -->
         <!-- 「　　　　　」「新規登録ページ」「　　　　　」を表示 -->
         {% if request.endpoint == 'signup_view' %}
-         <div class="nav-left">&nbsp;</div>
-         <div class="nav-center"><span class="nav-text">新規登録ページ</span></div>
-         <div class="nav-right">&nbsp;</div>
+          <div class="nav-left">&nbsp;</div>
+          <div class="nav-center"><span class="nav-text">新規登録ページ</span></div>
+          <div class="nav-right">&nbsp;</div>
 
         <!-- ログインページ -->
         <!--「　　　　　」「ログインページ」「　　　　　」を表示 -->
         {% elif request.endpoint == 'login_view' %}
-         <div class="nav-left">&nbsp;</div>
-         <div class="nav-center"><span class="nav-text">ログインページ</span></div>
-         <div class="nav-right">&nbsp;</div>
+          <div class="nav-left">&nbsp;</div>
+          <div class="nav-center"><span class="nav-text">ログインページ</span></div>
+          <div class="nav-right">&nbsp;</div>
 
         <!-- 書籍一覧（トップ）ページ -->
         <!-- 「　　　　　」「　　　　　」「ログアウト▶」を表示 -->
         {% elif request.endpoint == 'books_view' %}
-         <div class="nav-left">&nbsp;</div>
-         <div class="nav-center">&nbsp;</div>
-         <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
+          <div class="nav-left">&nbsp;</div>
+          <div class="nav-center">&nbsp;</div>
+          <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
-        <!-- 詳細・コメントページ -->
+        <!-- 詳細詳細ページ -->
         <!-- 「◀戻る」「　　　　　」「ログアウト▶」を表示 -->
         {% elif request.endpoint == 'book_id_view' %}
-         <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a></div>
-         <div class="nav-center">&nbsp;</div>
-         <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
+          <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a></div>
+          <div class="nav-center">&nbsp;</div>
+          <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
-        <!-- 書籍・評価ページ -->
+        <!-- 書籍コメントページ -->
         <!--「◀戻る」「　　　　　」「ログアウト▶」を表示 -->
         {% elif request.endpoint == 'book_comment_view' %}
-          <div class="nav-left">
-            {% if book %}
-              <a href="{{ url_for('book_id_view', book_id=book.id) }}" class="nav-button">◀戻る</a>
-            {% else %}
-              <a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a>
-            {% endif %}
-          </div>
+          <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a></div>
           <div class="nav-center">&nbsp;</div>
-         <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
+          <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
         <!-- エラーページ(404 or 500) -->
         <!-- 「◀トップページ」「　　　　　」「　　　　　」を表示 -->
         {% elif not request.endpoint or request.endpoint == 'page_not_found' %}
-         <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a></div>
-         <div class="nav-center">&nbsp;</div>
-         <div class="nav-right">&nbsp;</div>
+          <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a></div>
+          <div class="nav-center">&nbsp;</div>
+          <div class="nav-right">&nbsp;</div>
 
         <!-- その他（想定外・予備）のページ -->
         {% else %}
