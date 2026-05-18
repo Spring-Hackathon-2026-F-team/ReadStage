@@ -91,20 +91,20 @@
     font-size: 0.95em;
 }
 
-.level-name-start,
-.level-name-basic,
-.level-name-standard,
-.level-name-expert {
+.level-name-start-入門,
+.level-name-basic-基礎,
+.level-name-standard-応用,
+.level-name-expert-発展 {
     min-width: 140px;
     font-weight: bold;
     padding: 0 10px;
     border-radius: 5px;
 }
 
-.level-name-start{ color: #167600; background-color: #98E607;}
-.level-name-basic{ color: #ffffff; background-color: #17A351;}
-.level-name-standard{ color: #003297; background-color: #27bbfa;}
-.level-name-expert { color: #ffffff; background-color: #003ea2;}
+.level-name-start-入門{ color: #167600; background-color: #98E607;}
+.level-name-basic-基礎{ color: #ffffff; background-color: #17A351;}
+.level-name-standard-応用{ color: #003297; background-color: #27bbfa;}
+.level-name-expert-発展 { color: #ffffff; background-color: #003ea2;}
 
 .star-rating {
     color: orange;
