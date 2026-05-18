@@ -58,7 +58,7 @@
             <span class="level-name-{{ status|lower|replace(' ', '-')|replace('/', '-') }}">{{ status }}</span>
             <span class="star-rating">
                 <!-- 評価点を四捨五入し、さらに整数型に変換する -->
-                {% set rounded_score = avg_score|round|int %}
+                {% set rounded_score = ((avg_score|float) + 0.5)|int %}
                 <!-- 四捨五入した数だけ★を表示し、残りを☆で埋める -->
                 {{ '★' * rounded_score }}{{ '☆' * (5 - rounded_score) }}
             </span>
