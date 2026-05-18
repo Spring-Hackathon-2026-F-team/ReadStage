@@ -174,14 +174,18 @@ class Recommend:
       db_pool.release(conn)
 
   @classmethod
-  def get_book_recommend(cls, book_id):
+  def get_book_recommends(cls, user_id, book_id):
     conn = db_pool.get_conn()
     try:
       with conn.cursor() as cur:
-        sql = 'SELECT id, title FROM recommends WHERE book_id=%s;'
-        cur.execute(sql, (book_id, ))
-        recommend = cur.fetchone()
-        return recommend
+        sql = '''
+        SELECT id, user_id, (user_id=%s) AS is_current_user, evaluation, status, message, updated_at 
+        FROM recommends WHERE book_id=%s AND delete_flag=0 
+        ORDER BY id DESC;
+        '''
+        cur.execute(sql, (user_id, book_id))
+        recommends = cur.fetchall()
+        return recommends
     except pymysql.Error as e:
       print(f'エラーが発生しています：{e}')
       abort(500)
@@ -211,8 +215,12 @@ class Category:
     conn = db_pool.get_conn()
     try:
       with conn.cursor(pymysql.cursors.DictCursor) as cur:
-        sql = 'SELECT id, category_id FROM categories WHERE book_id=%s;'
-        cur.execute(sql, (id, book_id))
+        sql = '''
+        SELECT c.category FROM categories AS c 
+        INNER JOIN book_categories AS bc ON bc.category_id = c.id
+        WHERE bc.book_id=%s;
+        '''
+        cur.execute(sql, (book_id, ))
         category = cur.fetchone()
         return category
     except pymysql.Error as e:
@@ -223,14 +231,18 @@ class Category:
       
 class Keyword:
   @classmethod
-  def get_keyword(cls, book_id):
+  def get_keywords(cls, book_id):
     conn = db_pool.get_conn()
     try:
       with conn.cursor(pymysql.cursors.DictCursor) as cur:
-        sql = 'SELECT id, keyword_id FROM book_keywords WHERE keyword_id=%s;'
-        cur.execute(sql, (id, keyword))
-        keyword = cur.fetchall()
-        return keyword
+        sql = '''
+        SELECT k.keyword FROM keywords AS k 
+        INNER JOIN book_keywords AS bk ON bk.keyword_id = k.id
+        WHERE bk.book_id=%s;
+        '''
+        cur.execute(sql, (book_id, ))
+        keywords = cur.fetchall()
+        return keywords
     except pymysql.Error as e:
       print(f'エラーが発生しています：{e}')
       abort(500)
