@@ -209,6 +209,8 @@ a{
     font-size: 0.95em;
     color: #555;
     line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .c-button.delete{  /*.コンポーネント削除ボタンの設定 */
