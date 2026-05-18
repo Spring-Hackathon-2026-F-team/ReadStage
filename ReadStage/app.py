@@ -228,18 +228,6 @@ def create_comment(book_id):
                      evaluation=evaluation,
                      status=status,
                      message=message)
-    
-
-
-    # 書籍評価情報を登録
-    evaluation = int(request.form.get("evaluation"))
-    status = request.form.get("status")
-    message = request.form.get("message")
-    Recommend.create(user_id=user_id,
-                     book_id=book_id,
-                     evaluation=evaluation,
-                     status=status,
-                     message=message);
 
     # 詳細・コメントページにリダイレクト
     return redirect(url_for('book_id_view', book_id=book_id))
