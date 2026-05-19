@@ -44,7 +44,7 @@
           <div class="nav-center">&nbsp;</div>
           <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
-        <!-- 詳細詳細ページ -->
+        <!-- 評価詳細ページ -->
         <!-- 「◀戻る」「　　　　　」「ログアウト▶」を表示 -->
         {% elif request.endpoint == 'book_id_view' %}
           <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a></div>
@@ -71,6 +71,7 @@
           <div class="nav-center">&nbsp;</div>
           <div class="nav-right">&nbsp;</div>
         {% endif %}        
+
 
       </div>
     </nav>
