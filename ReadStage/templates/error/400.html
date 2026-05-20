@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}400エラー{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="header-image-container">
+        <div class="header-image-inner-container">
+        <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+        <p class="header-notification">お知らせ</p>
+    </div>
+</div>
+
+<div class="error-wrapper">
+    <div class ="box-design">
+        <p class="error-num">4 0 0 Bad Request</p>
+            <div class="error-description">
+                <p>セッションが切れている可能性があります</p>
+                <p>ブラウザの更新や<br>
+                キャッシュ、Cookie の削除をすると<br>
+                解消される場合があります</p>
+            </div>
+
+            <img src="{{ url_for('static', filename='image/app_logo.png') }}" class="app-logo-image" alt="アプリロゴ画像"> <!-- style属性を削除し、クラスを追加 -->
+            <a href='book/books.html' class="c-button">IT書籍を探すなら</a>
+    </div>
+</div>
+
+{% endblock %}

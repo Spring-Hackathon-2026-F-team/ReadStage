@@ -244,7 +244,27 @@ def create_comment(book_id):
 #エラーハンドラー404
 @app.errorhandler(404)
 def page_not_found(Error):
-    return render_template('error/404.html')
+    return render_template('error/404.html'), 404
+
+#エラーハンドラー400
+@app.errorhandler(400)
+def bad_request(Error):
+    return render_template('error/400.html'), 400
+
+#意図的に４００エラーを発生させるルートを作る
+@app.route('/books/400')
+def trigger_400():
+    abort(400) #ここで４００エラーを発生させる
+
+#エラーハンドラー500
+@app.errorhandler(500)
+def internal_serber_error(Error):
+    return render_template('error/500.html'), 500
+
+# 意図的に５００エラーを発生させるルートを作る
+@app.route('/books/500')
+def trigger_500(): #ここで５００エラーを発生させる
+    abort(500)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
