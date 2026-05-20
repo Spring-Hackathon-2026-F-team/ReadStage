@@ -75,7 +75,7 @@
 .select-levels {
     display: flex;
     align-items: center;
-    gap: 10px;   /* ラベルとドロップダウンの間隔 */
+    gap: 10px;
     width: 100%;
 }
 
@@ -103,12 +103,19 @@
     color: var(--textcolor);
 }
 
-.book-evaluation, 
-.select-levels {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
+/* ドロップダウンの背景色 */
+.dropdown option {
+    background-color: var(--secondary_background);
+}
+
+/* 選択後に表示されるセレクトボックス全体 */
+.dropdown-stars {
+    color: var(--textcolor);    /* 選択後は通常の色 */
+}
+
+/* ドロップダウンを開いたときの選択肢の星を黄色にする */
+.dropdown-stars option {
+    color: var(--star);
 }
 
 /* 学習レベルの説明セクション */
@@ -195,8 +202,7 @@
     box-sizing: border-box; /* パディングを幅に含める */
     border: none;   /* 枠線を消す */
     outline: none;  /* クリック時の枠線を消す */
-    /* background: var(--basic_text); */
-    /* color: var(--testcolor); */
+    color: var(--testcolor);
 }
 
 /* 「登録」ボタン */
