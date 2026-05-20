@@ -16,8 +16,12 @@
 </div>
 
 <div class="search-container">
-    <input type="search" placeholder="検索" class="search-input">
-    <button type="submit" class="search-button">検索</button>
+    <form action="/books/search" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="search" name="search-word" placeholder="検索" class="search-input" value={{ search_word }}>
+        <button type="submit" class="search-button">検索</button>
+    </form>
+    <button type="submit" class="search-button" onclick="location.href='/books'">検索クリア</button>
 </div>
 
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->

@@ -9,7 +9,7 @@ db_pool = DB.init_db_pool()
 
 class Book:
   @classmethod
-  def get_all(cls):
+  def get_all(cls, search_category_keyword):
     conn = db_pool.get_conn()
     try:
       # DictCursorを使って、結果を辞書形式で返す
@@ -32,10 +32,33 @@ class Book:
             b.id = bk.book_id
           LEFT JOIN keywords AS k ON
             bk.keyword_id = k.id
-          ORDER BY
-            b.id ASC;
         """
-        cur.execute(sql_books)
+
+        # WHERE句が必要な場合は組み立て
+        use_where = False
+        params = []
+        # カテゴリ・キーワード検索
+        if search_category_keyword:
+          sql_books += " WHERE c.category LIKE %s OR k.keyword LIKE %s"
+          params.append("%" + search_category_keyword + "%")
+          params.append("%" + search_category_keyword + "%")
+          use_where = True
+        
+        # TODO:後続の検索はここに追記予定。
+        # if learning_level:
+        #   if use_where:
+        #     # すでにWHERE句を追加済みなので、ANDから始める
+        #     sql_books += " AND ..."
+        #   else:
+        #     # WHERE句の指定がないので、WHERE句から始める
+        #     sql_books += " WHERE ..."
+        #   params.append(learning_level)
+        #   use_where = True
+
+        # 最後に並び順を追加
+        sql_books += "ORDER BY b.id ASC;"
+
+        cur.execute(sql_books, params)
         #辞書のリストとして取得
         rows = cur.fetchall()
         #1つのbook_idに対して複数のキーワードがあるため、辞書リストを整理する

@@ -5,6 +5,7 @@ import hashlib
 import uuid
 import re
 import os
+import unicodedata
 
 from models import Book, User, Recommend, Category, Keyword
 
@@ -129,12 +130,21 @@ def books_view():
     user_id = session.get("user_id")
     if user_id is None:
         return redirect(url_for('login_view'))
+ 
+    # URLクエリから検索情報を取得
+    search_word = request.args.get("search_word", "")
+    if search_word:
+        # 検索ボタンからのリダイレクト時
+        # 英数字は半角、カタカナは全角文字に変換して検索する
+        word = unicodedata.normalize('NFKC', search_word)
+        books = Book.get_all(word)
     else:
+        # 検索情報未設定時は検索未設定
         # Bookモデルクラスに整形された書籍データのリストを渡す
         # タイトル、カテゴリ、キーワード、まえがきを渡す
         # book_idごとの4つのレベルの評価点を渡す
-        books = Book.get_all()
-        return render_template('book/books.html', books=books)
+        books = Book.get_all(None)
+    return render_template('book/books.html', books=books, search_word=search_word)
 
 # 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
@@ -229,11 +239,22 @@ def create_comment(book_id):
                      status=status,
                      message=message)
 
-    # 詳細・コメントページにリダイレクト
+    # 評価詳細ページにリダイレクト
     return redirect(url_for('book_id_view', book_id=book_id))
 
 
 # 書籍検索
+@app.route('/books/search', methods=["POST"])
+def search_books():
+    # セッションチェック
+    # 検索はTOPページからしか許容市内想定なので、未ログインの場合はログインに戻す
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
+
+    # 検索条件を取得して、書籍一覧にリダイレクト
+    search_word = request.form.get("search-word")
+    return redirect(url_for("books_view", search_word=search_word))
 
 
 #書籍投稿削除
