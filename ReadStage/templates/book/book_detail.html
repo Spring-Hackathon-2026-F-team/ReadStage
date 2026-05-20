@@ -18,79 +18,68 @@
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
 
 <article class="book-item"> <!--書籍１冊分のセット枠-->
-<h3 class="book-title">マスタリングTCP/IP―入門編―(第6版)</h3>
+<h3 class="book-title">{{ book.title }}</h3>
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
-    <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="マスタリングTCP/IP―入門編―(第6版)の画像" class="book-image">
+    <img src="{{ url_for('static', filename='image/' ~ book.id ~ '.jpg') }}" alt="{{ book.title }}の画像" class="book-image">
     <div class="book-info-right"> <!-- 右側の列用 -->
+        {% if is_already_comment %}
         <div class="content-wrap">
-            <a href="/create_comment.html" class="c-button tocomment">書籍コメントへ</a> <!--ボタンコンポーネントの設定-->
+            <a href="/book/{{ book.id }}/comment" class="c-button tocomment">書籍コメントへ</a> <!--ボタンコンポーネントの設定-->
         </div>
+        {% endif %}
         <div class="book-category">
             <h5>カテゴリー</h5>
                 <ul>
-                    <li>ネットワーク</li>
+                    <li>{{ category.category }}</li>
                 </ul>
         </div>
         <div class="book-keyword">
             <h5>キーワード</h5>
                 <ul>
-                     <li>TCP/IP</li>
-                     <li>OSI参照モデル</li>
-                     <li>IP</li>
+                    {% for keyword in keywords %}
+                        <li>{{ keyword.keyword }}</li>
+                    {% endfor %}
                 </ul>
         </div>
     </div>
 </div>
 
+{% for comment in recommends %}
 <div class="comment-description-area">
     <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
-        <p class="level-name-standard">STANDARD/応用</p>
+        {% set level_css = {
+            'BASIC/基礎': 'basic',
+            'START/入門': 'start',
+            'STANDARD/応用': 'standard',
+            'EXPERT/発展': 'expert',
+        }%}
+        <p class="level-name-{{ level_css.get(comment.status, 'basic') }}">{{ comment.status }}</p>
         <div class="level-item">
-            <span class="star-rating">★★★☆☆</span>
-            <span class="star-rating-num">5.0</span>
+            <span class="star-rating">
+                {% for i in range(5) %}
+                    {{- "★" if i < comment.evaluation else "☆" -}}
+                {% endfor %}
+            </span>
+            <span class="star-rating-num">{{ "%.1f" | format(comment.evaluation) }}</span>
         </div>
     </div>
-    <p class="comment-updated-at-text">投稿日時:2026.5.2 <!-- コメント更新日 -->
+    <p class="comment-updated-at-text">投稿日時:{{ comment.updated_at.strftime('%Y.%m.%d') }} <!-- コメント更新日 -->
         <span id="comment-updated_at"></span>
     </p>
 
     <p class="comment-description">
-        ネットワークエンジニア以外でもすべてのエンジニアにおすすめしたい書籍です。<!-- 紹介文の表示 -->
+        {{- comment.message -}}<!-- 紹介文の表示 -->
     </p>
-    <div class="content-wrap">
-        <div class="button-wrap comment-actions">
-            <a href="create_comment.html" class="c-button retouch">修正</a><!--修正ボタン-->
-            <a href="book_delete.html" class="c-button delete">削除</a><!--削除ボタン-->
+    {% if comment.is_current_user %}
+        <div class="content-wrap">
+            <div class="button-wrap comment-actions">
+                <a href="create_comment.html" class="c-button retouch">修正</a><!--修正ボタン-->
+                <a href="book_delete.html" class="c-button delete">削除</a><!--削除ボタン-->
+            </div>
         </div>
-    </div>
+    {% endif %}
 </div>
-
-<div class="comment-description-area">
-    <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
-        <p class="level-name-start">START/入門</p>
-        <div class="level-item">
-            <span class="star-rating">★★★★☆</span>
-            <span class="star-rating-num">4.0</span>
-        </div>
-    </div>
-    <p class="comment-updated-at-text">投稿日時:2026.5.8 <!-- コメント更新日 -->
-        <span id="comment-updated_at"></span>
-    </p>
-
-    <p class="comment-description">
-        ある程度、勉強した後に読むと頭に入りやすいです。
-        httpの歴史や成り立ちがじっくり描かれており、わかりやすいです。
-        知識詰め込みってタイプの本ではないので読みやすかったです。
-        GET、POST、PUTなどの説明が分かりやすく、Web技術入門のための良書だ
-        と感じています。<!-- 紹介文の表示 -->
-    </p>
-    <div class="content-wrap"> <!-- 修正、削除ボタン -->
-        <div class="button-wrap comment-actions">
-            <a href="create_comment.html" class="c-button retouch">修正</a>
-            <a href="book_delete.html" class="c-button delete">削除</a>
-        </div>
-    </div>
-</div>
+{% endfor %}
 </article>
 
 </div>

@@ -9,7 +9,7 @@ db_pool = DB.init_db_pool()
 
 class Book:
   @classmethod
-  def get_all(cls):
+  def get_all(cls, search_category_keyword):
     conn = db_pool.get_conn()
     try:
       # DictCursorを使って、結果を辞書形式で返す
@@ -32,10 +32,33 @@ class Book:
             b.id = bk.book_id
           LEFT JOIN keywords AS k ON
             bk.keyword_id = k.id
-          ORDER BY
-            b.id ASC;
         """
-        cur.execute(sql_books)
+
+        # WHERE句が必要な場合は組み立て
+        use_where = False
+        params = []
+        # カテゴリ・キーワード検索
+        if search_category_keyword:
+          sql_books += " WHERE c.category LIKE %s OR k.keyword LIKE %s"
+          params.append("%" + search_category_keyword + "%")
+          params.append("%" + search_category_keyword + "%")
+          use_where = True
+        
+        # TODO:後続の検索はここに追記予定。
+        # if learning_level:
+        #   if use_where:
+        #     # すでにWHERE句を追加済みなので、ANDから始める
+        #     sql_books += " AND ..."
+        #   else:
+        #     # WHERE句の指定がないので、WHERE句から始める
+        #     sql_books += " WHERE ..."
+        #   params.append(learning_level)
+        #   use_where = True
+
+        # 最後に並び順を追加
+        sql_books += "ORDER BY b.id ASC;"
+
+        cur.execute(sql_books, params)
         #辞書のリストとして取得
         rows = cur.fetchall()
         #1つのbook_idに対して複数のキーワードがあるため、辞書リストを整理する
@@ -173,6 +196,24 @@ class Recommend:
     finally:
       db_pool.release(conn)
 
+  @classmethod
+  def get_book_recommends(cls, user_id, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = '''
+        SELECT id, user_id, (user_id=%s) AS is_current_user, evaluation, status, message, updated_at 
+        FROM recommends WHERE book_id=%s AND delete_flag=0 
+        ORDER BY id DESC;
+        '''
+        cur.execute(sql, (user_id, book_id))
+        recommends = cur.fetchall()
+        return recommends
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
 
   @classmethod
   def create(cls, user_id, book_id, evaluation, status, message):
@@ -190,4 +231,43 @@ class Recommend:
       abort(500)
     finally:
       db_pool.release(conn)
-    
+
+class Category:
+  @classmethod
+  def get_category(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor(pymysql.cursors.DictCursor) as cur:
+        sql = '''
+        SELECT c.category FROM categories AS c 
+        INNER JOIN book_categories AS bc ON bc.category_id = c.id
+        WHERE bc.book_id=%s;
+        '''
+        cur.execute(sql, (book_id, ))
+        category = cur.fetchone()
+        return category
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+      
+class Keyword:
+  @classmethod
+  def get_keywords(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor(pymysql.cursors.DictCursor) as cur:
+        sql = '''
+        SELECT k.keyword FROM keywords AS k 
+        INNER JOIN book_keywords AS bk ON bk.keyword_id = k.id
+        WHERE bk.book_id=%s;
+        '''
+        cur.execute(sql, (book_id, ))
+        keywords = cur.fetchall()
+        return keywords
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)

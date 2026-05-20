@@ -5,8 +5,9 @@ import hashlib
 import uuid
 import re
 import os
+import unicodedata
 
-from models import Book, User, Recommend
+from models import Book, User, Recommend, Category, Keyword
 
 # 定数定義
 EMAIL_PATTERN = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
@@ -129,18 +130,50 @@ def books_view():
     user_id = session.get("user_id")
     if user_id is None:
         return redirect(url_for('login_view'))
+ 
+    # URLクエリから検索情報を取得
+    search_word = request.args.get("search_word", "")
+    if search_word:
+        # 検索ボタンからのリダイレクト時
+        # 英数字は半角、カタカナは全角文字に変換して検索する
+        word = unicodedata.normalize('NFKC', search_word)
+        books = Book.get_all(word)
     else:
+        # 検索情報未設定時は検索未設定
         # Bookモデルクラスに整形された書籍データのリストを渡す
         # タイトル、カテゴリ、キーワード、まえがきを渡す
         # book_idごとの4つのレベルの評価点を渡す
-        books = Book.get_all()
-        return render_template('book/books.html', books=books)
+        books = Book.get_all(None)
+    return render_template('book/books.html', books=books, search_word=search_word)
 
 # 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
 def book_id_view(book_id):
+    # セッションチェック
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
 
-    return render_template('book/book_detail.html')
+    # 書籍存在チェック
+    book = Book.get_book(book_id)
+    if book is None:
+        abort(400)
+    
+    # カテゴリ・キーワード・コメント一覧取得
+    category = Category.get_category(book_id)
+    keywords = Keyword.get_keywords(book_id)
+    recommends = Recommend.get_book_recommends(user_id, book_id)
+
+    # 書籍評価へボタン表示条件
+    my_comment = Recommend.get_recommend(user_id, book_id)
+    is_already_comment = False if my_comment else True
+
+    return render_template('book/book_detail.html',
+                           book=book,
+                           category=category,
+                           keywords=keywords,
+                           recommends=recommends,
+                           is_already_comment=is_already_comment)
 
 
 # 書籍コメントページ表示
@@ -205,24 +238,23 @@ def create_comment(book_id):
                      evaluation=evaluation,
                      status=status,
                      message=message)
-    
 
-
-    # 書籍評価情報を登録
-    evaluation = int(request.form.get("evaluation"))
-    status = request.form.get("status")
-    message = request.form.get("message")
-    Recommend.create(user_id=user_id,
-                     book_id=book_id,
-                     evaluation=evaluation,
-                     status=status,
-                     message=message);
-
-    # 詳細・コメントページにリダイレクト
+    # 評価詳細ページにリダイレクト
     return redirect(url_for('book_id_view', book_id=book_id))
 
 
 # 書籍検索
+@app.route('/books/search', methods=["POST"])
+def search_books():
+    # セッションチェック
+    # 検索はTOPページからしか許容市内想定なので、未ログインの場合はログインに戻す
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
+
+    # 検索条件を取得して、書籍一覧にリダイレクト
+    search_word = request.form.get("search-word")
+    return redirect(url_for("books_view", search_word=search_word))
 
 
 #書籍投稿削除
