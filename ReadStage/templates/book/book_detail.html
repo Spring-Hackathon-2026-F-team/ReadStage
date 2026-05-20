@@ -74,7 +74,15 @@
         <div class="content-wrap">
             <div class="button-wrap comment-actions">
                 <a href="create_comment.html" class="c-button retouch">修正</a><!--修正ボタン-->
-                <a href="book_delete.html" class="c-button delete">削除</a><!--削除ボタン-->
+                <form action="/book/{{ book.id }}/comment/{{ comment.id }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button
+                        class="c-button delete"
+                        type="submit"
+                        onclick="return confirm('このコメントを削除しますか？')">
+                        削除
+                    </button>
+                </form>
             </div>
         </div>
     {% endif %}

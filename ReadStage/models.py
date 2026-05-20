@@ -186,7 +186,7 @@ class Recommend:
     conn = db_pool.get_conn()
     try:
       with conn.cursor() as cur:
-        sql = 'SELECT id FROM recommends WHERE user_id=%s AND book_id=%s;'
+        sql = 'SELECT id FROM recommends WHERE user_id=%s AND book_id=%s AND delete_flag=0;'
         cur.execute(sql, (user_id, book_id))
         recommend = cur.fetchone()
         return recommend
@@ -225,6 +225,20 @@ class Recommend:
           VALUES (%s, %s, %s, %s, %s);
           '''
         cur.execute(sql, (user_id, book_id, evaluation, status, message))
+        conn.commit()
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
+  @classmethod
+  def delete(cls, recommend_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = "UPDATE recommends SET delete_flag = 1, deleted_at = NOW(), updated_at = NOW() WHERE id = %s;"
+        cur.execute(sql, (recommend_id, ))
         conn.commit()
     except pymysql.Error as e:
       print(f'エラーが発生しています：{e}')

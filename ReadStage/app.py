@@ -258,6 +258,28 @@ def search_books():
 
 
 #書籍投稿削除
+@app.route("/book/<int:book_id>/comment/<int:recommend_id>", methods=["POST"])
+def delete_comment(book_id, recommend_id):
+    # セッションチェック
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
+
+    # 書籍存在チェック
+    book = Book.get_book(book_id)
+    if book is None:
+        abort(404)
+    
+    # コメント存在チェック
+    recommend = Recommend.get_recommend(user_id, book_id)
+    if recommend is None:
+        abort(400)
+
+    # 書籍評価情報にdelete_flagを設定
+    Recommend.delete(recommend_id);
+
+    # 詳細・コメントページにリダイレクト
+    return redirect(url_for('book_id_view', book_id=book_id))
 
 
 #書籍投稿修正
