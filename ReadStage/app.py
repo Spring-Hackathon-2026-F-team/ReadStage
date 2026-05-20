@@ -176,9 +176,13 @@ def book_id_view(book_id):
                            is_already_comment=is_already_comment)
 
 
-# 書籍コメントページ表示
+# 書籍コメント投稿・編集ページ表示
 @app.route("/book/<int:book_id>/comment", methods=["GET"])
-def book_comment_view(book_id):
+@app.route("/book/<int:book_id>/comment/<int:recommend_id>/edit", methods=["GET"])
+def book_comment_view(book_id, recommend_id=None):
+    # レコメンドIDがあれば書籍評価編集判定
+    is_edit = recommend_id is not None
+
     # セッションチェック
     user_id = session.get("user_id")
     if user_id is None:
@@ -189,12 +193,20 @@ def book_comment_view(book_id):
     if book is None:
         abort(404)
 
-    # 対象書籍に該当ユーザーがすでにコメント済みの場合は404エラーとする
-    recommend = Recommend.get_recommend(user_id, book_id)
-    if recommend is not None:
-        abort(404)
+    recommend = None
+    if is_edit:
+        # 編集時はレコメンドIDが一致しているかチェック
+        recommend = Recommend.get_edit_recommend(recommend_id)
+        if recommend['id'] != recommend_id:
+            abort(404)
+    else:
+        # 新規投稿時
+        # 対象書籍に該当ユーザーがすでにコメント済みの場合は404エラーとする
+        recommend = Recommend.get_recommend(user_id, book_id)
+        if recommend is not None:
+            abort(404)
 
-    return render_template('book/create_comment.html', book=book)
+    return render_template('book/create_comment.html',  is_edit=is_edit, book=book, recommend=recommend)
 
 
 # 書籍評価投稿処理
@@ -227,7 +239,15 @@ def create_comment(book_id):
     if evaluation_raw == "" or status == "":
         flash("「評価」と「学習者レベル」は必須入力です。", "error")
         # リダイレクトではなく、bookデータを渡して同じページを再表示
-        return render_template('book/create_comment.html', book=book)
+        return render_template('book/create_comment.html',
+                               is_edit=False,
+                               book=book,
+                               recommend=None,
+                               form_data={
+                                   "evaluation": evaluation_raw,
+                                   "status": status,
+                                   "message": message,
+                               })
     
     # int型に変換
     evaluation = int(evaluation_raw)
@@ -258,7 +278,7 @@ def search_books():
 
 
 #書籍投稿削除
-@app.route("/book/<int:book_id>/comment/<int:recommend_id>", methods=["POST"])
+@app.route("/book/<int:book_id>/comment/<int:recommend_id>/delete", methods=["POST"])
 def delete_comment(book_id, recommend_id):
     # セッションチェック
     user_id = session.get("user_id")
@@ -273,7 +293,7 @@ def delete_comment(book_id, recommend_id):
     # コメント存在チェック
     recommend = Recommend.get_recommend(user_id, book_id)
     if recommend is None:
-        abort(400)
+        abort(404)
 
     # 書籍評価情報にdelete_flagを設定
     Recommend.delete(recommend_id);
@@ -283,6 +303,49 @@ def delete_comment(book_id, recommend_id):
 
 
 #書籍投稿修正
+@app.route("/book/<int:book_id>/comment/<int:recommend_id>/edit", methods=["POST"])
+def edit_comment(book_id, recommend_id):
+    # セッションチェック
+    user_id = session.get("user_id")
+    if user_id is None:
+        return redirect(url_for('login_view'))
+
+    # 書籍存在チェック
+    book = Book.get_book(book_id)
+    if book is None:
+        abort(404)
+    
+    # レコメンドIDが一致しているかチェック
+    recommend = Recommend.get_edit_recommend(recommend_id)
+    if recommend['id'] != recommend_id:
+        abort(404)
+
+    # バリデーションチェック（未選択チェック）
+    evaluation = int(request.form.get("evaluation"))
+    status = request.form.get("status")
+    message = request.form.get("message")
+
+    # イレギュラーケース：編集時は評価・学習者レベルともに未選択状態にできないはず
+    if evaluation == "" or status == "":
+        flash("「評価」と「学習者レベル」は必須入力です。", "error")
+        return render_template('book/create_comment.html',
+                               is_edit=False,
+                               book=book,
+                               recommend=None,
+                               form_data={
+                                   "evaluation": evaluation,
+                                   "status": status,
+                                   "message": message,
+                               })
+
+    # 書籍評価情報を登録
+    Recommend.edit(recommend_id=recommend_id,
+                   evaluation=evaluation,
+                   status=status,
+                   message=message);
+
+    # 詳細・コメントページにリダイレクト
+    return redirect(url_for('book_id_view', book_id=book_id))
 
 #エラーハンドラー404
 @app.errorhandler(404)
