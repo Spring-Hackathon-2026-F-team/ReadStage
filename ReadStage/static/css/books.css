@@ -32,7 +32,7 @@
 }
 
 .book-title {
-    grid-column: 1/-1; /* book-itemの全幅使用*/
+    grid-column: 1/2; /* book-itemの1行めのみ使用*/
     margin-bottom: 0; /* book-itemのgapで調整するため*/
     font-size: 15px;
     color: #333;
@@ -167,4 +167,17 @@
 .book-category ul li:last-child,
 .book-keyword ul li:last-child {
     margin-bottom: 0; /* 最後のアイテムの下余白は不要 */
+}
+
+/*.詳細へボタンの詳細 */
+.c-button.todetail {
+    text-align: center
+}
+
+/*.詳細へボタンを横並びにするためのdivタグの設定 */
+.plus-button {
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    align-items: center;
+    gap: 10px;
 }
