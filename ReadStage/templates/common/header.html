@@ -53,7 +53,7 @@
 
         <!-- 書籍コメントページ -->
         <!--「◀戻る」「　　　　　」「ログアウト▶」を表示 -->
-        {% elif request.endpoint == 'book_comment_view' %}
+        {% elif request.endpoint in ['book_comment_view', 'create_comment', 'edit_comment'] %}
           <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀戻る</a></div>
           <div class="nav-center">&nbsp;</div>
           <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
