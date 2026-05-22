@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}404エラー{% endblock %}
+{% block title %}400エラー{% endblock %}
 
 {% block page_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
@@ -17,11 +17,12 @@
 
 <div class="error-wrapper">
     <div class ="box-design">
-        <p class="error-num">4 0 4 Not found</p>
+        <p class="error-num">4 0 0 Bad Request</p>
             <div class="error-description">
-                <p>お探しのページが見つかりませんでした。</p>
-                <p>URLに誤りがあるか<br>
-                削除もしくは移動した可能性があります</p>
+                <p>セッションが切れている可能性があります</p>
+                <p>ブラウザの更新や<br>
+                キャッシュ、Cookie の削除をすると<br>
+                解消される場合があります</p>
             </div>
 
             <img src="{{ url_for('static', filename='image/app_logo.png') }}" class="app-logo-image" alt="アプリロゴ画像"> <!-- style属性を削除し、クラスを追加 -->
@@ -30,5 +31,3 @@
 </div>
 
 {% endblock %}
-
-
