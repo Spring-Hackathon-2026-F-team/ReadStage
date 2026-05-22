@@ -19,7 +19,8 @@
 <div class="comment-wrapper">
     <div class="comment-list">
         <article class="comment-item"> <!-- 書籍１冊分のセット枠 -->
-            <form action="/book/{{ book.id }}/comment" method="post">
+            {% set action_url = "/book/" ~ book.id ~ "/comment/" ~ recommend.id ~ "/edit" if is_edit and recommend is not none else "/book/" ~ book.id ~ "/comment" %}
+            <form action={{ action_url }} method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <h3 class="book-title">{{ book.title }}</h3>
                 <div class="comment-content">
@@ -31,22 +32,25 @@
                         <div class="book-evaluation">
                             <h5>評価</h5>
                             <select name="evaluation" class="dropdown dropdown-stars">
-                                <option value="" disabled selected>評価★(5段階)</option>
-                                <option value="5">★★★★★</option>
-                                <option value="4">★★★★☆</option>
-                                <option value="3">★★★☆☆</option>
-                                <option value="2">★★☆☆☆</option>
-                                <option value="1">★☆☆☆☆</option>
+                                {% set selected_evaluation = (form_data.evaluation if form_data is defined else recommend.evaluation if recommend else "") | string %}                                
+                                <option value="" disabled {{ "selected" if selected_evaluation == '' }}>評価★(5段階)</option>
+                                <option value="5" {{ "selected" if selected_evaluation == '1' }}>★★★★★</option>
+                                <option value="4" {{ "selected" if selected_evaluation == '2' }}>★★★★☆</option>
+                                <option value="3" {{ "selected" if selected_evaluation == '3' }}>★★★☆☆</option>
+                                <option value="2" {{ "selected" if selected_evaluation == '4' }}>★★☆☆☆</option>
+                                <option value="1" {{ "selected" if selected_evaluation == '5' }}>★☆☆☆☆</option>
+
                             </select>
                         </div>
                         <div class="select-levels">
                             <h5>学習者レベル</h5>
+                            {% set selected_status = form_data.status if form_data is defined else recommend.status if recommend else "" %}
                             <select name="status" class="dropdown">
-                                <option value="" disabled selected>レベル(4段階)</option>
-                                <option value="START/入門">START/入門</option>
-                                <option value="BASIC/基礎">BASIC/基礎</option>
-                                <option value="STANDARD/応用">STANDARD/応用</option>
-                                <option value="EXPERT/発展">EXPERT/発展</option>
+                                <option value="" disabled {{ "selected" if selected_status == '' }}>レベル(4段階)</option>
+                                <option value="START/入門" {{ "selected" if selected_status == 'START/入門' }}>START/入門</option>
+                                <option value="BASIC/基礎" {{ "selected" if selected_status == 'BASIC/基礎' }}>BASIC/基礎</option>
+                                <option value="STANDARD/応用" {{ "selected" if selected_status == 'STANDARD/応用' }}>STANDARD/応用</option>
+                                <option value="EXPERT/発展" {{ "selected" if selected_status == 'EXPERT/発展' }}>EXPERT/発展</option>
                             </select>
                         </div>
                     </div>
@@ -63,11 +67,13 @@
                     <!-- 3行目: コメント入力欄 (全幅) -->
                     <div class="comment-area ">
                         <p class="comment-heading">コメント（任意　最大で140文字）</p>
-                        <textarea id="comment-message" name="message" class="comment-textarea" rows="5" placeholder="書籍の感想や評価を記入してください(最大140文字)" maxlength="140"></textarea>
+                        <textarea id="comment-message" name="message" class="comment-textarea" rows="5" placeholder="書籍の感想や評価を記入してください(最大140文字)" maxlength="140">
+                        {{- form_data.message if form_data is defined else recommend.message if recommend else "" -}}
+                        </textarea>
                     </div>
                 </div>
-                <!-- 「登録」ボタン -->
-                <button type="submit" class="c-button submit">登録</button>
+                <!-- 登録/編集ボタン -->
+                <button type="submit" class="c-button submit">{{ '編集' if is_edit else '登録' }}</button>
 
                 <!-- フラッシュメッセージ -->
                 {% with messages = get_flashed_messages(with_categories=true) %}
