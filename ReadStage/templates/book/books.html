@@ -25,6 +25,13 @@
 </div>
 
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
+<!-- 表示できる書籍がない場合は文言を表示 -->
+{% if books is not defined or books|length == 0 %}
+<div class="empty-container">
+    <p>お探しの書籍は見つかりませんでした。</p>
+    <p>キーワードを変えて、再度検索してください。</p>
+</div>
+{% else %}
 {% for book in books %} <!-- Jinja2のループを開始 -->
 <a href="/book/{{ book.id }}">
 <article class="book-item"> <!--書籍１冊分のセット枠-->
@@ -80,6 +87,7 @@
 </article>
 </a>
 {% endfor %} 
+{% endif %}
 <!-- Jinja2のループ終了 -->
 
 </div>
