@@ -25,7 +25,7 @@
             </div>
 
             <img src="{{ url_for('static', filename='image/app_logo.png') }}" class="app-logo-image" alt="アプリロゴ画像"> <!-- style属性を削除し、クラスを追加 -->
-            <a href='book/books.html' class="c-button">IT書籍を探すなら</a>
+            <a href="{{ url_for('books_view') }}" class="c-button">IT書籍を探すなら</a>
     </div>
 </div>
 
