@@ -23,9 +23,16 @@
       <div class="nav-inner">
         
       <!-- ------各画面、青色ナビゲーションバー内をそれぞれ「左・中・右」に分割表示------ -->
+        <!-- ゲストページ -->
+        <!-- 「　　　　　」「ゲストページ」「　　　　　」を表示 -->
+        {% if request.endpoint == 'guest_view' %}
+          <div class="nav-left">&nbsp;</div>
+          <div class="nav-center"><span class="nav-text">ゲストページ</span></div>
+          <div class="nav-right">&nbsp;</div>
+
         <!-- 新規登録ページ -->
         <!-- 「　　　　　」「新規登録ページ」「　　　　　」を表示 -->
-        {% if request.endpoint == 'signup_view' %}
+        {% elif request.endpoint == 'signup_view' %}
           <div class="nav-left">&nbsp;</div>
           <div class="nav-center"><span class="nav-text">新規登録ページ</span></div>
           <div class="nav-right">&nbsp;</div>

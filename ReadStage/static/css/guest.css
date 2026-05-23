@@ -1,0 +1,212 @@
+/* books.css */
+
+/* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
+
+/* ------書籍一覧全体------ */
+.book-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 0;
+    background-color: var(--card_background);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* aタグの文字色・下線表示をリセット */
+.book-list > a {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;    /* 左右中央寄せの安定化 */
+}
+
+/*.書籍一冊分のセットをGridコンテナにする */
+.book-item {
+    display: grid;
+    grid-template-columns: 1fr; /*１列で、中の要素が縦に並ぶように */
+    gap: 20px; /*それぞれの要素の間の間隔*/
+    border: 1px solid #ddd; /*枠線を追加して区切る　*/
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px; /*.上限をスマホサイズに */
+    margin: 5px auto; /*.上下に２０pxの余白、左右には自動で中央寄せ */
+}
+
+.book-title {
+    grid-column: 1/-1; /* book-itemの全幅使用*/
+    margin-bottom: 0; /* book-itemのgapで調整するため*/
+    font-size: 15px;
+    color: #333;
+}
+
+/* 投稿内容：左に画像、右に文章　*/
+.book-content {
+    /* grid-column: 1/-1; /* book-itemの全幅使用 */
+    display: grid; /*.カテゴリ・キーワード欄と横並びにする */
+    grid-template-columns: 160px 1fr; /* 左側（画像）：２００px、右側（文章）：残り全部　*/
+    gap: 20px; /*.画像と右側情報の間にスペースを作る */
+    align-items: flex-start; /* 必要に応じて上揃えにする　*/
+}
+
+/* 画像のレスポンシブ対応 */
+.book-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* book-imageの右側のコンテンツを縦に並べる */
+.book-info-right {
+    /* flex-grow: 1; /*.残りのスペースを全幅使用*/
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* 学習レベルのセクション */
+.book-levels {
+    grid-column: 1/-1; /*　book-itemの全幅使用 */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #EDEDED;
+}
+
+/* [学習レベル]のタイトル */
+.book-levels p{
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0px;
+    font-size: 1.1em;
+    color: #444;
+}
+
+.level-item {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    font-size: 0.95em;
+}
+
+.level-name-start-入門,
+.level-name-basic-基礎,
+.level-name-standard-応用,
+.level-name-expert-発展 {
+    min-width: 140px;
+    font-weight: bold;
+    padding: 0 10px;
+    border-radius: 5px;
+}
+
+.level-name-start-入門{    color: #167600; background-color: #98E607;}
+.level-name-basic-基礎{    color: #ffffff; background-color: #17A351;}
+.level-name-standard-応用{ color: #003297; background-color: #27bbfa;}
+.level-name-expert-発展 {  color: #ffffff; background-color: #003ea2;}
+
+.star-rating {
+    color: orange;
+    min-width: 70px;
+}
+
+.score {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/*.書籍のまえがきセクション */
+.book-description-area {
+    grid-column: 1/-1; /* book-itemの全幅使用 */
+    padding: 7px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #D2D2D2;
+}
+
+.book-description-heading { /*.書籍のまえがき */
+    font-weight: bold;
+    margin: 2px;
+    font-size: 1.1em;
+    color: #444;
+}
+
+/*.書籍の概要のスタイル */
+.book-description {
+    margin-top: 0;
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* h5 のデフォルトマージンを調整して、枠との間に余白を作る */
+.book-category h5,
+.book-keyword h5 {
+    margin-top: 0;
+    margin-bottom: 0px; /* h5の下の余白 */
+}
+
+/* リストアイテムの位置調整 */
+.book-category ul,
+.book-keyword ul {
+    padding-left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    list-style: none; /* リストタブの黒丸を消す */  
+} 
+
+/* リストアイテムの余白調整 */
+.book-category ul li,
+.book-keyword ul li {
+    background-color: #D2D2D2;
+    border: 1px solid #fff;
+    padding: 5px;
+    border-radius: 8px;
+    padding-left: 10px;
+    margin-bottom: 2px; /* 各リストアイテムの下に少し余白 */
+    display: block;
+}
+.book-category ul li:last-child,
+.book-keyword ul li:last-child {
+    margin-bottom: 0; /* 最後のアイテムの下余白は不要 */
+}
+
+.error-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.box-design {
+    background-color: var(--secondary_background);
+    border-radius: 6px;
+    padding: 10px 14px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+}
+
+.app-logo-image {
+    width: 50%;
+    max-width: 100px;
+    height: auto;
+}
+
+.error-wrapper .c-button {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
