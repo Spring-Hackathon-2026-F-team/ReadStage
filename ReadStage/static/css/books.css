@@ -12,6 +12,19 @@
     border-radius: 5px;
 }
 
+/* お探しの書籍は見つかりませんでした表示 */
+.empty-container {
+    min-height: calc(100vh - 378px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.empty-container p {
+    margin: 0;
+}
+
 /* aタグの文字色・下線表示をリセット */
 .book-list > a {
     text-decoration: none;
