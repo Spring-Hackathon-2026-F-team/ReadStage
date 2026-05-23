@@ -1,39 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}トップ{% endblock %}
+{% block title %}ゲストページ{% endblock %}
 
 {% block page_css %}
-<link rel="stylesheet" href="{{url_for('static', filename='css/books.css') }}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/guest.css') }}">
 {% endblock %}
 
 {% block content %}
 
+
+<!-- body上部ヘッダー画像の領域 -->
 <div class="header-image-container">
     <div class="header-image-inner-container">
       <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
-       <p class="header-notification">トップページ</p>
+       <!-- 画面名をゲストページでは表示させない -->
     </div>
 </div>
 
-<div class="search-container">
-    <form action="/books/search" method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <input type="search" name="search-word" placeholder="検索" class="search-input" value={{ search_word }}>
-        <button type="submit" class="search-button">検索</button>
-    </form>
-    <button type="submit" class="search-button" onclick="location.href='/books'">検索クリア</button>
-</div>
-
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
-<!-- 表示できる書籍がない場合は文言を表示 -->
-{% if books is not defined or books|length == 0 %}
-<div class="empty-container">
-    <p>お探しの書籍は見つかりませんでした。</p>
-    <p>キーワードを変えて、再度検索してください。</p>
-</div>
-{% else %}
 {% for book in books %} <!-- Jinja2のループを開始 -->
-<a href="/book/{{ book.id }}">
 <article class="book-item"> <!--書籍１冊分のセット枠-->
 <h3 class="book-title">{{ book.title }}</h3>
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
@@ -85,10 +70,15 @@
     </p>
 </div>
 </article>
-</a>
 {% endfor %} 
-{% endif %}
 <!-- Jinja2のループ終了 -->
-
 </div>
+
+<div class="error-wrapper">
+    <div class ="box-design">
+        <img src="{{ url_for('static', filename='image/app_logo.png') }}" class="app-logo-image" alt="アプリロゴ画像"> <!-- style属性を削除し、クラスを追加 -->
+        <a href='book/books.html' class="c-button">さらにIT書籍を探すなら</a>
+    </div>
+</div>
+
 {% endblock %}
