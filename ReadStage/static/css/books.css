@@ -4,7 +4,7 @@
 
 /* ------「学習レベル（4段階）」と「★★★★　以上」と「検索」の枠------ */
 .toppage-search-container {
-    background-color: var(--comment-background);
+    background-color: var(--secondary_background);
     border: 1px solid var(--textcolor);
     margin: 0 10px;
     padding: 4px 8px;
@@ -163,23 +163,6 @@
     width: 100%;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ------書籍一覧全体------ */
 .book-list {
     display: flex;
@@ -222,7 +205,6 @@
     margin: 5px auto; /*.上下に２０pxの余白、左右には自動で中央寄せ */
 }
 
-
 /* 「あなたにおすすめ！」タグの青枠 */
 .book-item.is-recommend {
     position: relative;
@@ -244,12 +226,6 @@
     border-radius: 4px 4px 0 0;
     z-index: 10;
 }
-
-
-
-
-
-
 
 .book-title {
     grid-column: 1/-1; /* book-itemの全幅使用*/

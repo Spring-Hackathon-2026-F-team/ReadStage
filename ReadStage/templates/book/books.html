@@ -16,10 +16,6 @@
     </div>
 </div>
 
-
-
-
-
 <!-- 「学習レベル(4段階）」と「★★★★　以上」と「検索」の枠 -->
 <div class="toppage-search-container">
     <p class="search-heading">書籍を探す</p>
@@ -29,7 +25,6 @@
 
         <!-- 左右の列を並べるコンテナ -->
         <div class="search-condition-row">
-
             <!-- 左側　-->
             <div class="condition-column-left">
                 <!-- 左側：1行目 -->
@@ -51,7 +46,6 @@
                     <span> が</span>
                 </div>
             </div>
-
             <!-- 右側 -->
             <div class="condition-column-right">
                 <!-- 右側：1行目 -->
@@ -64,9 +58,8 @@
             </div>
         </div>
 
-        <p class="keyword-label">カテゴリ/キーワード</p>
-
         <!-- 検索窓 -->
+        <p class="keyword-label">カテゴリ/キーワード</p>
         <div class="search-input-row">
             <input type="search" name="search-word" placeholder="検索" class="search-input" value="{{ search_word }}">
         </div>
@@ -79,11 +72,6 @@
     </form>
 </div>
 
-
-
-
-
-
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
 <!-- 表示できる書籍がない場合は文言を表示 -->
 {% if books is not defined or books|length == 0 %}
@@ -94,8 +82,6 @@
 {% else %}
 {% for book in books %} <!-- Jinja2のループを開始 -->
 <a href="/book/{{ book.id }}">
-
-
 
 <!- 最初の一冊のみ「あなたにおすすめ！」と表示 -->
 <article class="book-item{% if loop.first %} is-recommend{% endif %}"> <!-- 書籍１冊分のセット枠 -->
