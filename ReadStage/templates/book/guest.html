@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}ゲストページ{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/guest.css') }}">
+{% endblock %}
+
+{% block content %}
+
+
+<!-- body上部ヘッダー画像の領域 -->
+<div class="header-image-container">
+    <div class="header-image-inner-container">
+      <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+       <!-- 画面名をゲストページでは表示させない -->
+    </div>
+</div>
+
+<div class="book-list"> <!-- 全体を囲む大きな枠 -->
+{% for book in books %} <!-- Jinja2のループを開始 -->
+<a href="/book/{{ book.id }}">
+<article class="book-item"> <!--書籍１冊分のセット枠-->
+<h3 class="book-title">{{ book.title }}</h3>
+<div class="book-content"> <!-- 左側の列：イラスト用 -->
+    <img src="{{ url_for('static', filename='image/' + book.id|string + '.jpg') }}" alt="{{book.title}}の画像" class="book-image">
+    <div class="book-info-right"> <!-- 右側の列用 -->
+        <div class="book-category">
+            <h5>カテゴリー</h5>
+                <ul>
+                    <li>{{ book.category }}</li>
+                </ul>
+        </div>
+        <div class="book-keyword">
+            <h5>キーワード</h5>
+                <ul>
+                    {% for keyword in book.keywords %} <!-- キーワードリストをループ  -->
+                        <li>{{ keyword }}</li>
+                    {% endfor %}
+                </ul>
+        </div>
+    </div>
+</div>
+<!-- 学習レベルの評価データを動的に表示 -->
+<div class="book-levels">
+    <p>学習レベル</p>
+    <!-- 各ステータスをループして表示するための表示用のリストを定義 -->
+    {% set statuses = ['START/入門', 'BASIC/基礎', 'STANDARD/応用', 'EXPERT/発展'] %}
+    {% for status in statuses %}
+    <!-- book.average_evaluationsから現在のstatusの評価点を取得。評価がない場合は0.0を表示 -->
+        {% set avg_score = book.average_evaluations.get(status, 0.0) %} 
+        <div class="level-item">
+            <!-- CSSクラス名用にステータス名を加工（例:"START/入門" -> "level-name-start-入門"）-->
+            <!-- ステータス名に半角スペースが入った場合は'-'で置き換え --> 
+            <span class="level-name-{{ status|lower|replace(' ', '-')|replace('/', '-') }}">{{ status }}</span>
+            <span class="star-rating">
+                <!-- 評価点を四捨五入し、さらに整数型に変換する -->
+                {% set rounded_score = ((avg_score|float) + 0.5)|int %}
+                <!-- 四捨五入した数だけ★を表示し、残りを☆で埋める -->
+                {{ '★' * rounded_score }}{{ '☆' * (5 - rounded_score) }}
+            </span>
+            <span class="score">{{ avg_score|float|round(1) }}</span> <!-- 小数点以下1桁で表示 -->
+        </div>
+    {% endfor %}
+</div>
+
+<div class="book-description-area">
+    <p class="book-description-heading">書籍のまえがき</p>
+    <p class="book-description">
+        {{ book.introduction }} <!-- 取得した紹介文の表示 -->
+    </p>
+</div>
+</article>
+</a>
+{% endfor %} 
+<!-- Jinja2のループ終了 -->
+</div>
+
+<div class="error-wrapper">
+    <div class ="box-design">
+        <img src="{{ url_for('static', filename='image/app_logo.png') }}" class="app-logo-image" alt="アプリロゴ画像"> <!-- style属性を削除し、クラスを追加 -->
+        <a href='book/books.html' class="c-button">さらにIT書籍を探すなら</a>
+    </div>
+</div>
+
+{% endblock %}
