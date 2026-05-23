@@ -8,6 +8,7 @@
 
 {% block content %}
 
+<!-- body上部ヘッダー画像の領域 -->
 <div class="header-image-container">
     <div class="header-image-inner-container">
       <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
@@ -15,13 +16,60 @@
     </div>
 </div>
 
-<div class="search-container">
-    <form action="/books/search" method="post">
+<!-- 「学習レベル(4段階）」と「★★★★　以上」と「検索」の枠 -->
+<div class="toppage-search-container">
+    <p class="search-heading">書籍を探す</p>
+
+    <form action="/books/search" method="post" class="search-form">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <input type="search" name="search-word" placeholder="検索" class="search-input" value={{ search_word }}>
-        <button type="submit" class="search-button">検索</button>
+
+        <!-- 左右の列を並べるコンテナ -->
+        <div class="search-condition-row">
+            <!-- 左側　-->
+            <div class="condition-column-left">
+                <!-- 左側：1行目 -->
+                <span>学習レベル</span>
+                <!-- 左側：2行目：ドロップダウン -->
+                <div class="dropdown">
+                    <select name="status" class="toppage-level">
+                        <option value="" disabled {% if not selected_status %}selected{% endif %}>レベル(4段階)</option>
+                        <option value="START/入門" {% if selected_status == "START/入門" %}selected{% endif %}>START/入門</option>
+                        <option value="BASIC/基礎" {% if selected_status == "BASIC/基礎" %}selected{% endif %}>BASIC/基礎</option>
+                        <option value="STANDARD/応用" {% if selected_status == "STANDARD/応用" %}selected{% endif %}>STANDARD/応用</option>
+                        <option value="EXPERT/発展" {% if selected_status == "EXPERT/発展" %}selected{% endif %}>EXPERT/発展</option>
+                        <!-- <option value="" disabled selected>レベル(4段階)</option>
+                        <option value="START/入門">START/入門</option>
+                        <option value="BASIC/基礎">BASIC/基礎</option>
+                        <option value="STANDARD/応用">STANDARD/応用</option>
+                        <option value="EXPERT/発展">EXPERT/発展</option> -->
+                    </select>
+                    <span> が</span>
+                </div>
+            </div>
+            <!-- 右側 -->
+            <div class="condition-column-right">
+                <!-- 右側：1行目 -->
+                <span>評価</span>
+                <!-- 右側：2行目：星の評価 -->
+                <div class="rating-row">
+                    <span class="star">★★★★</span>
+                    <span>　以上</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 検索窓 -->
+        <p class="keyword-label">カテゴリ/キーワード</p>
+        <div class="search-input-row">
+            <input type="search" name="search-word" placeholder="検索" class="search-input" value="{{ search_word }}">
+        </div>
+        
+        <!-- 「検索クリア」ボタンと「検索」ボタン -->
+        <div class="buttons-row"> 
+            <button type="button" class="clear-button" onclick="location.href='/books'">クリア</button>
+            <button type="submit" class="c-button">検索</button>
+        </div>
     </form>
-    <button type="submit" class="search-button" onclick="location.href='/books'">検索クリア</button>
 </div>
 
 <div class="book-list"> <!-- 全体を囲む大きな枠 -->
@@ -34,8 +82,15 @@
 {% else %}
 {% for book in books %} <!-- Jinja2のループを開始 -->
 <a href="/book/{{ book.id }}">
-<article class="book-item"> <!--書籍１冊分のセット枠-->
-<h3 class="book-title">{{ book.title }}</h3>
+
+<!- 最初の一冊のみ「あなたにおすすめ！」と表示 -->
+<article class="book-item{% if loop.first %} is-recommend{% endif %}"> <!-- 書籍１冊分のセット枠 -->
+    <!-- 最初の一冊のみ、タグを表示 -->
+    {% if loop.first %}
+    <div class="recommend-tag">あなたにおすすめ！</div>
+    {% endif %}
+
+    <h3 class="book-title">{{ book.title }}</h3>
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
     <img src="{{ url_for('static', filename='image/' + book.id|string + '.jpg') }}" alt="{{book.title}}の画像" class="book-image">
     <div class="book-info-right"> <!-- 右側の列用 -->
