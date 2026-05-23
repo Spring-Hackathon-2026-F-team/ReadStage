@@ -162,6 +162,7 @@ body {
     left: 15px; /* 画像の左端から15px右 */
     color: white; /* 文字色を白に */
     font-size: 1em; /* テキストの大きさ */
+    letter-spacing: 0.1em;
     font-weight: bold; /* 太字 */
     /* 文字の枠線（アウトライン）をtext-shadowで表現 */
     text-shadow:
