@@ -63,8 +63,8 @@
             <span class="star-rating-num">{{ "%.1f" | format(comment.evaluation) }}</span>
         </div>
     </div>
-    <p class="comment-updated-at-text">投稿日時:{{ comment.updated_at.strftime('%Y.%m.%d') }} <!-- コメント更新日 -->
-        <span id="comment-updated_at"></span>
+    <p class="comment-created-at-text">投稿日時:{{ comment.created_at.strftime('%Y.%m.%d') }} <!-- コメント更新日 -->
+        <span id="comment-created_at"></span>
     </p>
 
     <p class="comment-description">

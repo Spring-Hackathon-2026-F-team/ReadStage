@@ -202,9 +202,9 @@ class Recommend:
     try:
       with conn.cursor() as cur:
         sql = '''
-        SELECT id, user_id, (user_id=%s) AS is_current_user, evaluation, status, message, updated_at 
+        SELECT id, user_id, (user_id=%s) AS is_current_user, evaluation, status, message, created_at 
         FROM recommends WHERE book_id=%s AND delete_flag=0 
-        ORDER BY id DESC;
+        ORDER BY created_at DESC;
         '''
         cur.execute(sql, (user_id, book_id))
         recommends = cur.fetchall()
