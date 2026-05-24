@@ -2,20 +2,194 @@
 
 /* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
 
-/*.投稿リスト全体 */
+/* ------「学習レベル（4段階）」と「★★★★　以上」と「検索」の枠------ */
+.toppage-search-container {
+    background-color: var(--secondary_background);
+    border: 1px solid var(--textcolor);
+    margin: 0 10px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    box-sizing: border-box; /* パディングを含めた幅の計算 */
+    width: auto;
+}
+
+/* 「書籍を探す』の文字部分 */
+.search-heading {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 2px 0;
+    letter-spacing: 0.05em; /* 文字間隔 */
+}
+
+.search-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+
+.search-condition-row {
+    display: flex;
+    justify-content: space-between; /* 左右を両端にフィット */
+    align-items: flex-start; /* 上揃え */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 左右列の並び */
+.condition-column-left,
+.condition-column-right {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 左側の幅設定 */
+.condition-column-left {
+    width: 55%; /* 調整用 */
+}
+
+/* 右側の幅設定 */
+.condition-column-right {
+    width: 45%; /* 調整用 */
+}
+
+.condition-column-left  > span:first-child,
+.condition-column-right > span:first-child {
+    font-size: 12px;
+}
+
+/* ドロップダウンと★評価の並び */
+.dropdown,
+.rating-row {
+    display: flex;
+    flex-direction: row;    /* 横並びにする */
+    align-items: center;    /* 上下中央揃え */
+}
+
+.dropdown {
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ドロップダウンの枠調整 */
+.toppage-level {
+    width: 80%;
+    max-width: 100%;
+    background-color: var(--comment_background);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* 「★★★★　以上」の文字色分け */
+.star {
+    color: var(--star);
+    font-size: 16px;
+}
+
+.rating-row > span:last-child {
+    color: var(--textcolor);
+}
+
+/* カテゴリ/キーワードのラベル調整 */
+.keyword-label {
+    margin-top: 6px;
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+.search-input-row {
+    width: 100%;
+    display: block;
+    clear: both;
+    box-sizing: border-box;
+}
+
+/* 検索入力欄 */
+.search-input {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--secondary_background);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 14px;
+    height: 26px;
+    box-sizing: border-box; /* パディングを含めた幅の計算 */
+}
+
+/* 「クリア」「検索」ボタン */
+.buttons-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    /* 上下中央 */
+    gap: 24px;
+    margin-top: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.clear-button, 
+.buttons-row .c-button {
+    flex: 1;    /* 横幅を半分(等分）に引き伸ばす */
+    text-align: center;
+    font-size: 16px;
+    padding: 2px 0;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.clear-button {
+    color: var(--primary);
+    background-color: var(--basic_text);
+    border: 1px solid var(--primary);
+    display: block;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    margin: 0;
+}
+
+/* ホバー時の基本（グレーが薄くなる） */
+.clear-button:hover {
+    background-color: var(--secondary_background);
+}
+
+/* 検索ボタン */
+.buttons-row .c-button {
+    width: 100%;
+}
+
+/* ------書籍一覧全体------ */
 .book-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin-top: 10px;
-    background-color: #EDEDED;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 0;
+    background-color: var(--card_background);
     padding: 10px;
     border-radius: 5px;
+}
+
+/* お探しの書籍は見つかりませんでした表示 */
+.empty-container {
+    min-height: calc(100vh - 378px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 /* aタグの文字色・下線表示をリセット */
 .book-list > a {
     text-decoration: none;
     color: inherit;
+    width: 100%;    /* 左右中央寄せの安定化 */
 }
 
 /*.書籍一冊分のセットをGridコンテナにする */
@@ -29,6 +203,28 @@
     border-radius: 8px;
     max-width: 400px; /*.上限をスマホサイズに */
     margin: 5px auto; /*.上下に２０pxの余白、左右には自動で中央寄せ */
+}
+
+/* 「あなたにおすすめ！」タグの青枠 */
+.book-item.is-recommend {
+    position: relative;
+    border: 2px solid var(--primary);
+    margin: 2em auto 0;
+    border-radius: 0 5px 5px 5px;
+}
+
+/* 「あなたにおすすめ！」タグ部分 */
+.recommend-tag {
+    position: absolute;
+    top: -1.8em;
+    left: -2px;
+    background-color: var(--primary);
+    color: var(--expart_text);
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 4px 4px 0 0;
+    z-index: 10;
 }
 
 .book-title {
@@ -101,10 +297,10 @@
     border-radius: 5px;
 }
 
-.level-name-start-入門{ color: #167600; background-color: #98E607;}
-.level-name-basic-基礎{ color: #ffffff; background-color: #17A351;}
+.level-name-start-入門{    color: #167600; background-color: #98E607;}
+.level-name-basic-基礎{    color: #ffffff; background-color: #17A351;}
 .level-name-standard-応用{ color: #003297; background-color: #27bbfa;}
-.level-name-expert-発展 { color: #ffffff; background-color: #003ea2;}
+.level-name-expert-発展 {  color: #ffffff; background-color: #003ea2;}
 
 .star-rating {
     color: orange;

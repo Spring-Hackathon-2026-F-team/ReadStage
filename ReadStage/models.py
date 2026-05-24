@@ -186,7 +186,7 @@ class Recommend:
     conn = db_pool.get_conn()
     try:
       with conn.cursor() as cur:
-        sql = 'SELECT id FROM recommends WHERE user_id=%s AND book_id=%s;'
+        sql = 'SELECT id FROM recommends WHERE user_id=%s AND book_id=%s AND delete_flag=0;'
         cur.execute(sql, (user_id, book_id))
         recommend = cur.fetchone()
         return recommend
@@ -216,6 +216,24 @@ class Recommend:
       db_pool.release(conn)
 
   @classmethod
+  def get_edit_recommend(cls, recommend_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = '''
+        SELECT id, user_id, evaluation, status, message, updated_at 
+        FROM recommends WHERE id=%s AND delete_flag=0;
+        '''
+        cur.execute(sql, (recommend_id,))
+        recommend = cur.fetchone()
+        return recommend
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
+  @classmethod
   def create(cls, user_id, book_id, evaluation, status, message):
     conn = db_pool.get_conn()
     try:
@@ -231,6 +249,35 @@ class Recommend:
       abort(500)
     finally:
       db_pool.release(conn)
+
+  @classmethod
+  def delete(cls, recommend_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = "UPDATE recommends SET delete_flag = 1, deleted_at = NOW() WHERE id = %s;"
+        cur.execute(sql, (recommend_id, ))
+        conn.commit()
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
+  @classmethod
+  def edit(cls, recommend_id, evaluation, status, message):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = 'UPDATE recommends SET evaluation=%s, status=%s, message=%s WHERE id=%s;'
+        cur.execute(sql, (evaluation, status, message, recommend_id ))
+        conn.commit()
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
 
 class Category:
   @classmethod

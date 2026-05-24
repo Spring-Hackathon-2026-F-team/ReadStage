@@ -72,9 +72,20 @@
     </p>
     {% if comment.is_current_user %}
         <div class="content-wrap">
-            <div class="button-wrap comment-actions">
-                <a href="create_comment.html" class="c-button retouch">修正</a><!--修正ボタン-->
-                <a href="book_delete.html" class="c-button delete">削除</a><!--削除ボタン-->
+            <div class="button-wrap comment-actions"><!-- 修正、削除ボタン -->
+                <form action="/book/{{ book.id }}/comment/{{ comment.id }}/edit" method="get">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="c-button retouch" type="submit">修正</button>
+                </form>
+                <form action="/book/{{ book.id }}/comment/{{ comment.id }}/delete" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button
+                        class="c-button delete"
+                        type="submit"
+                        onclick="return confirm('このコメントを削除します。\nよろしいですか？\nこの操作は取り消せません。')">
+                        削除
+                    </button>
+                </form>
             </div>
         </div>
     {% endif %}

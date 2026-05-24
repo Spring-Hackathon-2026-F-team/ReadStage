@@ -6,6 +6,8 @@
   <title>{% block title %}ReadStage{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- ファビコン -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/app_logo.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/color.css') }}">
   {% block page_css %}{% endblock %}
