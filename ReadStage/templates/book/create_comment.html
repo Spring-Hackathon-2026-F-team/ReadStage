@@ -31,7 +31,17 @@
                     <div class="book-info-right">
                         <div class="book-evaluation">
                             <h5>評価</h5>
-                            <select name="evaluation" class="dropdown dropdown-stars">
+                            <div class="stars">
+                                <span>
+                                    <input id="review01" type="radio" name="review"><label for="review01">★</label>
+                                    <input id="review02" type="radio" name="review"><label for="review02">★</label>
+                                    <input id="review03" type="radio" name="review"><label for="review03">★</label>
+                                    <input id="review04" type="radio" name="review"><label for="review04">★</label>
+                                    <input id="review05" type="radio" name="review"><label for="review05">★</label>
+                                </span>
+                            </div>
+
+                            <!-- <select name="evaluation" class="dropdown dropdown-stars">
                                 {% set selected_evaluation = (form_data.evaluation if form_data is defined else recommend.evaluation if recommend else "") | string %}                                
                                 <option value="" disabled {{ "selected" if selected_evaluation == '' }}>評価★(5段階)</option>
                                 <option value="5" {{ "selected" if selected_evaluation == '1' }}>★★★★★</option>
@@ -39,8 +49,7 @@
                                 <option value="3" {{ "selected" if selected_evaluation == '3' }}>★★★☆☆</option>
                                 <option value="2" {{ "selected" if selected_evaluation == '4' }}>★★☆☆☆</option>
                                 <option value="1" {{ "selected" if selected_evaluation == '5' }}>★☆☆☆☆</option>
-
-                            </select>
+                            </select> -->
                         </div>
                         <div class="select-levels">
                             <h5>学習者レベル</h5>
