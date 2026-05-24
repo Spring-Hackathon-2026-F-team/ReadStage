@@ -152,7 +152,7 @@ a{
 }
 
 /* 投稿日時 */
-.comment-updated-at-text { /* 新しいクラス名 */
+.comment-created-at-text { /* 新しいクラス名 */
     margin: 0; /* pタグのデフォルトマージンをリセット */
     white-space: nowrap; /* テキストが改行されないように */
     font-size: 0.9em; /* 必要に応じてフォントサイズ調整 */
