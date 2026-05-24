@@ -9,7 +9,7 @@ db_pool = DB.init_db_pool()
 
 class Book:
   @classmethod
-  def get_all(cls, search_category_keyword):
+  def get_all(cls, search_dict):
     conn = db_pool.get_conn()
     try:
       # DictCursorを使って、結果を辞書形式で返す
@@ -37,23 +37,36 @@ class Book:
         # WHERE句が必要な場合は組み立て
         use_where = False
         params = []
-        # カテゴリ・キーワード検索
-        if search_category_keyword:
-          sql_books += " WHERE c.category LIKE %s OR k.keyword LIKE %s"
-          params.append("%" + search_category_keyword + "%")
-          params.append("%" + search_category_keyword + "%")
-          use_where = True
-        
-        # TODO:後続の検索はここに追記予定。
-        # if learning_level:
-        #   if use_where:
-        #     # すでにWHERE句を追加済みなので、ANDから始める
-        #     sql_books += " AND ..."
-        #   else:
-        #     # WHERE句の指定がないので、WHERE句から始める
-        #     sql_books += " WHERE ..."
-        #   params.append(learning_level)
-        #   use_where = True
+
+        # 検索条件を指定している場合
+        if search_dict is not None:
+          # カテゴリ・キーワード検索
+          if "word" in search_dict:
+            search_category_keyword = search_dict["word"]
+            if search_category_keyword:
+              sql_books += " WHERE (c.category LIKE %s OR k.keyword LIKE %s)"
+              params.append("%" + search_category_keyword + "%")
+              params.append("%" + search_category_keyword + "%")
+              use_where = True
+          
+          # 学習レベル検索（※評価は固定で4以上）
+          if "status" in search_dict:
+            search_status = search_dict["status"]
+            if search_status:
+              if use_where:
+                # すでにWHERE句を追加済みなので、ANDから始める
+                sql_books += " AND "
+              else:
+                # WHERE句の指定がないので、WHERE句から始める
+                sql_books += " WHERE "
+              # サブクエリで指定学習レベルが4以上のものに絞り込む
+              sql_books += """
+              b.id IN (SELECT book_id FROM recommends 
+                       WHERE status=%s AND delete_flag=0 
+                       GROUP BY book_id HAVING AVG(evaluation) >= 4)
+              """
+              params.append(search_status)
+              use_where = True
 
         # 最後に並び順を追加
         sql_books += "ORDER BY b.id ASC;"
@@ -89,6 +102,7 @@ class Book:
             status,
             ROUND(AVG(evaluation), 1) AS average_evaluation
           FROM recommends
+          WHERE delete_flag=0
           GROUP BY
             book_id, status;
         """
