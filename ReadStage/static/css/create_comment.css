@@ -54,10 +54,11 @@
 
 /* 左側の書籍画像 */
 .book-image {
-    width: 95px;
-    height: 134px;
+    width: 116px;
+    height: 163px;
     object-fit: cover;
     flex-shrink: 0;
+    display: block; /* 画像の下の隙間をなくす */
 }
 
 /* 右側のコンテンツ（評価と学習者レベル） */
@@ -66,35 +67,33 @@
     display: flex;
     flex-direction: column;
     min-width: 160px;    /* 狭くなりすぎないように */
-    gap: 24px;
-    padding-right: 10px;
+    gap: 12px;
 }
 
-/* 「評価」と「学習者レベル」の行の設定 */
-.book-evaluation,
-.select-levels {
+/* 「評価」と下に星★５つ */
+.book-evaluation {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
     width: 100%;
 }
 
-/* 中央のラベル文字 */
+/* 「評価」と「学習者レベル」のラベル文字 */
 .book-evaluation h5,
 .select-levels h5 {
     margin: 0;
-    width: 80px;
-    flex-shrink: 0; /* 幅を固定してつぶさない */
-    font-size: 14px;
+    font-size: 16px;
+    color: var(--textcolor);
     white-space: nowrap;    /* 折り返しを防止 */
 }
 
-
-
+/* 星の評価 */
 .stars span {
     display: flex;                  /* フレックスボックス */
     flex-direction: row-reverse;    /* 星を逆順に並べる */
     justify-content: flex-end;      /* 逆順なので、左寄せにする */
+    margin-left: 20px;
 }
 
 .stars input[type='radio'] {
@@ -103,7 +102,7 @@
 
 .stars label {
     color: var(--comment_background);   /* 未選択の星をグレーにする */
-    font-size: 20px;
+    font-size: 26px;
     padding: 0 2px;     /* 星の左右の余白 */
     cursor: pointer;    /* カーソルが乗ったときに指の形にする */
     transition: color 0.2s; /* 色の変化を滑らかにする */
@@ -115,38 +114,95 @@
     color: var(--star);     /* 選択された星以降をすべて黄色にする*/
 }
 
+/* 星の選択をホバー側優先にさせる */
+.stars input[type='radio']:checked ~ label:hover,
+.stars input[type='radio']:checked ~ label:hover ~ label,
+.stars label:hover ~ input[type='radio']:checked ~ label {
+    color: var(--star);
+}
 
+/* 学習者レベルブロック全体 */
+.select-levels {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+}
 
+/* 4つのボタンを2×2のグリッドにする設定 */
+.learning-level-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 12px;
+    width: 100%;
+}
 
+/* 各レベルアイテム */
+.level-card {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+}
 
+/* ラジオボタン本体は非表示 */
+.level-card input[type="radio"] {
+    display: none;
+}
 
-/* 右側のドロップダウン */
-.dropdown {
-    flex: 1;        /* 残りの幅をすべて使用する */
-    min-width: 0;   /* はみだし防止 */
+/* 4つの選択ボタン（未選択時は普通のボタンの見た目） */
+.level-card .c-button {
+    display: block;
+    width: 100%;
     box-sizing: border-box;
-    padding: 2px;
-    padding-right: 30px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin: 0;
+    text-align: center;
+    border: none;
+    transition: background-color 0.2s ease, color 0.2s ease; 
+    padding: 2px 0; 
     font-size: 14px;
+    font-weight: bold;
     background-color: var(--comment_background);
     color: var(--textcolor);
 }
 
-/* ドロップダウンの背景色 */
-.dropdown option {
-    background-color: var(--secondary_background);
+/* 未選択時のホバー */
+.level-card .c-button:hover {
+    background-color: var(--comment_background);
 }
 
-/* 選択後に表示されるセレクトボックス全体 */
-.dropdown-stars {
-    color: var(--textcolor);    /* 選択後は通常の色 */
+/* 選択された時の各ボタンの固定カラー */
+/* 1. START/入門 ボタン（選択時は黄緑） */
+.level-card input[type="radio"]:checked + .c-button[for="status_start"] {
+    background-color: var(--start_background);
+    color: var(--start_text);
 }
 
-/* ドロップダウンを開いたときの選択肢の星を黄色にする */
-.dropdown-stars option {
-    color: var(--star);
+/* 2. BASIC/基礎 ボタン（選択時は緑） */
+.level-card input[type="radio"]:checked + .c-button[for="status_basic"] {
+    background-color: var(--basic_background);
+    color: var(--basic_text);
+}
+
+/* 3. STANDARD/応用 ボタン（選択時は青） */
+.level-card input[type="radio"]:checked + .c-button[for="status_standard"] {
+    background-color: var(--standard_background);
+    color: var(--standard_text);
+}
+
+/* 4. EXPERT/発展 ボタン（選択時は紺） */
+.level-card input[type="radio"]:checked + .c-button[for="status_expert"] {
+    background-color: var(--expart_background);
+    color: var(--expart_text);
+}
+/* ボタンの下の説明文 */
+.level-card span {
+    font-size: 11px;
+    color: var(--textcolor);
+    line-height: 1.3;
+    padding-left: 2px;
 }
 
 /* 学習レベルの説明セクション */
@@ -162,14 +218,10 @@
     letter-spacing: 0.05em; /* 文字間隔を少し空ける */
 }
 
-
-
-
-
 /* 「📚各レベルの参考例」文字の部分 */
 .learning-level h5 {
     margin: 0 0 6px 0;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--textcolor);
 }
 
@@ -190,10 +242,10 @@
     display: inline-block;
     width: 95px;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     flex-shrink: 0;     /* 潰れないように固定 */
-    margin-right: 8px; /* spanとの間隔 */
+    margin-right: 4px;  /* spanとの間隔 */
     border-radius: 6px;
 }
 
@@ -201,7 +253,7 @@
 .level-start    { background-color: var(--start_background)    ; color: var(--start_text); }
 .level-basic    { background-color: var(--basic_background)    ; color: var(--basic_text); }
 .level-standard { background-color: var(--standard_background) ; color: var(--standard_text); }
-.level-expert   { background-color: var(--expart_background)   ; color: var(--basic_text); }
+.level-expert   { background-color: var(--expart_background)   ; color: var(--expart_text); }
 
 /* レベルバッジ右側の説明文 */
 .level-text span {
@@ -237,7 +289,7 @@
     box-sizing: border-box; /* パディングを幅に含める */
     border: none;   /* 枠線を消す */
     outline: none;  /* クリック時の枠線を消す */
-    color: var(--testcolor);
+    color: var(--textcolor);
 }
 
 /* 「登録」ボタン */

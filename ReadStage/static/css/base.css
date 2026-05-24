@@ -146,7 +146,6 @@ body {
 /* ヘッダー画像とテキストを囲むコンテナ */
 .header-image-container {
     width: 100%; /* 親要素の幅に合わせる */
-    margin-bottom: 5px; /* 下に余白 */
     display: flex;
     justify-content: center;    /* 左右の中央 */
 }
@@ -155,14 +154,20 @@ body {
     position: relative; /* 子要素（お知らせテキスト）の絶対配置の基準にする */
 }
 
-/* ヘッダー画像上の「トップページ」テキストのスタイル */
+.header-image {
+    display: block; 
+    width: 100%;
+    height: auto;
+}
+
+/* ヘッダー画像上のテキストスタイル */
 .header-notification {
     position: absolute; /* 親要素（.header-image-container）を基準に絶対配置 */
-    bottom: 15px; /* 画像の下端から15px上 */
+    bottom: 12px; /* 画像の下端から15px上 */
     left: 15px; /* 画像の左端から15px右 */
     color: white; /* 文字色を白に */
     font-size: 1em; /* テキストの大きさ */
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     font-weight: bold; /* 太字 */
     /* 文字の枠線（アウトライン）をtext-shadowで表現 */
     text-shadow:
