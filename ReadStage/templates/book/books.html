@@ -81,16 +81,16 @@
 </div>
 {% else %}
 {% for book in books %} <!-- Jinja2のループを開始 -->
-<a href="/book/{{ book.id }}">
-
 <!- 最初の一冊のみ「あなたにおすすめ！」と表示 -->
 <article class="book-item{% if loop.first %} is-recommend{% endif %}"> <!-- 書籍１冊分のセット枠 -->
     <!-- 最初の一冊のみ、タグを表示 -->
     {% if loop.first %}
     <div class="recommend-tag">あなたにおすすめ！</div>
     {% endif %}
-
-    <h3 class="book-title">{{ book.title }}</h3>
+    <div class="plus-button"> <!---ボタンを横並びにするため-->
+     <h3 class="book-title">{{ book.title }}</h3>
+     <a href="/book/{{book.id }}" class="c-button todetail">詳細へ</a> 
+    </div>
 <div class="book-content"> <!-- 左側の列：イラスト用 -->
     <img src="{{ url_for('static', filename='image/' + book.id|string + '.jpg') }}" alt="{{book.title}}の画像" class="book-image">
     <div class="book-info-right"> <!-- 右側の列用 -->
@@ -112,7 +112,10 @@
 </div>
 <!-- 学習レベルの評価データを動的に表示 -->
 <div class="book-levels">
+    <div class="plus-button"><!---ボタンを横並びにするため-->
     <p>学習レベル</p>
+    <a href="/book/{{book.id }}" class="c-button todetail">詳細へ</a>
+    </div>
     <!-- 各ステータスをループして表示するための表示用のリストを定義 -->
     {% set statuses = ['START/入門', 'BASIC/基礎', 'STANDARD/応用', 'EXPERT/発展'] %}
     {% for status in statuses %}
@@ -140,7 +143,6 @@
     </p>
 </div>
 </article>
-</a>
 {% endfor %} 
 {% endif %}
 <!-- Jinja2のループ終了 -->
