@@ -201,7 +201,7 @@
     background-color: #f8f8f8;
     padding: 20px;
     border-radius: 8px;
-    max-width: 400px; /*.上限をスマホサイズに */
+    max-width: min(400px, 100%);  /*.上限をスマホサイズに */
     margin: 5px auto; /*.上下に２０pxの余白、左右には自動で中央寄せ */
 }
 

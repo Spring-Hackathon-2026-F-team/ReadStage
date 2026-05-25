@@ -82,9 +82,9 @@
 {% else %}
 {% for book in books %} <!-- Jinja2のループを開始 -->
 <!- 最初の一冊のみ「あなたにおすすめ！」と表示 -->
-<article class="book-item{% if loop.first %} is-recommend{% endif %}"> <!-- 書籍１冊分のセット枠 -->
+<article class="book-item{% if book.id == recommend_book_id %} is-recommend{% endif %}"> <!-- 書籍１冊分のセット枠 -->
     <!-- 最初の一冊のみ、タグを表示 -->
-    {% if loop.first %}
+    {% if book.id == recommend_book_id %}
     <div class="recommend-tag">あなたにおすすめ！</div>
     {% endif %}
     <div class="plus-button"> <!---ボタンを横並びにするため-->

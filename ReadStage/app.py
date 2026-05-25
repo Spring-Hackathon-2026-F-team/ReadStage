@@ -13,6 +13,7 @@ from models import Book, User, Recommend, Category, Keyword
 EMAIL_PATTERN = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
 SESSION_DAYS = 30
 PASSWORD_MIN_LEN = 8
+STATUS_LEVELS = ['START/入門', 'BASIC/基礎', 'STANDARD/応用', 'EXPERT/発展']
 
 app = Flask(__name__)
 
@@ -124,6 +125,61 @@ def logout():
     return redirect(url_for('login_view'))
 
 
+# おすすめ書籍検索時の検索対象学習レベルを取得
+# 引数で指定したstatus+その次の学習レベルを返す
+# EXPERT/発展の場合は['EXPERT/発展', 'EXPERT/発展']を返す
+def get_recommend_statuses(status):
+    status_index = STATUS_LEVELS.index(status)
+    recommend_statuses = [STATUS_LEVELS[status_index]]
+    if status_index + 1 < len(STATUS_LEVELS):
+        recommend_statuses.append(STATUS_LEVELS[status_index + 1])
+    else:
+        recommend_statuses.append(STATUS_LEVELS[status_index])
+    return recommend_statuses
+
+
+# おすすめ書籍取得
+def get_recommend_book(user_id):
+    recommend_book_id = None
+
+    # ユーザーが直近でコメントした情報を取得
+    latest_recommend = Recommend.get_latest_comment(user_id)
+    if latest_recommend is not None:
+        # 直近でコメントした書籍と同一カテゴリの書籍一覧を取得
+        same_category_book_ids = Book.get_same_category_book_ids(latest_recommend['book_id'])
+
+        # # 検索対象の学習レベルを2つ選定
+        recommend_statuses = get_recommend_statuses(latest_recommend['status'])
+
+        # 同一カテゴリの書籍で、おすすめ対象の書籍を選択
+        recommend_book = Book.get_recommend_book_from_ids(user_id, same_category_book_ids, recommend_statuses)
+        print(recommend_book)
+        if recommend_book is None:
+            recommend_book = Book.get_recommend_book_from_all(user_id, recommend_statuses)
+        if recommend_book is not None:
+            recommend_book_id = recommend_book['id']
+    return recommend_book_id
+
+
+# おすすめ書籍を先頭に並び替え
+def sort_recommend_book_top(books, recommend_book_id):
+    if recommend_book_id is None:
+        return books
+
+    recommend_book = None
+    other = []
+    for book in books:
+        if book["id"] == recommend_book_id:
+            recommend_book = book
+        else:
+            other.append(book)
+    
+    if recommend_book is None:
+        return books
+    
+    return [recommend_book, *other]
+
+
 # トップページ(書籍一覧)の表示
 @app.route("/books", methods=["GET"])
 def books_view():
@@ -146,7 +202,13 @@ def books_view():
         # タイトル、カテゴリ、キーワード、まえがきを渡す
         # book_idごとの4つのレベルの評価点を渡す
         books = Book.get_all(None)
-    return render_template('book/books.html', books=books, search_word=search_word, selected_status=search_status)
+
+    # おすすめ書籍の選抜
+    recommend_book_id = get_recommend_book(user_id)
+
+    # おすすめ書籍を先頭に移動
+    books = sort_recommend_book_top(books, recommend_book_id)
+    return render_template('book/books.html', books=books, search_word=search_word, selected_status=search_status, recommend_book_id=recommend_book_id)
 
 # 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
