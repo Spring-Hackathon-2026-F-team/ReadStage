@@ -9,7 +9,7 @@
 {% block content %}
 
 <!-- body上部ヘッダー画像の領域 -->
-<div class="header-image-container">
+<div id="page-top" class="header-image-container">
     <div class="header-image-inner-container">
       <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
        <p class="header-notification">トップページ</p>
@@ -110,6 +110,9 @@
         </div>
     </div>
 </div>
+<a href="#page-top" class="floating-btn">
+    <img src="{{ url_for('static', filename='image/floating_button.png') }}" alt="トップへ戻る">
+</a>
 <!-- 学習レベルの評価データを動的に表示 -->
 <div class="book-levels">
     <div class="plus-button"><!---ボタンを横並びにするため-->
