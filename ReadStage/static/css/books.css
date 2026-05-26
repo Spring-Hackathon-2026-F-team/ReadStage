@@ -404,3 +404,8 @@
 html {
     scroll-behavior: smooth;
 }
+
+/* 上部ヘッダー画像分のオフセット */
+#page-top {
+    scroll-margin-top: 103px;
+}
