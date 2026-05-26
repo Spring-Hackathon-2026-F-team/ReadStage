@@ -152,6 +152,96 @@ class Book:
     finally:
       db_pool.release(conn)
 
+  @classmethod
+  def get_same_category_book_ids(cls, book_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = '''
+        SELECT book_id AS id
+        FROM book_categories
+        WHERE category_id IN (
+          SELECT category_id
+          FROM book_categories
+          WHERE book_id=%s
+        );
+        '''
+        cur.execute(sql, (book_id,))
+        books = cur.fetchall()
+        return [book['id'] for book in books]
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
+  @classmethod
+  def get_recommend_book_from_ids(cls, user_id, book_ids, target_statuses):
+    if len(book_ids) == 0:
+      return None
+
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        # book_idsの中から、以下の書籍を１冊選択
+        # ・過去にユーザーが投稿(※削除済みは除く)していない
+        # ・target_statusesのうち、平均レートが最も高い（同順の場合はidの若い順）書籍を選ぶ
+        book_id_placeholders = ', '.join(['%s'] * len(book_ids))
+        sql = f'''
+        SELECT b.id AS id
+        FROM books AS b
+        JOIN recommends AS r ON b.id = r.book_id
+        WHERE b.id IN ({book_id_placeholders})
+          AND r.delete_flag=0
+          AND (r.status=%s OR r.status=%s)
+          AND b.id NOT IN (
+            SELECT book_id
+            FROM recommends
+            WHERE user_id=%s AND delete_flag=0
+          )
+        GROUP BY b.id
+        ORDER BY AVG(r.evaluation) DESC, b.id ASC
+        LIMIT 1;
+        '''
+        cur.execute(sql, (*book_ids, target_statuses[0], target_statuses[1], user_id))
+        return cur.fetchone()
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
+  @classmethod
+  def get_recommend_book_from_all(cls, user_id, target_statuses):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        # 全ての書籍から、以下の書籍を1冊選択
+        # ・過去にユーザーが投稿(※削除済みは除く)していない
+        # ・target_statusesのうち、平均レートが最も高い（同順の場合はidの若い順）書籍を選ぶ
+        sql = '''
+        SELECT b.id AS id
+        FROM books AS b
+        JOIN recommends AS r ON b.id = r.book_id
+        WHERE r.delete_flag=0
+          AND (r.status=%s OR r.status=%s)
+          AND b.id NOT IN (
+            SELECT book_id
+            FROM recommends
+            WHERE user_id=%s AND delete_flag=0
+          )
+        GROUP BY b.id
+        ORDER BY AVG(r.evaluation) DESC, b.id ASC
+        LIMIT 1;
+        '''
+        cur.execute(sql, (target_statuses[0], target_statuses[1], user_id))
+        return cur.fetchone()
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
 class User:
   # メールアドレスに合致するユーザーIDとパスワードのみを返却
   @classmethod
@@ -286,6 +376,25 @@ class Recommend:
         sql = 'UPDATE recommends SET evaluation=%s, status=%s, message=%s WHERE id=%s;'
         cur.execute(sql, (evaluation, status, message, recommend_id ))
         conn.commit()
+    except pymysql.Error as e:
+      print(f'エラーが発生しています：{e}')
+      abort(500)
+    finally:
+      db_pool.release(conn)
+
+  @classmethod
+  def get_latest_comment(cls, user_id):
+    conn = db_pool.get_conn()
+    try:
+      with conn.cursor() as cur:
+        sql = '''
+        SELECT id, book_id, status FROM recommends 
+        WHERE user_id=%s AND delete_flag=0
+        ORDER BY created_at DESC, id DESC LIMIT 1;
+        '''
+        cur.execute(sql, (user_id, ))
+        latest_comment = cur.fetchone()
+        return latest_comment
     except pymysql.Error as e:
       print(f'エラーが発生しています：{e}')
       abort(500)

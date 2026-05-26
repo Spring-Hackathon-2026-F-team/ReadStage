@@ -35,11 +35,11 @@
                             <div class="stars">
                                 <span>
                                     {% set selected_evaluation = (form_data.evaluation if form_data is defined else recommend.evaluation if recommend else "") | string %}                                
-                                    <input id="review01" type="radio" name="evaluation" value="1" {{ "checked" if selected_evaluation == "1" }}><label for="review01">★</label>
-                                    <input id="review02" type="radio" name="evaluation" value="2" {{ "checked" if selected_evaluation == "2" }}><label for="review02">★</label>
-                                    <input id="review03" type="radio" name="evaluation" value="3" {{ "checked" if selected_evaluation == "3" }}><label for="review03">★</label>
-                                    <input id="review04" type="radio" name="evaluation" value="4" {{ "checked" if selected_evaluation == "4" }}><label for="review04">★</label>
                                     <input id="review05" type="radio" name="evaluation" value="5" {{ "checked" if selected_evaluation == "5" }}><label for="review05">★</label>
+                                    <input id="review04" type="radio" name="evaluation" value="4" {{ "checked" if selected_evaluation == "4" }}><label for="review04">★</label>
+                                    <input id="review03" type="radio" name="evaluation" value="3" {{ "checked" if selected_evaluation == "3" }}><label for="review03">★</label>
+                                    <input id="review02" type="radio" name="evaluation" value="2" {{ "checked" if selected_evaluation == "2" }}><label for="review02">★</label>
+                                    <input id="review01" type="radio" name="evaluation" value="1" {{ "checked" if selected_evaluation == "1" }}><label for="review01">★</label>
                                 </span>
                             </div>
                         </div>
