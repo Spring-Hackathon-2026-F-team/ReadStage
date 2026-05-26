@@ -67,7 +67,7 @@
 
         <!-- 「◀トップページ」「　　　　　」「　　　　　」を表示 -->
         <!-- エラーページ(404) -->
-        {% elif request.endpoint == None %}
+        {% elif request.endpoint == None or request.endpoint == 'page_not_found' %}
           <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a></div>
           <div class="nav-center">&nbsp;</div>
           <div class="nav-right">&nbsp;</div>
