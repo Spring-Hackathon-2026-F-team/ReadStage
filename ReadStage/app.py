@@ -22,14 +22,14 @@ app.permanent_session_lifetime = timedelta(days=SESSION_DAYS)
 csrf = CSRFProtect(app)
 
 
-# ルートページのリダイレクト処理
+# ゲストページのリダイレクト処理
 @app.route("/", methods=["GET"])
-def index():
-    #user_idがない場合、login.htmlへリダイレクト
-    user_id = session.get("user_id")
-    if user_id is None:
-        return redirect(url_for('login_view'))
-    return redirect(url_for('books_view'))
+def guest_view():
+    # ゲストページは未ログイン状態でアクセス可能。
+    # 書籍を3冊限定で取得する
+    books = Book.get_all(None)
+    books_top3 = books[:3]
+    return render_template('book/guest.html', books=books_top3)
 
 
 # サインアップページの表示

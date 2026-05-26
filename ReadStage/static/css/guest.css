@@ -1,6 +1,11 @@
 /* books.css */
 
 /* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
+.header-login {
+    width: 220px;
+    margin: 0 auto;
+    text-align: center;
+}
 
 /* ------書籍一覧全体------ */
 .book-list {

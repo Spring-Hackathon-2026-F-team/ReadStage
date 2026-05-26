@@ -14,6 +14,7 @@
     <div class="header-image-inner-container">
       <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
        <!-- 画面名をゲストページでは表示させない -->
+       <a href='{{ url_for('login_view') }}' class="c-button header-login">IT書籍を探すなら</a>
     </div>
 </div>
 
@@ -77,7 +78,7 @@
 <div class="error-wrapper">
     <div class ="box-design">
         <img src="{{ url_for('static', filename='image/app_logo.png') }}" class="app-logo-image" alt="アプリロゴ画像"> <!-- style属性を削除し、クラスを追加 -->
-        <a href='book/books.html' class="c-button">さらにIT書籍を探すなら</a>
+        <a href='{{ url_for('login_view') }}' class="c-button">さらにIT書籍を探すなら</a>
     </div>
 </div>
 
