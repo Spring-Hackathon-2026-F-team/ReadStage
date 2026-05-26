@@ -177,7 +177,7 @@
 
 /* お探しの書籍は見つかりませんでした表示 */
 .empty-container {
-    min-height: calc(100vh - 378px);
+    min-height: calc(100vh - 477px);
     display: flex;
     flex-direction: column;
     justify-content: center;

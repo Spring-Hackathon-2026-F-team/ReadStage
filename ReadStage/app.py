@@ -133,18 +133,20 @@ def books_view():
  
     # URLクエリから検索情報を取得
     search_word = request.args.get("search_word", "")
-    if search_word:
+    search_status = request.args.get("search_status", "")
+    if search_word or search_status:
         # 検索ボタンからのリダイレクト時
         # 英数字は半角、カタカナは全角文字に変換して検索する
         word = unicodedata.normalize('NFKC', search_word)
-        books = Book.get_all(word)
+        search_dict = { "word": word, "status": search_status }
+        books = Book.get_all(search_dict)
     else:
         # 検索情報未設定時は検索未設定
         # Bookモデルクラスに整形された書籍データのリストを渡す
         # タイトル、カテゴリ、キーワード、まえがきを渡す
         # book_idごとの4つのレベルの評価点を渡す
         books = Book.get_all(None)
-    return render_template('book/books.html', books=books, search_word=search_word)
+    return render_template('book/books.html', books=books, search_word=search_word, selected_status=search_status)
 
 # 評価詳細ページ表示
 @app.route("/book/<int:book_id>", methods=["GET"])
@@ -274,7 +276,8 @@ def search_books():
 
     # 検索条件を取得して、書籍一覧にリダイレクト
     search_word = request.form.get("search-word")
-    return redirect(url_for("books_view", search_word=search_word))
+    search_status = request.form.get("search-status")
+    return redirect(url_for("books_view", search_word=search_word, search_status=search_status))
 
 
 #書籍投稿削除
