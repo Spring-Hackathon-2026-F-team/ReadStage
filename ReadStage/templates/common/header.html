@@ -65,9 +65,19 @@
           <div class="nav-center">&nbsp;</div>
           <div class="nav-right"><a href="{{ url_for('logout') }}" class="nav-button">ログアウト▶</a></div>
 
-        <!-- エラーページ(404 or 500) -->
         <!-- 「◀トップページ」「　　　　　」「　　　　　」を表示 -->
-        {% elif not request.endpoint or request.endpoint == 'page_not_found' %}
+        <!-- エラーページ(404) -->
+        {% elif request.endpoint == None or request.endpoint == 'page_not_found' %}
+          <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a></div>
+          <div class="nav-center">&nbsp;</div>
+          <div class="nav-right">&nbsp;</div>
+        <!-- エラーページ(500) -->
+        {% elif request.endpoint == 'trigger_500' %}
+          <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a></div>
+          <div class="nav-center">&nbsp;</div>
+          <div class="nav-right">&nbsp;</div>
+        <!-- エラーページ(400) -->
+        {% elif request.endpoint == 'trigger_400' %}
           <div class="nav-left"><a href="{{ url_for('books_view') }}" class="nav-button">◀トップページ</a></div>
           <div class="nav-center">&nbsp;</div>
           <div class="nav-right">&nbsp;</div>
