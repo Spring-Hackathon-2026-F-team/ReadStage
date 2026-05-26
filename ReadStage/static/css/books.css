@@ -377,3 +377,35 @@
     align-items: center;
     gap: 10px;
 }
+
+/*floating-buttonの詳細 */
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 50px; /*　ボタンの幅　*/
+    height: 50px; /*　ボタンの高さ　*/
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /*画像がはみ出さないように */
+}
+
+.floating-btn img {
+    width: 100%; /* ボタンの幅に合わせる */
+    height: 100%; /* ボタンの高さに合わせる */
+    object-fit: contain; /* 画像の比率を保ちつつ収める*/
+    opacity: 0.2; /* 20%の透過度 */
+}
+
+/* スムーズスクロール追加 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 上部ヘッダー画像分のオフセット */
+#page-top {
+    scroll-margin-top: 103px;
+}
