@@ -81,7 +81,8 @@
 </div>
 {% else %}
 {% for book in books %} <!-- Jinja2のループを開始 -->
-<!- 最初の一冊のみ「あなたにおすすめ！」と表示 -->
+<div>
+<!-- おすすめの一冊のみ「あなたにおすすめ！」と表示 -->
 <article class="book-item{% if book.id == recommend_book_id %} is-recommend{% endif %}"> <!-- 書籍１冊分のセット枠 -->
     <!-- 最初の一冊のみ、タグを表示 -->
     {% if book.id == recommend_book_id %}
@@ -110,9 +111,6 @@
         </div>
     </div>
 </div>
-<a href="#page-top" class="floating-btn">
-    <img src="{{ url_for('static', filename='image/floating_button.png') }}" alt="トップへ戻る">
-</a>
 <!-- 学習レベルの評価データを動的に表示 -->
 <div class="book-levels">
     <div class="plus-button"><!---ボタンを横並びにするため-->
@@ -147,6 +145,13 @@
 </div>
 </article>
 {% endfor %} 
+
+<!-- フローティングボタン -->
+<a href="#page-top" class="floating-btn">
+    <img src="{{ url_for('static', filename='image/floating_button.png') }}" alt="トップへ戻る">
+</a>
+</div>
+
 {% endif %}
 <!-- Jinja2のループ終了 -->
 
