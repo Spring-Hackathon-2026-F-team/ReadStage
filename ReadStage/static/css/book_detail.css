@@ -1,0 +1,229 @@
+/* books.css */
+/* @charset "utf-8";    /*.日本語の基本設定 */
+/*.投稿リスト全体 */
+html, body {   /*  デフォルトの余白がない設定にする   */
+    margin: 0;
+    padding: 0;
+}
+*, *::before, *::after { /* 全ての要素にbox-sizingの適用を行う */
+    box-sizing: border-box;
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 5px;
+    background-color: #EDEDED;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/*.書籍一冊分のセットをGridコンテナにする */
+.book-item {
+    display: grid;
+    grid-template-columns: 1fr; /*１列で、中の要素が縦に並ぶように */
+    gap: 20px; /*それぞれの要素の間の間隔*/
+    border: 1px solid #ddd; /*枠線を追加して区切る　*/
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 8px;
+/*    max-width: 400px; */ /*.上限をスマホサイズに */
+    max-width: min(400px, 100%); 
+    margin: 5px auto; /*.上下に２０pxの余白、左右には自動で中央寄せ */
+    box-sizing: border-box; 
+}
+
+/* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
+
+/* 書籍タイトルのスタイル*/
+.book-title {
+    grid-column: 1/-1; /* book-itemの全幅使用*/
+    margin: 0; /* book-itemのgapで調整するため*/
+    font-size: 15px;
+    color: #333;
+}
+
+/* 投稿内容：左に画像、右に文章　*/
+.book-content {
+    /* grid-column: 1/-1; /* book-itemの全幅使用 */
+    display: grid; /*.カテゴリ・キーワード欄と横並びにする */
+    grid-template-columns: 160px 1fr; /* 左側（画像）：160px、右側（文章）：残り全部　*/
+    gap: 5px; /*.画像と右側情報の間にスペースを作る */
+    align-items: flex-start; /* 必要に応じて上揃えにする　*/
+}
+
+/* 画像のレスポンシブ対応 */
+.book-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* book-imageの右側のコンテンツを縦に並べる */
+.book-info-right {
+    /* flex-grow: 1; /*.残りのスペースを全幅使用*/
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* ボタンコンポーネントの詳細設定 */
+a{
+    text-decoration: none;
+}
+
+.content-wrap{
+    width: 100%;
+    max-width: 375px;
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+}
+
+.c-button.tocomment{
+    width: 130px;
+    margin-left: auto; /* 左側のマージンを自動調整して右寄せにする */
+}
+.c-button.tocomment:hover{
+    background-color: var(--primary);
+}
+
+.star-rating {
+    color: orange;
+    min-width: 70px;
+}
+
+/* book-categoryとbook-keywordに左パディング追加 */
+.book-category,
+.book-keyword,
+.book-review {
+    padding-left: 1px; /* h5とliの左端が揃う基準 */
+}
+
+/* h5 のデフォルトマージンを調整して、枠との間に余白を作る */
+.book-category h5,
+.book-keyword h5 {
+    margin-top: 0;
+    margin-bottom: 3px; /* h5の下に少し余白 */
+    padding-left: 0; /* 親にパディングがあるので、h5自体には不要 */
+}
+
+/* ul のデフォルトマージンとパディングをリセット */
+.book-category ul,
+.book-keyword ul {
+    margin: 0; /* デフォルトマージンをリセット */
+    padding: 0 2px; /* ulのデフォルトパディングをリセット */
+}
+
+/* リストアイテムの余白調整 */
+.book-category ul li,
+.book-keyword ul li {
+    list-style: none; /* リストタブの黒丸を消す */  
+    background-color: #D2D2D2;
+    border: 1px solid #fff;
+    padding: 0 5px; /* 上下左右2pxのパディング */
+    text-indent: 3px;
+    border-radius: 8px;
+    margin-bottom: 2px;
+    display: block; /* これで親要素の幅いっぱいに広げる */
+    height: 26px;
+    line-height: 26px;
+}
+
+.book-category ul li:last-child,
+.book-keyword ul li:last-child {
+    margin-bottom: 0px; /* 最後のアイテムの下余白は不要 */
+}
+
+/*.コメントのセクション */
+.comment-description-area {
+    grid-column: 1/-1; /* book-itemの全幅使用 */
+    padding: 5px; /* 上下、左右のpadding */
+    border: 1px solid #333333;
+    border-radius: 0px;
+    background-color: #EDEDED;
+    margin: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column; /* 要素を縦に並べる */
+    gap: 5px; /* 要素間の隙間 */
+}
+
+/* 投稿日時 */
+.comment-created-at-text { /* 新しいクラス名 */
+    margin: 0; /* pタグのデフォルトマージンをリセット */
+    white-space: nowrap; /* テキストが改行されないように */
+    font-size: 0.9em; /* 必要に応じてフォントサイズ調整 */
+    color: #555;
+    text-align: right; 
+}
+
+/* 学習者レベル、評価を横並び */
+.comment-meta-info {
+    display: flex; 
+    align-items: center; /* 垂直方向の中央揃え */
+    gap: 10px; /* 要素間のスペース */
+}
+
+/* 学習者レベル */
+.level-name-start,
+.level-name-basic,
+.level-name-expert { /*.学習者レベルの名前 */
+    margin: 0 2px; /* 上下、左右のmargin */
+    /* width: 55%; */
+    text-indent: 5px;
+    font-size: 1.1em;
+    border: 0.5px solid #333333;
+    flex-shrink: 0;
+}
+
+.level-name-standard{
+    margin: 0 2px; /* 上下、左右のmargin */
+    text-indent: 3px;
+    font-size: 1.0em;
+    border: 0.5px solid #333333;
+    flex-shrink: 0;
+}
+
+.level-name-start,
+.level-name-basic,
+.level-name-standard,
+.level-name-expert {
+    min-width: 140px;
+    max-width: 160px;
+    font-weight: bold;
+    padding: 0 10px;
+    border-radius: 5px;
+}
+
+.level-name-start{ color: #167600; background-color: #98E607;}
+.level-name-basic{ color: #ffffff; background-color: #17A351;}
+.level-name-standard{ color: #003297; background-color: #27bbfa;}
+.level-name-expert { color: #ffffff; background-color: #003ea2;}
+
+/* コメント詳細のスタイル */
+.comment-description {
+    margin: 0px; /* デフォルトマージンをリセット */
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.c-button.delete{  /*.コンポーネント削除ボタンの設定 */
+    background-color: var(--danger); /* 赤色 */
+}
+.c-button.delete:hover{
+    background-color: #70080a;
+}
+/* 修正、削除ボタンの位置調整 */
+.button-wrap.comment-actions {  /*コンポーネント修正・削除の２つまとめ分 */
+    display: flex;  /*flex要素にして、ボタンを横並びにする */
+    justify-content: flex-end; /* ボタンを右寄せにする */
+    gap: 5px; /* ボタン間のスペース */
+    margin-top: 6px; /* コメントとの間に少しスペース */
+    padding-right: 5px; /* comment-description-areaのpaddingに合わせる */
+}

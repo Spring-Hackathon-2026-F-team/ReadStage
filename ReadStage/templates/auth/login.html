@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}ログイン{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div>
+  <div id="image-container">
+    <img src={{ url_for('static', filename='image/img_auth_bookshelf.png')}} alt="本棚" />
+  </div>
+
+  <form method="post" >
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div>
+      <p>メールアドレス</p>
+      <input id="email" name="email" type="email" />
+    </div>
+    <div>
+      <p>パスワード</p>
+      <input id="password" name="password" type="password" />
+    </div>
+    <!-- ログイン画面にだけ、「パスワード確認用」と同じ高さのスペースを作る -->
+    <div class="spacer" style="height: 55px;"></div>
+    <button type="submit" class="c-button">ログイン</button>
+  </form>
+
+  <!-- フラッシュメッセージ -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-message">
+      {% for category, message in messages %}
+        <div class="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <a href={{ url_for('signup_view') }}>アカウントを持っていない方はこちら</a>
+</div>
+{% endblock %}

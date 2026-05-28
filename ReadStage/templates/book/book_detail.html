@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}評価詳細{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/book_detail.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="header-image-container">
+    <div class="header-image-inner-container">
+      <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+       <p class="header-notification">評価詳細ページ</p>
+    </div>
+</div>
+
+<div class="book-list"> <!-- 全体を囲む大きな枠 -->
+
+<article class="book-item"> <!--書籍１冊分のセット枠-->
+<h3 class="book-title">{{ book.title }}</h3>
+<div class="book-content"> <!-- 左側の列：イラスト用 -->
+    <img src="{{ url_for('static', filename='image/' ~ book.id ~ '.jpg') }}" alt="{{ book.title }}の画像" class="book-image">
+    <div class="book-info-right"> <!-- 右側の列用 -->
+        {% if is_already_comment %}
+        <div class="content-wrap">
+            <a href="/book/{{ book.id }}/comment" class="c-button tocomment">書籍コメントへ</a> <!--ボタンコンポーネントの設定-->
+        </div>
+        {% endif %}
+        <div class="book-category">
+            <h5>カテゴリー</h5>
+                <ul>
+                    <li>{{ category.category }}</li>
+                </ul>
+        </div>
+        <div class="book-keyword">
+            <h5>キーワード</h5>
+                <ul>
+                    {% for keyword in keywords %}
+                        <li>{{ keyword.keyword }}</li>
+                    {% endfor %}
+                </ul>
+        </div>
+    </div>
+</div>
+
+{% for comment in recommends %}
+<div class="comment-description-area">
+    <div class="comment-meta-info"> <!-- 　学習者レベル、評価をFlexboxで囲む -->
+        {% set level_css = {
+            'BASIC/基礎': 'basic',
+            'START/入門': 'start',
+            'STANDARD/応用': 'standard',
+            'EXPERT/発展': 'expert',
+        }%}
+        <p class="level-name-{{ level_css.get(comment.status, 'basic') }}">{{ comment.status }}</p>
+        <div class="level-item">
+            <span class="star-rating">
+                {% for i in range(5) %}
+                    {{- "★" if i < comment.evaluation else "☆" -}}
+                {% endfor %}
+            </span>
+            <span class="star-rating-num">{{ "%.1f" | format(comment.evaluation) }}</span>
+        </div>
+    </div>
+    <p class="comment-created-at-text">投稿日時:{{ comment.created_at.strftime('%Y.%m.%d') }} <!-- コメント更新日 -->
+        <span id="comment-created_at"></span>
+    </p>
+
+    <p class="comment-description">
+        {{- comment.message -}}<!-- 紹介文の表示 -->
+    </p>
+    {% if comment.is_current_user %}
+        <div class="content-wrap">
+            <div class="button-wrap comment-actions"><!-- 修正、削除ボタン -->
+                <form action="/book/{{ book.id }}/comment/{{ comment.id }}/edit" method="get">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="c-button retouch" type="submit">修正</button>
+                </form>
+                <form action="/book/{{ book.id }}/comment/{{ comment.id }}/delete" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button
+                        class="c-button delete"
+                        type="submit"
+                        onclick="return confirm('このコメントを削除します。\nよろしいですか？\nこの操作は取り消せません。')">
+                        削除
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endfor %}
+</article>
+
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}書籍コメント{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/create_comment.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="header-image-container">
+    <div class="header-image-inner-container">
+        <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+        <p class="header-notification">書籍コメントページ</p>
+    </div>
+</div>
+
+ <!-- 全体を囲む大きな枠 -->
+<div class="comment-wrapper">
+    <div class="comment-list">
+        <article class="comment-item"> <!-- 書籍１冊分のセット枠 -->
+            {% set action_url = "/book/" ~ book.id ~ "/comment/" ~ recommend.id ~ "/edit" if is_edit and recommend is not none else "/book/" ~ book.id ~ "/comment" %}
+            <form action={{ action_url }} method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <h3 class="book-title">{{ book.title }}</h3>
+                <div class="comment-content">
+                    <!-- 1行目 左側: 書籍画像 -->
+                    <img src="{{ url_for('static', filename='image/' ~ book.id ~ '.jpg') }}" alt="{{ book.title }}の本の表紙画像" class="book-image">
+
+                    <!-- 1行目 右側: 評価と学習者レベル -->
+                    <div class="book-info-right">
+                        <!-- 評価ブロック：見出しの下に星５つ -->
+                        <div class="book-evaluation">
+                            <h5>評価</h5>
+                            <div class="stars">
+                                <span>
+                                    {% set selected_evaluation = (form_data.evaluation if form_data is defined else recommend.evaluation if recommend else "") | string %}                                
+                                    <input id="review05" type="radio" name="evaluation" value="5" {{ "checked" if selected_evaluation == "5" }}><label for="review05">★</label>
+                                    <input id="review04" type="radio" name="evaluation" value="4" {{ "checked" if selected_evaluation == "4" }}><label for="review04">★</label>
+                                    <input id="review03" type="radio" name="evaluation" value="3" {{ "checked" if selected_evaluation == "3" }}><label for="review03">★</label>
+                                    <input id="review02" type="radio" name="evaluation" value="2" {{ "checked" if selected_evaluation == "2" }}><label for="review02">★</label>
+                                    <input id="review01" type="radio" name="evaluation" value="1" {{ "checked" if selected_evaluation == "1" }}><label for="review01">★</label>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- 学習者レベルブロック：見出しの下にボタン4つ（2×2） -->
+                        <div class="select-levels">
+                            <h5>学習者レベル</h5>
+                            {% set selected_status = form_data.status if form_data is defined else recommend.status if recommend else "" %}
+                            <div class="learning-level-grid">
+                                <!-- 入門ボタン -->
+                                <div class="level-card">
+                                    <input id="status_start" type="radio" name="status" value="START/入門" {{ "checked" if selected_status == 'START/入門' }}>
+                                    <label for="status_start" class="c-button">START</label>
+                                </div>
+                                
+                                <!-- 基礎ボタン -->
+                                <div class="level-card">
+                                    <input id="status_basic" type="radio" name="status" value="BASIC/基礎" {{ "checked" if selected_status == 'BASIC/基礎' }}>
+                                    <label for="status_basic" class="c-button">BASIC</label>
+                                </div>
+                                
+                                <!-- 応用ボタン -->
+                                <div class="level-card">
+                                    <input id="status_standard" type="radio" name="status" value="STANDARD/応用" {{ "checked" if selected_status == 'STANDARD/応用' }}>
+                                    <label for="status_standard" class="c-button">STANDARD</label>
+                                </div>
+                                
+                                <!-- 発発展ボタン -->
+                                <div class="level-card">
+                                    <input id="status_expert" type="radio" name="status" value="EXPERT/発展" {{ "checked" if selected_status == 'EXPERT/発展' }}>
+                                    <label for="status_expert" class="c-button">EXPERT</label>
+                                </div>                         
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2行目: 学習者レベルの説明 (全幅) -->
+                    <div class="learning-level">
+                        <h5>📚 各レベルの参考例</h5>
+                        <p class="level-text"><strong class="level-badge level-start">START</strong><span>この分野の用語は聞いたことがある</span></p>
+                        <p class="level-text"><strong class="level-badge level-basic">BASIC</strong><span>この分野の用語に少し理解がある</span></p>
+                        <p class="level-text"><strong class="level-badge level-standard">STANDARD</strong><span>この分野に何度か触れたことがある</span></p>
+                        <p class="level-text"><strong class="level-badge level-expert">EXPERT</strong><span>この分野の知識を使いこなせている</span></p>
+                    </div>
+
+                    <!-- 3行目: コメント入力欄 (全幅) -->
+                    <div class="comment-area ">
+                        <p class="comment-heading">コメント（任意　最大で140文字）</p>
+                        <textarea id="comment-message" name="message" class="comment-textarea" rows="5" placeholder="書籍の感想や評価を記入してください(最大140文字)" maxlength="140">
+                        {{- form_data.message if form_data is defined else recommend.message if recommend else "" -}}
+                        </textarea>
+                    </div>
+                </div>
+                <!-- 登録/編集ボタン -->
+                <button type="submit" class="c-button submit">{{ '編集' if is_edit else '登録' }}</button>
+
+                <!-- フラッシュメッセージ -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-message">
+                        {% for category, message in messages %}
+                        <div class="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+            </form>
+        </article>
+    </div>
+</div>
+{% endblock %}
+ 

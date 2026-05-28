@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}500エラー{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/error.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="header-image-container">
+        <div class="header-image-inner-container">
+        <img src="{{ url_for('static', filename='image/Header-image.png') }}" class="header-image" alt="ヘッダー画像">
+        <p class="header-notification">お知らせ</p>
+    </div>
+</div>
+
+<div class="error-wrapper">
+    <div class ="box-design">
+        <p class="error-num">5 0 0 Internal Server Error</p>
+            <div class="error-description">
+                <p>アクセスが集中しているか<br>
+                メンテナンス中です</p>
+                <p>しばらく時間を置いてから<br>
+                再度アクセスをお願いいたします</p>
+            </div>
+
+            <img src="{{ url_for('static', filename='image/app_logo.png') }}" class="app-logo-image" alt="アプリロゴ画像"> <!-- style属性を削除し、クラスを追加 -->
+            <a href="{{ url_for('books_view') }}" class="c-button">IT書籍を探すなら</a>
+    </div>
+</div>
+
+{% endblock %}

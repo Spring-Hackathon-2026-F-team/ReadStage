@@ -1,0 +1,55 @@
+/* 404/500/その他エラー画面のCSS */
+
+/* body上部ヘッダー画像の設定はbase.cssにコンポーネント化 */
+
+/* 全体の配置を調整するためのラッパー */
+.error-wrapper {
+    display: flex; /* Flexboxを使って子要素を中央に配置 */
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center; /* 垂直方向の中央揃え（必要であれば） */
+    min-height: 60vh; /* 画面の高さの60%を最低限確保（例） */
+    padding: 20px; /* 全体の余白 */
+    box-sizing: border-box; /* パディングを幅に含める */
+}
+
+/* 四角い枠で囲む部分 */
+.box-design {
+    border: 2px solid #B1B1B1; /* 四角い枠線 */
+    padding: 20px; /* 枠内の余白 */
+    max-width: 500px; /* 枠の最大幅 */
+    width: 100%; /* 親要素の幅に合わせる */
+    text-align: center; /* 枠内のテキストやインライン要素を中央揃え */
+    border-radius: 10px; /* 角を少し丸くする */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* 影をつける */
+    background-color: var(--card_background); /* 背景色 */
+}
+
+/* エラー番号のスタイル */
+.error-num {
+    font-size: 1.5em; /* 数字を大きく */
+    color: var(--textcolor); /* エラーコード色 */
+    margin-bottom: 15px;
+}
+
+/* エラー説明の段落スタイル */
+.error-description p {
+    margin-bottom: 8px; /* 段落間の余白 */
+    line-height: 1.6; /* 行の高さ */
+    font-size: 0.9em; /* 親要素のフォントサイズの倍率 */
+}
+
+/* アプリロゴ画像のスタイル */
+.app-logo-image {
+    width: 28%;
+    max-width: 150px; /* 画像の最大幅を調整 */
+    height: auto;
+    display: block; /* margin: auto; を効かせるためにブロック要素にする */
+    margin: 15px auto; /* 画像を中央に配置 */
+}
+
+/* ボタンリンクのスタイル */
+.c-button {
+    display: inline-block; /* ボタンのように見せるため */
+    padding: 8px 20px; /* ボタンのパディング */
+    font-weight: bold;
+}
